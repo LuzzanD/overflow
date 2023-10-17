@@ -12,11 +12,11 @@ import Image from "next/image";
 import { useTheme } from "@/ThemeProvider";
 
 const ThemeChanger = () => {
-  const { mode, setMode } = useTheme();
+  const { mode } = useTheme();
   return (
     <div>
       <Select>
-        <SelectTrigger className="w-[70px]">
+        <SelectTrigger className="w-[60px] bg-slate-200 focus:outline-none">
           <Image
             src={`/assets/icons/${
               mode === "light" ? "sun" : mode === "dark" ? "moon" : "computer"
@@ -26,16 +26,17 @@ const ThemeChanger = () => {
             height={20}
           />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="bg-slate-200">
           {themeOptions.map((option) => {
             return (
               <SelectItem
                 key={option.name}
                 value={option.name}
-                onSelect={() => {
-                  setMode(`${option.name}`);
-                  console.log(option.name);
+                onClick={() => {
+                  console.log("light");
+                  // themeChanger(option.name);
                 }}
+                className="w-[60px]"
               >
                 {
                   <Image

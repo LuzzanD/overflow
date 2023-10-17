@@ -2,50 +2,49 @@
 
 import React from "react";
 import Image from "next/image";
-import { Input } from "@/components/ui/input";
+
 // import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { SignedIn } from "@clerk/nextjs";
+import { SignedIn, SignedOut, useUser } from "@clerk/nextjs";
 
 import ThemeChanger from "./theme/ThemeChanger";
+import GlobalSearch from "./shared/GlobalSearch";
 
 const NavBar = () => {
+  const { user } = useUser();
+
+  console.log(user);
+
   return (
     <nav className="background-light850_dark100 flex-between h-[60px] w-full p-10">
       <div>
-        <Image
-          src="/assets/images/logo.png"
-          alt="overflow logo"
-          height={50}
-          width={200}
-          className="rounded-full"
-        />
-      </div>
-      <div className="background-light700_dark300 flex w-[600px] rounded-lg">
-        <div className="flex-center relative w-[50px]">
+        <Link href="/">
           <Image
-            src="/assets/icons/search.svg"
-            alt="search-icon"
-            width={25}
-            height={25}
+            src="/assets/images/logo.png"
+            alt="overflow logo"
+            height={50}
+            width={200}
+            className="rounded-full"
           />
-        </div>
-        <Input className="rounded-none border-none bg-transparent outline-none" />
-      </div>
-      <div className="flex gap-2">
-        <ThemeChanger />
-        <Link
-          href="/sign-in"
-          className="btn primary-gradient rounded-md px-4 py-2 text-light-900"
-        >
-          Sign In
         </Link>
+      </div>
+      <GlobalSearch />
+      <div className="flex gap-4">
+        <ThemeChanger />
+        <SignedOut>
+          <Link
+            href="/sign-in"
+            className="btn primary-gradient rounded-md px-4 py-2 text-light-900"
+          >
+            Sign In
+          </Link>
+        </SignedOut>
         <SignedIn>
           <Image
-            src="/assets/vercel.svg"
+            src={user ? user.imageUrl : ""}
             alt="account profile picture"
-            height={30}
-            width={30}
+            height={40}
+            width={40}
             className="rounded-full"
           />
         </SignedIn>
