@@ -1,29 +1,42 @@
 import React from "react";
-import { navbarOptions } from "../constants";
-import Link from "next/link";
 import Image from "next/image";
 
-const LeftSidebar = () => {
+const questions = [
+  "I'm getting a 'NullPointerException' in my Java code. How can I debug and fix this issue?",
+  "What are the best practices for optimizing SQL queries to improve database performance?",
+  "I'm working on a Python project and encountered an 'IndentationError.' How can I resolve it, and what causes this error?",
+  "How can I implement error handling and exception handling in my C# application to make it more robust and user-friendly?",
+  "What are the key differences between object-oriented programming and functional programming, and when should I choose one over the other for a software project?",
+];
+
+const questionCard = questions.map((question) => {
   return (
-    <section className="background-light800_dark400 flex h-full w-[18%] flex-col gap-4 p-4">
-      {navbarOptions.map((option) => {
-        return (
-          <Link href={option.href} key={option.value}>
-            <div className="hover:primary-gradient mx-auto flex h-[50px] w-[70%] items-center justify-start gap-4 rounded-lg px-4 py-2">
-              <Image
-                src={option.icon}
-                alt="icon"
-                width={20}
-                height={20}
-                className="bg-slate-900"
-              />
-              <p className="body-semibold">{option.value}</p>
-            </div>
-          </Link>
-        );
-      })}
+    <div key={question} className="mb-2 flex items-center justify-between">
+      <p className="small-regular w-[250px]">{question}</p>
+      <Image
+        className="object-contain"
+        src="../public/assets/icons/chevron-right.svg"
+        alt="shevron icon"
+        width={15}
+        height={15}
+      />
+    </div>
+  );
+});
+
+const RightSideBar = () => {
+  return (
+    <section className="background-light800_dark400 flex h-full w-[25%] flex-col gap-4 p-4">
+      <div>
+        <h3 className="base-semibold mb-5">Hot Network</h3>
+        <div>{questionCard}</div>
+      </div>
+      <div>
+        <h3 className="base-semibold mb-5">Popular Tags</h3>
+        <div></div>
+      </div>
     </section>
   );
 };
 
-export default LeftSidebar;
+export default RightSideBar;

@@ -5,7 +5,7 @@ import Image from "next/image";
 
 // import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { SignedIn, SignedOut, useUser } from "@clerk/nextjs";
+import { SignedIn, SignedOut, useUser, UserButton } from "@clerk/nextjs";
 
 import ThemeChanger from "./theme/ThemeChanger";
 import GlobalSearch from "./shared/GlobalSearch";
@@ -16,7 +16,7 @@ const NavBar = () => {
   console.log(user);
 
   return (
-    <nav className="background-light850_dark100 flex-between h-[60px] w-full p-10">
+    <nav className="background-light800_dark400 flex-between h-[60px] w-full p-10">
       <div>
         <Link href="/">
           <Image
@@ -24,7 +24,7 @@ const NavBar = () => {
             alt="overflow logo"
             height={50}
             width={200}
-            className="rounded-full"
+            className="rounded-full hover:scale-[102%]"
           />
         </Link>
       </div>
@@ -40,13 +40,7 @@ const NavBar = () => {
           </Link>
         </SignedOut>
         <SignedIn>
-          <Image
-            src={user ? user.imageUrl : ""}
-            alt="account profile picture"
-            height={40}
-            width={40}
-            className="rounded-full"
-          />
+          <UserButton />
         </SignedIn>
       </div>
     </nav>
