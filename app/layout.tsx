@@ -1,4 +1,5 @@
 import "./globals.css";
+import "../styles/theme.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import React from "react";
@@ -30,7 +31,7 @@ export default function RootLayout({
 
             <div className="flex h-full justify-between">
               <LeftSidebar />
-              {children}
+              <div className="w-[62%]">{children}</div>
               <RightSidebar />
             </div>
           </body>

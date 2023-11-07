@@ -2,21 +2,25 @@
 
 import { connectToDatabase } from "../mongoose";
 
-export const createQuestion = () => {
+export const createQuestion = async () => {
   try {
-    connectToDatabase();
+    await connectToDatabase();
+    console.log("hello");
+  } catch (error) {
+    console.log("Unable to connect to database", error);
+  }
+};
+
+export const getQuestion = async () => {
+  try {
+    await connectToDatabase();
     console.log("hello");
   } catch (error) {}
 };
 
-export const getQuestion = () => {
+export const getQuestions = async () => {
   try {
-    console.log("hello");
-  } catch (error) {}
-};
-
-export const getQuestions = () => {
-  try {
+    await connectToDatabase();
     console.log("hello");
   } catch (error) {}
 };

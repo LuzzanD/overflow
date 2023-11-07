@@ -17,12 +17,12 @@ import Image from "next/image";
 import { useTheme } from "@/ThemeProvider";
 
 const ThemeChanger = () => {
-  const { mode } = useTheme();
+  const { mode, themeChanger } = useTheme();
   return (
     <div>
       <Menubar>
         <MenubarMenu>
-          <MenubarTrigger className="w-[60px] bg-slate-200 focus:outline-none">
+          <MenubarTrigger className="cursor-pointer bg-transparent focus:outline-none">
             <Image
               src={`/assets/icons/${
                 mode === "light" ? "sun" : mode === "dark" ? "moon" : "computer"
@@ -32,17 +32,17 @@ const ThemeChanger = () => {
               height={20}
             />
           </MenubarTrigger>
-          <MenubarContent className="bg-slate-200">
+          <MenubarContent className="flex flex-col items-center gap-2 bg-slate-200 px-2 ">
             {themeOptions.map((option) => {
               return (
                 <MenubarItem
                   key={option.name}
                   // value={option.name}
                   onClick={() => {
-                    console.log("light");
-                    // themeChanger(option.name);
+                    // console.log("light");
+                    themeChanger(option.name);
                   }}
-                  className="w-[60px]"
+                  className="cursor-pointer bg-transparent"
                 >
                   {
                     <Image
@@ -50,6 +50,7 @@ const ThemeChanger = () => {
                       alt="theme icon"
                       width={20}
                       height={20}
+                      className="hover:invert-[100%]"
                     />
                   }
                 </MenubarItem>

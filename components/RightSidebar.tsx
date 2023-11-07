@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import chevronImage from "../public/assets/icons/chevron-right.svg";
 
 const questions = [
   "I'm getting a 'NullPointerException' in my Java code. How can I debug and fix this issue?",
@@ -11,14 +12,17 @@ const questions = [
 
 const questionCard = questions.map((question) => {
   return (
-    <div key={question} className="mb-2 flex items-center justify-between">
-      <p className="small-regular w-[250px]">{question}</p>
+    <div
+      key={question}
+      className="group mb-4 flex items-center justify-between rounded-lg bg-zinc-300/20 py-2 pl-4 hover:cursor-pointer hover:bg-zinc-300/40"
+    >
+      <p className="body-regular w-[80%]">{question}</p>
       <Image
-        className="object-contain"
-        src="../public/assets/icons/chevron-right.svg"
+        src={chevronImage}
         alt="shevron icon"
-        width={15}
-        height={15}
+        width={30}
+        height={30}
+        className="group-hover:invert"
       />
     </div>
   );
@@ -26,7 +30,7 @@ const questionCard = questions.map((question) => {
 
 const RightSideBar = () => {
   return (
-    <section className="background-light800_dark400 flex h-full w-[25%] flex-col gap-4 p-4">
+    <section className="background-light800_dark400 flex min-h-screen w-[20%] flex-col gap-4 p-4">
       <div>
         <h3 className="base-semibold mb-5">Hot Network</h3>
         <div>{questionCard}</div>

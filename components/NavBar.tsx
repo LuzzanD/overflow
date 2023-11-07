@@ -16,7 +16,7 @@ const NavBar = () => {
   console.log(user);
 
   return (
-    <nav className="background-light800_dark400 flex-between h-[60px] w-full p-10">
+    <nav className="background-light800_dark400 flex h-[60px] w-full items-center justify-between p-10">
       <div>
         <Link href="/">
           <Image
@@ -29,7 +29,7 @@ const NavBar = () => {
         </Link>
       </div>
       <GlobalSearch />
-      <div className="flex gap-4">
+      <div className="flex items-center gap-4">
         <ThemeChanger />
         <SignedOut>
           <Link
