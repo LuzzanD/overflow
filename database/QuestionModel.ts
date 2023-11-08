@@ -1,11 +1,10 @@
-import mongoose from "mongoose";
+import { Schema, model } from "mongoose";
 
-const questionSchema = new mongoose.Schema({
-  author: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+const questionSchema = new Schema({
   title: String,
   text: String,
   tags: String,
   createdAt: Date,
 });
 
-export const Question = mongoose.model("Question", questionSchema);
+export const Question = model("Question", questionSchema);

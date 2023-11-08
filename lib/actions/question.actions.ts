@@ -1,11 +1,20 @@
 "use server";
 
+import { Question } from "@/database/QuestionModel";
 import { connectToDatabase } from "../mongoose";
 
-export const createQuestion = async () => {
+interface IQuestion {
+  title: string;
+  text: string;
+  tags: string;
+  createdAt: Date;
+}
+
+export const createQuestion = async (params: IQuestion) => {
+  const { title, text, tags, createdAt } = params;
   try {
     await connectToDatabase();
-    console.log("hello");
+    await Question.create({ title, text, tags, createdAt });
   } catch (error) {
     console.log("Unable to connect to database", error);
   }
