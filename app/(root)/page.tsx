@@ -3,8 +3,11 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
+// import { getQuestions } from "@/lib/actions/question.actions";
 
 const page = () => {
+  // const fetchedQuestions = getQuestions()
+
   return (
     <div className="flex w-full flex-col gap-8 p-8">
       <div className="flex items-center justify-between">

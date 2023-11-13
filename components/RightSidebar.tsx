@@ -19,7 +19,7 @@ const questionCard = questions.map((question) => {
       <p className="body-regular w-[80%]">{question}</p>
       <Image
         src={chevronImage}
-        alt="shevron icon"
+        alt="chevron icon"
         width={30}
         height={30}
         className="group-hover:invert"

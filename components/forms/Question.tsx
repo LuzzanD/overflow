@@ -30,7 +30,11 @@ const formSchema = z.object({
   }),
 });
 
-const Question = () => {
+interface QuestionProps {
+  id: string;
+}
+
+const Question = ({ id }: QuestionProps) => {
   const editorRef = useRef(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -44,12 +48,12 @@ const Question = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const date = new Date();
       await createQuestion({
+        author: JSON.parse(id),
         title: values.title,
         text: values.text,
         tags: values.tags,
-        createdAt: date,
+        createdAt: new Date(),
       });
     } catch (error) {
       console.log(error);
@@ -83,52 +87,63 @@ const Question = () => {
           )}
         />
         <div className="flex w-full flex-col gap-2">
-          <h3 className="paragraph-semibold">
-            Detailed explanation of your problem?
-          </h3>
-          <Editor
-            apiKey={process.env.NEXT_PUBLIC_TINY_API_KEY}
-            onInit={(evt, editor) => {
-              // @ts-ignore
-              editorRef.current = editor;
-            }}
-            initialValue="<p>Please enter the detailed explanation of your question.</p>"
-            init={{
-              height: 500,
-              width: "100%",
-              menubar: false,
-              plugins: [
-                "advlist",
-                "autolink",
-                "lists",
-                "link",
-                "image",
-                "charmap",
-                "preview",
-                "anchor",
-                "searchreplace",
-                "visualblocks",
-                "code",
-                "fullscreen",
-                "insertdatetime",
-                "media",
-                "table",
-                "code",
-                "help",
-                "wordcount",
-              ],
-              toolbar:
-                "undo redo | blocks | " +
-                "bold italic forecolor  | bullist numlist outdent indent | " +
-                "removeformat | help",
-              content_style:
-                "body { font-family:Helvetica,Arial,sans-serif; font-size:16px; color: grey }",
-            }}
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-[16px] font-semibold leading-[20.8px]">
+                  Detailed explanation of your problem?
+                </FormLabel>
+                <FormControl>
+                  <Editor
+                    apiKey={process.env.NEXT_PUBLIC_TINY_API_KEY}
+                    onInit={(evt, editor) => {
+                      // @ts-ignore
+                      editorRef.current = editor;
+                    }}
+                    initialValue="<p>Please enter the detailed explanation of your question.</p>"
+                    init={{
+                      height: 500,
+                      width: "100%",
+                      menubar: false,
+                      plugins: [
+                        "advlist",
+                        "autolink",
+                        "lists",
+                        "link",
+                        "image",
+                        "charmap",
+                        "preview",
+                        "anchor",
+                        "searchreplace",
+                        "visualblocks",
+                        "code",
+                        "fullscreen",
+                        "insertdatetime",
+                        "media",
+                        "table",
+                        "code",
+                        "help",
+                        "wordcount",
+                      ],
+                      toolbar:
+                        "undo redo | blocks | " +
+                        "bold italic forecolor  | bullist numlist outdent indent | " +
+                        "removeformat | help",
+                      content_style:
+                        "body { font-family:Helvetica,Arial,sans-serif; font-size:16px; color: grey }",
+                    }}
+                  />
+                </FormControl>
+                <FormDescription className="text-[12px] font-normal leading-[15.6px] text-sky-600">
+                  Introduce the problem and expand on what you put in the title.
+                  Minimum 20 characters.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-          <p className="small-regular text-sky-600">
-            Introduce the problem and expand on what you put in the title.
-            Minimum 20 characters.
-          </p>
         </div>
         <FormField
           control={form.control}
