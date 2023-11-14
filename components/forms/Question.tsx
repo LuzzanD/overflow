@@ -53,8 +53,11 @@ const Question = ({ id }: QuestionProps) => {
         title: values.title,
         text: values.text,
         tags: values.tags,
+        upvotes: [],
+        downvotes: [],
         createdAt: new Date(),
       });
+      console.log(values.tags, values.text, values.title);
     } catch (error) {
       console.log(error);
     }
@@ -86,65 +89,67 @@ const Question = ({ id }: QuestionProps) => {
             </FormItem>
           )}
         />
-        <div className="flex w-full flex-col gap-2">
-          <FormField
-            control={form.control}
-            name="title"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-[16px] font-semibold leading-[20.8px]">
-                  Detailed explanation of your problem?
-                </FormLabel>
-                <FormControl>
-                  <Editor
-                    apiKey={process.env.NEXT_PUBLIC_TINY_API_KEY}
-                    onInit={(evt, editor) => {
-                      // @ts-ignore
-                      editorRef.current = editor;
-                    }}
-                    initialValue="<p>Please enter the detailed explanation of your question.</p>"
-                    init={{
-                      height: 500,
-                      width: "100%",
-                      menubar: false,
-                      plugins: [
-                        "advlist",
-                        "autolink",
-                        "lists",
-                        "link",
-                        "image",
-                        "charmap",
-                        "preview",
-                        "anchor",
-                        "searchreplace",
-                        "visualblocks",
-                        "code",
-                        "fullscreen",
-                        "insertdatetime",
-                        "media",
-                        "table",
-                        "code",
-                        "help",
-                        "wordcount",
-                      ],
-                      toolbar:
-                        "undo redo | blocks | " +
-                        "bold italic forecolor  | bullist numlist outdent indent | " +
-                        "removeformat | help",
-                      content_style:
-                        "body { font-family:Helvetica,Arial,sans-serif; font-size:16px; color: grey }",
-                    }}
-                  />
-                </FormControl>
-                <FormDescription className="text-[12px] font-normal leading-[15.6px] text-sky-600">
-                  Introduce the problem and expand on what you put in the title.
-                  Minimum 20 characters.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+        {/* <div className="flex w-full flex-col gap-2"> */}
+        <FormField
+          control={form.control}
+          name="text"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-[16px] font-semibold leading-[20.8px]">
+                Detailed explanation of your problem?
+              </FormLabel>
+              <FormControl>
+                <Editor
+                  apiKey={process.env.NEXT_PUBLIC_TINY_API_KEY}
+                  onInit={(evt, editor) => {
+                    // @ts-ignore
+                    editorRef.current = editor;
+                  }}
+                  initialValue="Please enter the detailed explanation of your question."
+                  onBlur={field.onBlur}
+                  onEditorChange={(content) => field.onChange(content)}
+                  init={{
+                    height: 500,
+                    width: "100%",
+                    menubar: false,
+                    plugins: [
+                      "advlist",
+                      "autolink",
+                      "lists",
+                      "link",
+                      "image",
+                      "charmap",
+                      "preview",
+                      "anchor",
+                      "searchreplace",
+                      "visualblocks",
+                      "code",
+                      "fullscreen",
+                      "insertdatetime",
+                      "media",
+                      "table",
+                      "code",
+                      "help",
+                      "wordcount",
+                    ],
+                    toolbar:
+                      "undo redo | blocks | " +
+                      "bold italic forecolor  | bullist numlist outdent indent | " +
+                      "removeformat | help",
+                    content_style:
+                      "body { font-family:Helvetica,Arial,sans-serif; font-size:16px; color: grey }",
+                  }}
+                />
+              </FormControl>
+              <FormDescription className="text-[12px] font-normal leading-[15.6px] text-sky-600">
+                Introduce the problem and expand on what you put in the title.
+                Minimum 20 characters.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {/* </div> */}
         <FormField
           control={form.control}
           name="tags"
