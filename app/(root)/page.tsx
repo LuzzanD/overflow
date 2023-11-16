@@ -16,7 +16,7 @@ const page = () => {
           Ask the question!
         </Button>
       </div>
-      <div className="background-light700_dark300 flex w-full rounded-lg">
+      <div className="flex w-full rounded-lg bg-slate-200/90">
         <div className="flex-center relative w-[50px] cursor-pointer rounded-l-lg hover:bg-transparent/5">
           <Image
             src="/assets/icons/search.svg"

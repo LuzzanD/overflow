@@ -14,15 +14,15 @@ import {
 
 import { themeOptions } from "@/constants";
 import Image from "next/image";
-import { useTheme } from "@/ThemeProvider";
+import { useTheme } from "@/context/ThemeProvider";
 
 const ThemeChanger = () => {
   const { mode, themeChanger } = useTheme();
   return (
     <div>
-      <Menubar>
+      <Menubar className="border-none">
         <MenubarMenu>
-          <MenubarTrigger className="cursor-pointer bg-transparent focus:outline-none">
+          <MenubarTrigger className="cursor-pointer rounded-md bg-slate-200 px-4 py-2 outline-none focus:outline-none">
             <Image
               src={`/assets/icons/${
                 mode === "light" ? "sun" : mode === "dark" ? "moon" : "computer"
@@ -32,7 +32,7 @@ const ThemeChanger = () => {
               height={20}
             />
           </MenubarTrigger>
-          <MenubarContent className="flex flex-col items-center gap-2 bg-slate-200 px-2 ">
+          <MenubarContent className="ml-1 flex flex-col items-center gap-2 bg-slate-200 px-2">
             {themeOptions.map((option) => {
               return (
                 <MenubarItem

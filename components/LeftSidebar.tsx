@@ -6,7 +6,7 @@ import Image from "next/image";
 
 const LeftSidebar = () => {
   return (
-    <section className="background-light800_dark400 flex min-h-screen w-[18%] flex-col gap-2 px-2 py-4">
+    <section className="flex min-h-screen w-[16%] flex-col gap-2 bg-slate-50 px-2 py-8 shadow-xl dark:bg-slate-800">
       {navbarOptions.map((option) => {
         return (
           <Link href={option.href} key={option.value}>

@@ -16,7 +16,7 @@ const NavBar = () => {
   console.log(user);
 
   return (
-    <nav className="background-light800_dark400 flex h-[60px] w-full items-center justify-between p-10">
+    <nav className="z-10 flex h-[60px] w-full items-center justify-between bg-slate-50 p-10 shadow-md dark:bg-slate-800">
       <div>
         <Link href="/">
           <Image

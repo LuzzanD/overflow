@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 
 const GlobalSearch = () => {
   return (
-    <div className="background-light700_dark300 flex w-[600px] rounded-lg">
+    <div className="flex w-[600px] rounded-lg bg-slate-200">
       <div className="flex-center relative w-[50px] cursor-pointer rounded-l-lg hover:bg-transparent/5">
         <Image
           src="/assets/icons/search.svg"
