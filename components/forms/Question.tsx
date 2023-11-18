@@ -19,14 +19,14 @@ import {
 import { createQuestion } from "@/lib/actions/question.actions";
 
 const formSchema = z.object({
-  title: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+  title: z.string().min(10, {
+    message: "Question must be at least 10 characters long.",
   }),
   text: z.string().min(50, {
-    message: "Username must be at least 50 characters.",
+    message: "Explanation of the question must be at least 50 characters.",
   }),
   tags: z.string().min(2, {
-    message: "tags must be at least 2 characters.",
+    message: "Tags must be at least 2 characters.",
   }),
 });
 

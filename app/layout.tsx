@@ -6,7 +6,6 @@ import React from "react";
 import LeftSidebar from "../components/LeftSidebar";
 import RightSidebar from "../components/RightSidebar";
 import NavBar from "../components/NavBar";
-// import Footer from "../components/Footer";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/context/ThemeProvider";
 
@@ -24,8 +23,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <ThemeProvider>
-        <ClerkProvider>
+      <ClerkProvider>
+        <ThemeProvider>
           <body className={`${inter.className} flex flex-col`}>
             <NavBar />
 
@@ -37,8 +36,8 @@ export default function RootLayout({
               <RightSidebar />
             </div>
           </body>
-        </ClerkProvider>
-      </ThemeProvider>
+        </ThemeProvider>
+      </ClerkProvider>
     </html>
   );
 }
