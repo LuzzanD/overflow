@@ -30,7 +30,7 @@ export default function RootLayout({
 
             <div className="flex h-full justify-between">
               <LeftSidebar />
-              <div className="w-[62%] bg-slate-50 dark:bg-slate-800">
+              <div className="w-[75%] bg-slate-50 dark:bg-slate-800 lg:w-[64%]">
                 {children}
               </div>
               <RightSidebar />

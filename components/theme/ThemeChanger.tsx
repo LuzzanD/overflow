@@ -22,17 +22,17 @@ const ThemeChanger = () => {
     <div>
       <Menubar className="border-none">
         <MenubarMenu>
-          <MenubarTrigger className="cursor-pointer rounded-md bg-slate-200 px-4 py-2 outline-none focus:outline-none">
+          <MenubarTrigger className="mt-1 cursor-pointer rounded-md bg-none p-1 outline-none focus:outline-none">
             <Image
               src={`/assets/icons/${
                 mode === "light" ? "sun" : mode === "dark" ? "moon" : "computer"
               }.svg`}
               alt="theme icon"
-              width={20}
-              height={20}
+              width={25}
+              height={25}
             />
           </MenubarTrigger>
-          <MenubarContent className="ml-1 flex flex-col items-center gap-2 bg-slate-200 px-2">
+          <MenubarContent className="ml-[-40px] flex flex-col items-center gap-2 bg-slate-200 px-2">
             {themeOptions.map((option) => {
               return (
                 <MenubarItem
@@ -42,17 +42,16 @@ const ThemeChanger = () => {
                     // console.log("light");
                     themeChanger(option.name);
                   }}
-                  className="cursor-pointer bg-transparent"
+                  className="flex w-[100px] cursor-pointer items-center justify-start gap-4 bg-transparent"
                 >
-                  {
-                    <Image
-                      src={option.icon}
-                      alt="theme icon"
-                      width={20}
-                      height={20}
-                      className="hover:invert-[100%]"
-                    />
-                  }
+                  <Image
+                    src={option.icon}
+                    alt="theme icon"
+                    width={20}
+                    height={20}
+                    className="hover:invert-[100%]"
+                  />
+                  <span className="block text-[#7B8EC8]">{option.name}</span>
                 </MenubarItem>
               );
             })}
