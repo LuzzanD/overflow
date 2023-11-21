@@ -15,7 +15,7 @@ const GlobalSearch = () => {
           height={25}
         />
       </div>
-      <Input className="rounded-r-lg bg-transparent hover:bg-transparent/5 focus:outline-none" />
+      <Input className="h-full rounded-r-lg bg-transparent hover:bg-transparent/5 focus:outline-none" />
     </div>
   );
 };

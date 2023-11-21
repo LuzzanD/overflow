@@ -6,6 +6,8 @@ export interface IUser extends Document {
   password: string;
   name: string;
   bio: string;
+  portfolioLink: string;
+  locationString: string;
   profilePictureUrl: string;
   questions: Schema.Types.ObjectId[];
   answers: Schema.Types.ObjectId[];
@@ -18,7 +20,9 @@ const userSchema = new Schema({
   password: { type: String },
   name: { type: String },
   bio: { type: String },
+  portfolioLink: { type: String },
   profilePictureUrl: { type: String },
+  locationString: { type: String },
   questions: [{ type: Schema.Types.ObjectId, ref: "Question" }],
   answers: [{ type: Schema.Types.ObjectId, ref: "Answers" }],
   tags: [{ type: Schema.Types.ObjectId, ref: "Tags" }],

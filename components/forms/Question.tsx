@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,6 +17,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { createQuestion } from "@/lib/actions/question.actions";
+// import { Badge } from "../ui/badge";
 
 const formSchema = z.object({
   title: z.string().min(10, {
@@ -36,6 +37,8 @@ interface QuestionProps {
 
 const Question = ({ id }: QuestionProps) => {
   const editorRef = useRef(null);
+  const [tagInput, setTagInput] = useState("");
+  const [tagArray, setTagArray] = useState<String[]>([]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -63,6 +66,26 @@ const Question = ({ id }: QuestionProps) => {
     }
   };
 
+  const handleEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && tagInput) {
+      setTagArray(tagInput.split(" "));
+    } else {
+      alert("Please enter at least one tag");
+    }
+  };
+
+  useEffect(() => {
+    console.log(tagArray);
+  }, [tagArray]);
+
+  // const tagsArrayRender = () => {
+  //   if (tagArray.length > 0) {
+  //     tagArray.map((tag, index) => {
+  //       return <Badge key={index}>{tag}</Badge>;
+  //     });
+  //   }
+  // };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -77,13 +100,14 @@ const Question = ({ id }: QuestionProps) => {
               <FormControl>
                 <Input
                   placeholder="Please insert the question title."
-                  className="rounded-lg bg-transparent text-sm hover:bg-transparent/5 focus:outline-none"
+                  className="rounded-lg bg-white text-sm hover:bg-slate-200 focus:outline-none"
                   {...field}
                 />
               </FormControl>
               <FormDescription className="text-[12px] font-normal leading-[15.6px] text-sky-600">
                 Be specific and imagine you&apos;re asking a question to another
                 person.
+                <span className="text-[14px] text-orange-600"> *</span>
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -144,6 +168,7 @@ const Question = ({ id }: QuestionProps) => {
               <FormDescription className="text-[12px] font-normal leading-[15.6px] text-sky-600">
                 Introduce the problem and expand on what you put in the title.
                 Minimum 20 characters.
+                <span className="text-[14px] text-orange-600"> *</span>
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -160,14 +185,18 @@ const Question = ({ id }: QuestionProps) => {
               </FormLabel>
               <FormControl>
                 <Input
+                  value={tagInput}
+                  onChange={(e) => setTagInput(e.target.value)}
                   placeholder="Please insert tag names related to your question above."
-                  className="rounded-lg bg-transparent text-sm hover:bg-transparent/5 focus:outline-none"
-                  {...field}
+                  className="rounded-lg bg-white text-sm hover:bg-slate-200 focus:outline-none"
+                  onKeyDown={(e) => handleEnterKey(e)}
                 />
               </FormControl>
+              {/* <div>{tagsArrayRender}</div> */}
               <FormDescription className="text-[12px] font-normal leading-[15.6px] text-sky-600">
                 Add up to 5 tags to describe what your question is about. Start
                 typing to see suggestions.
+                <span className="text-[14px] text-orange-600"> *</span>
               </FormDescription>
               <FormMessage />
             </FormItem>
