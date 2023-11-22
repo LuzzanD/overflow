@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import Image from "next/image";
 // import { getQuestions } from "@/lib/actions/question.actions";
 
-const page = () => {
+const Home = () => {
   // const fetchedQuestions = getQuestions()
 
   return (
@@ -36,4 +36,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Home;

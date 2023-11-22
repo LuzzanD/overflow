@@ -92,18 +92,18 @@ const Question = ({ id }: QuestionProps) => {
             <FormItem>
               <FormLabel className="text-[16px] font-semibold leading-[20.8px]">
                 Question title
+                <span className="text-[14px] text-orange-600"> *</span>
               </FormLabel>
               <FormControl>
                 <Input
                   placeholder="Please insert the question title."
-                  className="rounded-lg bg-white text-sm hover:bg-slate-200 focus:outline-none"
+                  className="w-[90%] rounded-lg bg-white text-sm hover:bg-slate-200 focus:outline-none"
                   {...field}
                 />
               </FormControl>
               <FormDescription className="text-[12px] font-normal leading-[15.6px] text-sky-600">
                 Be specific and imagine you&apos;re asking a question to another
                 person.
-                <span className="text-[14px] text-orange-600"> *</span>
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -117,6 +117,7 @@ const Question = ({ id }: QuestionProps) => {
             <FormItem>
               <FormLabel className="text-[16px] font-semibold leading-[20.8px]">
                 Detailed explanation of your problem?
+                <span className="text-[14px] text-orange-600"> *</span>
               </FormLabel>
               <FormControl>
                 <Editor
@@ -130,7 +131,7 @@ const Question = ({ id }: QuestionProps) => {
                   onEditorChange={(content) => field.onChange(content)}
                   init={{
                     height: 500,
-                    width: "100%",
+                    width: "90%",
                     menubar: false,
                     plugins: [
                       "advlist",
@@ -157,14 +158,13 @@ const Question = ({ id }: QuestionProps) => {
                       "bold italic forecolor  | bullist numlist outdent indent | " +
                       "removeformat | help",
                     content_style:
-                      "body { font-family:Helvetica,Arial,sans-serif; font-size:16px; color: grey }",
+                      "body { font-family:Helvetica,Arial,sans-serif; font-size:16px; color: grey;}",
                   }}
                 />
               </FormControl>
               <FormDescription className="text-[12px] font-normal leading-[15.6px] text-sky-600">
                 Introduce the problem and expand on what you put in the title.
                 Minimum 20 characters.
-                <span className="text-[14px] text-orange-600"> *</span>
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -178,13 +178,14 @@ const Question = ({ id }: QuestionProps) => {
             <FormItem>
               <FormLabel className="text-[16px] font-semibold leading-[20.8px]">
                 Tags
+                <span className="text-[14px] text-orange-600"> *</span>
               </FormLabel>
               <FormControl>
                 <Input
                   value={tagInput}
                   onChange={(e) => setTagInput(e.target.value)}
                   placeholder="Please insert tag names related to your question above."
-                  className="rounded-lg bg-white text-sm hover:bg-slate-200 focus:outline-none"
+                  className="w-[90%] rounded-lg bg-white text-sm hover:bg-slate-200 focus:outline-none"
                   onKeyDown={(e) => handleEnterKey(e)}
                 />
               </FormControl>
@@ -192,7 +193,6 @@ const Question = ({ id }: QuestionProps) => {
               <FormDescription className="text-[12px] font-normal leading-[15.6px] text-sky-600">
                 Add up to 5 tags to describe what your question is about. Start
                 typing to see suggestions.
-                <span className="text-[14px] text-orange-600"> *</span>
               </FormDescription>
               <FormMessage />
             </FormItem>

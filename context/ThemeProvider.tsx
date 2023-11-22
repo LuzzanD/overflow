@@ -10,28 +10,24 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [mode, setMode] = useState("system");
+  const [mode, setMode] = useState("light");
 
   useEffect(() => {
-    console.log(mode);
-    if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
+    if (mode === "system") {
+      localStorage.removeItem("theme");
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    } else if (mode !== "system") {
+      localStorage.theme = mode;
+      if (localStorage.theme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
     }
-
-    // Whenever the user explicitly chooses light mode
-    localStorage.theme = "light";
-
-    // Whenever the user explicitly chooses dark mode
-    localStorage.theme = "dark";
-
-    // Whenever the user explicitly chooses to respect the OS preference
-    localStorage.removeItem("theme");
   }, [mode]);
 
   const themeChanger = (type: string): void => {
