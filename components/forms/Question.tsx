@@ -17,7 +17,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { createQuestion } from "@/lib/actions/question.actions";
-// import { Badge } from "../ui/badge";
+import Tag from "../shared/Tag";
 
 const formSchema = z.object({
   title: z.string().min(10, {
@@ -69,8 +69,6 @@ const Question = ({ id }: QuestionProps) => {
   const handleEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && tagInput) {
       setTagArray(tagInput.split(" "));
-    } else {
-      alert("Please enter at least one tag");
     }
   };
 
@@ -78,13 +76,11 @@ const Question = ({ id }: QuestionProps) => {
     console.log(tagArray);
   }, [tagArray]);
 
-  // const tagsArrayRender = () => {
-  //   if (tagArray.length > 0) {
-  //     tagArray.map((tag, index) => {
-  //       return <Badge key={index}>{tag}</Badge>;
-  //     });
-  //   }
-  // };
+  const tagsArrayRender =
+    tagArray.length > 1 &&
+    tagArray.map((tag, index) => {
+      return <Tag key={index} name={tag} />;
+    });
 
   return (
     <Form {...form}>
@@ -192,7 +188,7 @@ const Question = ({ id }: QuestionProps) => {
                   onKeyDown={(e) => handleEnterKey(e)}
                 />
               </FormControl>
-              {/* <div>{tagsArrayRender}</div> */}
+              <div className="flex gap-1">{tagsArrayRender}</div>
               <FormDescription className="text-[12px] font-normal leading-[15.6px] text-sky-600">
                 Add up to 5 tags to describe what your question is about. Start
                 typing to see suggestions.

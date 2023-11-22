@@ -2,7 +2,7 @@ import React from "react";
 import { Badge } from "@/components/ui/badge";
 
 interface ITag {
-  name: string;
+  name: String;
 }
 
 const Tag = ({ name }: ITag) => {
