@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <div className="flex w-full flex-col gap-8 p-8">
       <div className="flex items-center justify-between">
-        <h1 className="h1-bold mb-2">All questions</h1>
+        <h1 className="h1-bold mb-2 dark:text-slate-100">All questions</h1>
         <Button className="primary-gradient ml-auto block w-[200px] text-white">
           Ask the question!
         </Button>
@@ -25,7 +25,7 @@ const Home = () => {
             height={25}
           />
         </div>
-        <Input className="rounded-r-lg bg-transparent hover:bg-transparent/5 focus:outline-none" />
+        <Input className="rounded-r-lg border-none bg-transparent hover:bg-transparent/5 focus:outline-none" />
       </div>
       <div className="flex flex-col gap-4">
         {[1, 2, 3, 4].map((number) => {

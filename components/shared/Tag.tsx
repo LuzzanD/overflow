@@ -10,7 +10,7 @@ const Tag = ({ name }: ITag) => {
     <div>
       <Badge
         variant="outline"
-        className=" rounded-md bg-slate-200 px-3 py-1 text-[10px] text-slate-600 hover:cursor-pointer"
+        className="small-regular rounded-md border-none bg-slate-300 px-3 py-1 text-[10px] text-slate-600 hover:cursor-pointer hover:bg-slate-300/50 dark:bg-dark-400 dark:text-slate-100 hover:dark:bg-dark-400/40"
       >
         {name}
       </Badge>

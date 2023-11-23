@@ -14,15 +14,17 @@ const questionCard = questions.map((question) => {
   return (
     <div
       key={question}
-      className="group mb-4 flex items-center justify-between rounded-lg bg-slate-200/90 py-2 pl-4 hover:cursor-pointer hover:bg-slate-200/50"
+      className="group mb-4 flex items-center justify-between rounded-lg bg-slate-200/90 py-2 pl-4 hover:cursor-pointer hover:bg-slate-200/50 dark:bg-dark-100 hover:dark:bg-dark-100/50"
     >
-      <p className="small-regular w-[90%] lg:w-[80%]">{question}</p>
+      <p className="small-regular w-[90%] dark:text-slate-100 lg:w-[80%]">
+        {question}
+      </p>
       <Image
         src={chevronImage}
         alt="chevron icon"
         width={25}
         height={25}
-        className="invert"
+        className="invert dark:invert-0"
       />
     </div>
   );
@@ -30,13 +32,13 @@ const questionCard = questions.map((question) => {
 
 const RightSideBar = () => {
   return (
-    <section className="flex min-h-screen w-[25%] flex-col gap-4 bg-slate-50 p-4 pt-8 shadow-xl dark:bg-slate-800 lg:w-[20%]">
+    <section className="flex min-h-screen w-[25%] flex-col gap-4 bg-slate-50 p-4 pt-8 shadow-xl dark:bg-dark-200 dark:shadow-dark-100 lg:w-[20%]">
       <div>
-        <h3 className="base-semibold mb-5">Hot Network</h3>
+        <h3 className="base-semibold mb-5 dark:text-slate-100">Hot Network</h3>
         <div>{questionCard}</div>
       </div>
       <div>
-        <h3 className="base-semibold mb-5">Popular Tags</h3>
+        <h3 className="base-semibold mb-5 dark:text-slate-100">Popular Tags</h3>
         <div></div>
       </div>
     </section>

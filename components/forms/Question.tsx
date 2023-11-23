@@ -90,7 +90,7 @@ const Question = ({ id }: QuestionProps) => {
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-[16px] font-semibold leading-[20.8px]">
+              <FormLabel className="text-[16px] font-semibold leading-[20.8px] dark:text-slate-100">
                 Question title
                 <span className="text-[14px] text-orange-600"> *</span>
               </FormLabel>
@@ -115,7 +115,7 @@ const Question = ({ id }: QuestionProps) => {
           name="text"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-[16px] font-semibold leading-[20.8px]">
+              <FormLabel className="text-[16px] font-semibold leading-[20.8px] dark:text-slate-100">
                 Detailed explanation of your problem?
                 <span className="text-[14px] text-orange-600"> *</span>
               </FormLabel>
@@ -176,7 +176,7 @@ const Question = ({ id }: QuestionProps) => {
           name="tags"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-[16px] font-semibold leading-[20.8px]">
+              <FormLabel className="text-[16px] font-semibold leading-[20.8px] dark:text-slate-100">
                 Tags
                 <span className="text-[14px] text-orange-600"> *</span>
               </FormLabel>

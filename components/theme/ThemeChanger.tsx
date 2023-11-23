@@ -28,8 +28,8 @@ const ThemeChanger = () => {
                 mode === "light" ? "sun" : mode === "dark" ? "moon" : "computer"
               }.svg`}
               alt="theme icon"
-              width={25}
-              height={25}
+              width={20}
+              height={20}
             />
           </MenubarTrigger>
           <MenubarContent className="ml-[-40px] flex flex-col items-center gap-2 bg-slate-200 px-2">

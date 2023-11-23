@@ -6,7 +6,7 @@ import Image from "next/image";
 
 const LeftSidebar = () => {
   return (
-    <section className="z-[8] hidden min-h-screen flex-col gap-1 bg-slate-50 py-8 shadow-xl dark:bg-slate-800 lg:flex lg:w-[16%] xl:gap-2 xl:px-1 2xl:px-2">
+    <section className="z-[8] hidden min-h-screen flex-col gap-1 bg-slate-50 py-8 shadow-xl dark:bg-dark-200 dark:shadow-dark-100 lg:flex lg:w-[16%] xl:gap-2 xl:px-1 2xl:px-2">
       {navbarOptions.map((option) => {
         return (
           <Link href={option.href} key={option.value}>
@@ -18,7 +18,7 @@ const LeftSidebar = () => {
                 height={17}
                 className="invert-colors group-hover:invert-0"
               />
-              <p className="small-regular xl:body-regular group-hover:text-white">
+              <p className="small-regular xl:body-regular group-hover:text-white dark:text-slate-100">
                 {option.value}
               </p>
             </div>

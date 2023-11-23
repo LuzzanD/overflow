@@ -17,7 +17,7 @@ const NavBar = () => {
   console.log(user);
 
   return (
-    <nav className="z-10 flex h-[60px] w-full items-center justify-between bg-slate-50 p-4 shadow-md dark:bg-slate-800 md:p-6 lg:p-10">
+    <nav className="z-10 flex h-[60px] w-full items-center justify-around bg-slate-50 p-4 shadow-md dark:bg-dark-300 dark:shadow-dark-100 md:justify-between md:p-6 lg:p-10">
       <Link href="/">
         <div className="relative block aspect-square w-[30px] sm:hidden">
           <Image
@@ -31,12 +31,20 @@ const NavBar = () => {
         </div>
         <div className="relative hidden sm:block sm:h-[50px] sm:w-[140px] md:w-[160px] lg:w-[180px] xl:w-[200px]">
           <Image
+            src="/assets/images/logo-dark.svg"
+            alt="overflow logo"
+            fill={true}
+            // height={50}
+            // width={200}
+            className="hidden object-contain dark:block"
+          />
+          <Image
             src="/assets/images/logo-light.svg"
             alt="overflow logo"
             fill={true}
             // height={50}
             // width={200}
-            className="object-contain"
+            className="object-contain dark:hidden"
           />
         </div>
       </Link>

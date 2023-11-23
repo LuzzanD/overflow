@@ -2,7 +2,7 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
-// import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { createUser, deleteUser, updateUser } from "@/lib/actions/user.actions";
 
 export async function POST(req: Request) {
@@ -23,7 +23,7 @@ export async function POST(req: Request) {
 
   // If there are no headers, error out
   if (!svix_id || !svix_timestamp || !svix_signature) {
-    return new Response("Error occured -- no svix headers", {
+    return NextResponse.json("Error occured -- no svix headers", {
       status: 400,
     });
   }
@@ -46,7 +46,7 @@ export async function POST(req: Request) {
     }) as WebhookEvent;
   } catch (err) {
     console.error("Error verifying webhook:", err);
-    return new Response("Error occured", {
+    return NextResponse.json("Error occured", {
       status: 400,
     });
   }
@@ -61,7 +61,7 @@ export async function POST(req: Request) {
       profilePictureUrl: image_url,
     });
 
-    return new Response(newUser, { status: 200 });
+    return NextResponse.json(newUser, { status: 200 });
   }
 
   if (evt.type === "user.updated") {
@@ -74,12 +74,12 @@ export async function POST(req: Request) {
 
     const updatedUser = await updateUser({ userId: id, updatedData });
 
-    return new Response(updatedUser, { status: 200 });
+    return NextResponse.json(updatedUser, { status: 200 });
   }
 
   if (evt.type === "user.deleted") {
     const { id } = evt.data;
     const deletedUser = await deleteUser({ userId: id! });
-    return new Response(deletedUser, { status: 200 });
+    return NextResponse.json(deletedUser, { status: 200 });
   }
 }
