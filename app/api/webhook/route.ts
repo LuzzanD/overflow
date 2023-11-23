@@ -82,4 +82,5 @@ export async function POST(req: Request) {
     const deletedUser = await deleteUser({ userId: id! });
     return NextResponse.json({ message: "Ok", user: deletedUser });
   }
+  return NextResponse.json({ message: "OK" });
 }
