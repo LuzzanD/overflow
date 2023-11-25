@@ -30,6 +30,7 @@ const ThemeChanger = () => {
               alt="theme icon"
               width={20}
               height={20}
+              className=""
             />
           </MenubarTrigger>
           <MenubarContent className="ml-[-40px] flex flex-col items-center gap-2 bg-slate-200 px-2">
