@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -37,7 +37,7 @@ interface QuestionProps {
 
 const Question = ({ id }: QuestionProps) => {
   const editorRef = useRef(null);
-  const [tagInput, setTagInput] = useState("");
+  // const [tagInput, setTagInput] = useState("");
   // const [tagArray, setTagArray] = useState<String[]>([]);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -182,11 +182,12 @@ const Question = ({ id }: QuestionProps) => {
               </FormLabel>
               <FormControl>
                 <Input
-                  value={tagInput}
-                  onChange={(e) => setTagInput(e.target.value)}
+                  // value={tagInput}
+                  // onChange={(e) => setTagInput(e.target.value)}
                   placeholder="Please insert tag names related to your question above."
                   className="w-[90%] rounded-lg bg-white text-sm hover:bg-slate-200 focus:outline-none"
                   // onKeyDown={(e) => handleEnterKey(e)}
+                  {...field}
                 />
               </FormControl>
               <div className="flex gap-1"></div>

@@ -3,10 +3,10 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
-// import { getQuestions } from "@/lib/actions/question.actions";
+import { getQuestions } from "@/lib/actions/question.actions";
 
-const Home = () => {
-  // const fetchedQuestions = getQuestions()
+const Home = async () => {
+  const fetchedQuestions = await getQuestions();
 
   return (
     <div className="flex w-full flex-col gap-8">
@@ -28,9 +28,10 @@ const Home = () => {
         <Input className="rounded-r-lg border-none bg-transparent hover:bg-transparent/5 focus:outline-none" />
       </div>
       <div className="flex flex-col gap-4">
-        {[1, 2, 3, 4].map((number) => {
-          return <QuestionCard key={number} />;
-        })}
+        {fetchedQuestions &&
+          fetchedQuestions.map((question) => {
+            return <QuestionCard key={question.id} question={question} />;
+          })}
       </div>
     </div>
   );
