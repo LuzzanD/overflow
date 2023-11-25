@@ -7,9 +7,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <main className="flex flex-col">
       <NavBar />
-      <div className="flex h-full justify-between">
+      <div className="flex h-full flex-col justify-between sm:flex-row">
         <LeftSidebar />
-        <div className="w-[75%] bg-slate-50 dark:bg-dark-400 lg:w-[64%]">
+        <div className="w-[100%] bg-slate-50 p-8 dark:bg-dark-300 sm:w-[75%] lg:w-[64%]">
           {children}
         </div>
         <RightSidebar />

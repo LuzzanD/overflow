@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,7 +17,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { createQuestion } from "@/lib/actions/question.actions";
-import Tag from "../shared/Tag";
+// import Tag from "../shared/Tag";
 
 const formSchema = z.object({
   title: z.string().min(10, {
@@ -38,7 +38,7 @@ interface QuestionProps {
 const Question = ({ id }: QuestionProps) => {
   const editorRef = useRef(null);
   const [tagInput, setTagInput] = useState("");
-  const [tagArray, setTagArray] = useState<String[]>([]);
+  // const [tagArray, setTagArray] = useState<String[]>([]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -66,21 +66,21 @@ const Question = ({ id }: QuestionProps) => {
     }
   };
 
-  const handleEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && tagInput) {
-      setTagArray(tagInput.split(" "));
-    }
-  };
+  // const handleEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  //   if (e.key === "Enter" && tagInput) {
+  //     setTagArray(tagInput.split(" "));
+  //   }
+  // };
 
-  useEffect(() => {
-    console.log(tagArray);
-  }, [tagArray]);
+  // useEffect(() => {
+  //   console.log(tagArray);
+  // }, [tagArray]);
 
-  const tagsArrayRender =
-    tagArray.length > 1 &&
-    tagArray.map((tag, index) => {
-      return <Tag key={index} name={tag} />;
-    });
+  // const tagsArrayRender =
+  //   tagArray.length > 1 &&
+  //   tagArray.map((tag, index) => {
+  //     return <Tag key={index} name={tag} />;
+  //   });
 
   return (
     <Form {...form}>
@@ -186,10 +186,10 @@ const Question = ({ id }: QuestionProps) => {
                   onChange={(e) => setTagInput(e.target.value)}
                   placeholder="Please insert tag names related to your question above."
                   className="w-[90%] rounded-lg bg-white text-sm hover:bg-slate-200 focus:outline-none"
-                  onKeyDown={(e) => handleEnterKey(e)}
+                  // onKeyDown={(e) => handleEnterKey(e)}
                 />
               </FormControl>
-              <div className="flex gap-1">{tagsArrayRender}</div>
+              <div className="flex gap-1"></div>
               <FormDescription className="text-[12px] font-normal leading-[15.6px] text-sky-600">
                 Add up to 5 tags to describe what your question is about. Start
                 typing to see suggestions.

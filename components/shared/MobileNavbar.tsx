@@ -30,7 +30,7 @@ const MobileNavbar = () => {
         </SheetTrigger>
         <SheetContent
           side="left"
-          className="flex w-[40%] flex-col bg-slate-100 px-4"
+          className="flex w-[50%] flex-col bg-slate-100 px-4 sm:w-[40%] md:w-[30%]"
         >
           <SheetHeader className="flex flex-row justify-between space-y-0">
             <SheetTitle className="relative h-[30px] w-[110px]">

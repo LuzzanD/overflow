@@ -62,7 +62,7 @@ const NavBar = () => {
         <SignedIn>
           <UserButton />
         </SignedIn>
-        <div className="ml-1 sm:hidden">
+        <div className="ml-1 lg:hidden">
           <MobileNavbar />
         </div>
       </div>

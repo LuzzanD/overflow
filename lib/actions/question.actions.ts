@@ -8,6 +8,7 @@ export const createQuestion = async (params: IQuestion) => {
     const { author, title, text, tags, createdAt } = params;
     await connectToDatabase();
     await Question.create({ author, title, text, tags, createdAt });
+    console.log(author, title, text, tags, createdAt);
   } catch (error) {
     console.log("Unable to connect to database", error);
   }

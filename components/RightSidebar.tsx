@@ -32,7 +32,7 @@ const questionCard = questions.map((question) => {
 
 const RightSideBar = () => {
   return (
-    <section className="flex min-h-screen w-[25%] flex-col gap-4 bg-slate-50 p-4 pt-8 shadow-xl dark:bg-dark-200 dark:shadow-dark-100 lg:w-[20%]">
+    <section className=" min-h-screen w-[100%] flex-col gap-4 bg-slate-50 p-4 pt-8 shadow-xl dark:bg-dark-200 dark:shadow-dark-100 sm:w-[25%]  lg:w-[20%]">
       <div>
         <h3 className="base-semibold mb-5 dark:text-slate-100">Hot Network</h3>
         <div>{questionCard}</div>

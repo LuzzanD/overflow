@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 "use server";
 
 import { connectToDatabase } from "../mongoose";
@@ -17,11 +18,10 @@ interface CreateUserParams {
 
 interface UpdateUserParams {
   userId: string;
-  updatedData: {
-    username: string;
-    name: string;
-    profilePictureUrl: string;
-  };
+  username: string;
+  first_name: string;
+  last_name: string;
+  image_url: string;
 }
 
 interface DeleteUserParams {
@@ -34,6 +34,16 @@ export const getUserById = async (params: GetUserParams) => {
     await connectToDatabase();
     const user = await User.findOne({ clerkId: userId });
     return user;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getAllUsers = async () => {
+  try {
+    await connectToDatabase();
+    const allUsers = await User.find();
+    return allUsers;
   } catch (error) {
     console.log(error);
   }
@@ -56,12 +66,19 @@ export const createUser = async (params: CreateUserParams) => {
 };
 
 export const updateUser = async (params: UpdateUserParams) => {
-  const { userId, updatedData } = params;
+  const { userId, username, first_name, last_name, image_url } = params;
   try {
     await connectToDatabase();
     const user = await User.findOneAndUpdate(
       { clerkId: userId },
-      { updatedData }
+      {
+        $set: {
+          username: username!,
+          name: `${first_name} ${last_name}`,
+          profilePictureUrl: image_url,
+        },
+      },
+      { upsert: true }
     );
     return user;
   } catch (error) {

@@ -66,13 +66,14 @@ export async function POST(req: Request) {
 
   if (evt.type === "user.updated") {
     const { id, first_name, last_name, username, image_url } = evt.data;
-    const updatedData = {
-      username: username!,
-      name: `${first_name} ${last_name && last_name}`,
-      profilePictureUrl: image_url,
-    };
 
-    const updatedUser = await updateUser({ userId: id, updatedData });
+    const updatedUser = await updateUser({
+      userId: id,
+      username: username!,
+      first_name,
+      last_name,
+      image_url,
+    });
 
     return NextResponse.json({ message: "Ok", user: updatedUser });
   }
