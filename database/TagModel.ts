@@ -1,5 +1,11 @@
 import { Schema, model, models } from "mongoose";
 
+export interface ITag {
+  name: string;
+  tags: string;
+  createdAt: Date;
+}
+
 const tagSchema = new Schema({
   name: String,
   tags: String,

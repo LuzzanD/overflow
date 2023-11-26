@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,7 +17,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { createQuestion } from "@/lib/actions/question.actions";
-// import Tag from "../shared/Tag";
+import Tag from "../shared/Tag";
 
 const formSchema = z.object({
   title: z.string().min(10, {
@@ -37,8 +37,8 @@ interface QuestionProps {
 
 const Question = ({ id }: QuestionProps) => {
   const editorRef = useRef(null);
-  // const [tagInput, setTagInput] = useState("");
-  // const [tagArray, setTagArray] = useState<String[]>([]);
+  const [tagInput, setTagInput] = useState("");
+  const [tagArray, setTagArray] = useState<string[]>([]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -55,7 +55,7 @@ const Question = ({ id }: QuestionProps) => {
         author: JSON.parse(id),
         title: values.title,
         text: values.text,
-        tags: values.tags,
+        tags: tagArray,
         upvotes: [],
         downvotes: [],
         createdAt: new Date(),
@@ -66,21 +66,34 @@ const Question = ({ id }: QuestionProps) => {
     }
   };
 
-  // const handleEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
-  //   if (e.key === "Enter" && tagInput) {
-  //     setTagArray(tagInput.split(" "));
-  //   }
-  // };
+  const handleEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && tagInput) {
+      if (tagArray.length === 5) {
+        alert("There should be max 5 tags related to a question.");
+        setTagInput("");
+      } else {
+        setTagArray((prevValue) =>
+          Array.from(
+            new Set([...prevValue, ...tagInput.toLowerCase().split(" ")])
+          )
+        );
+        setTagInput("");
+      }
+    }
+  };
 
-  // useEffect(() => {
-  //   console.log(tagArray);
-  // }, [tagArray]);
+  const handleClose = (name: string) => {
+    const newTagArray = tagArray.filter((tag) => tag !== name);
+    setTagArray(newTagArray);
+  };
 
-  // const tagsArrayRender =
-  //   tagArray.length > 1 &&
-  //   tagArray.map((tag, index) => {
-  //     return <Tag key={index} name={tag} />;
-  //   });
+  const tagsArrayRender =
+    tagArray.length > 0 &&
+    tagArray.map((tag, index) => {
+      return (
+        <Tag key={index} name={tag} changeable handleTagClose={handleClose} />
+      );
+    });
 
   return (
     <Form {...form}>
@@ -182,15 +195,14 @@ const Question = ({ id }: QuestionProps) => {
               </FormLabel>
               <FormControl>
                 <Input
-                  // value={tagInput}
-                  // onChange={(e) => setTagInput(e.target.value)}
+                  value={tagInput}
+                  onChange={(e) => setTagInput(e.target.value)}
                   placeholder="Please insert tag names related to your question above."
                   className="w-[90%] rounded-lg bg-white text-sm hover:bg-slate-200 focus:outline-none"
-                  // onKeyDown={(e) => handleEnterKey(e)}
-                  {...field}
+                  onKeyDown={(e) => handleEnterKey(e)}
                 />
               </FormControl>
-              <div className="flex gap-1"></div>
+              <div className="flex gap-1">{tagsArrayRender}</div>
               <FormDescription className="text-[12px] font-normal leading-[15.6px] text-sky-600">
                 Add up to 5 tags to describe what your question is about. Start
                 typing to see suggestions.
