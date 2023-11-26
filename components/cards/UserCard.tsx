@@ -11,13 +11,13 @@ const UserCard = async ({ userId }: Params) => {
   console.log(user);
   return (
     user && (
-      <div className=" flex h-[200px] w-1/5 flex-col items-center justify-between rounded-md border-2 bg-slate-100 px-2 py-4 pt-8 dark:border-dark-100/70 dark:bg-dark-400/10">
-        <div className="relative h-1/2 w-1/2 rounded-full">
+      <div className=" flex h-[220px] w-1/5 flex-col items-center justify-between rounded-md border-2 bg-slate-100 px-2 pb-4 pt-8 dark:border-dark-100/70 dark:bg-dark-400/10">
+        <div className="relative aspect-square w-[100px] overflow-hidden rounded-full bg-slate-200">
           <Image
             src={user.profilePictureUrl}
-            alt="user profile pic"
+            alt="user profile picture"
             fill={true}
-            className="object-contain"
+            className="object-cover"
           />
         </div>
         <div className="flex flex-col items-center">
