@@ -1,45 +1,60 @@
 import React from "react";
 import Image from "next/image";
 import chevronImage from "../public/assets/icons/chevron-right.svg";
+import { getAllTags } from "@/lib/actions/tag.actions";
+import { getQuestions } from "@/lib/actions/question.actions";
+import Tag from "./shared/Tag";
 
-const questions = [
-  "I'm getting a 'NullPointerException' in my Java code. How can I debug and fix this issue?",
-  "What are the best practices for optimizing SQL queries to improve database performance?",
-  "I'm working on a Python project and encountered an 'IndentationError.' How can I resolve it, and what causes this error?",
-  "How can I implement error handling and exception handling in my C# application to make it more robust and user-friendly?",
-  "What are the key differences between object-oriented programming and functional programming, and when should I choose one over the other for a software project?",
-];
+const RightSideBar = async () => {
+  const allTags = await getAllTags();
+  const allQuestions = await getQuestions();
 
-const questionCard = questions.map((question) => {
-  return (
-    <div
-      key={question}
-      className="group mb-4 flex items-center justify-between rounded-lg bg-slate-200/90 py-2 pl-4 hover:cursor-pointer hover:bg-slate-200/50 dark:bg-dark-100 hover:dark:bg-dark-100/50"
-    >
-      <p className="small-regular w-[90%] dark:text-slate-100 lg:w-[80%]">
-        {question}
-      </p>
-      <Image
-        src={chevronImage}
-        alt="chevron icon"
-        width={25}
-        height={25}
-        className="invert dark:invert-0"
-      />
-    </div>
-  );
-});
+  const questionCards =
+    allQuestions &&
+    allQuestions.map((question) => {
+      return (
+        <div
+          key={question}
+          className="group mb-4 flex h-[65px] items-center justify-between rounded-lg bg-slate-200/90 p-2 hover:cursor-pointer hover:bg-slate-200/50 dark:bg-dark-100 hover:dark:bg-dark-100/50"
+        >
+          <p className="small-regular h-[100%] w-[90%] overflow-hidden text-ellipsis dark:text-slate-100 lg:w-[80%]">
+            {question.text}
+          </p>
+          <Image
+            src={chevronImage}
+            alt="chevron icon"
+            width={25}
+            height={25}
+            className="invert dark:invert-0"
+          />
+        </div>
+      );
+    });
 
-const RightSideBar = () => {
+  const tagCards =
+    allTags &&
+    allTags.map((tag, index) => {
+      return (
+        <div
+          key={index}
+          className="mb-4 flex items-center justify-between rounded-lg bg-slate-200/90 p-2 hover:cursor-pointer hover:bg-slate-200/50 dark:bg-dark-100 hover:dark:bg-dark-100/50"
+        >
+          <Tag name={tag.name} />
+          <div className="small-semibold dark:text-slate-100">
+            {tag.questions ? tag.questions.length : 0}
+          </div>
+        </div>
+      );
+    });
   return (
     <section className=" min-h-screen w-[100%] flex-col gap-4 bg-slate-50 p-4 pt-8 shadow-xl dark:bg-dark-200 dark:shadow-dark-100 sm:w-[25%]  lg:w-[20%]">
       <div>
         <h3 className="base-semibold mb-5 dark:text-slate-100">Hot Network</h3>
-        <div>{questionCard}</div>
+        <div>{questionCards}</div>
       </div>
       <div>
         <h3 className="base-semibold mb-5 dark:text-slate-100">Popular Tags</h3>
-        <div></div>
+        <div>{tagCards}</div>
       </div>
     </section>
   );

@@ -195,6 +195,12 @@
     background: linear-gradient(129deg, #5e60ce 0%, #4ea8de 100%);
   }
 
+  .secondary-gradient {
+    background: linear-gradient(
+      (129deg, #f28927 0%, rgb(246, 225, 90) 166, 224) 100%
+    );
+  }
+
   .dark-gradient {
     background: linear-gradient(
       232deg,

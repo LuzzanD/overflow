@@ -45,6 +45,10 @@ body {
     background: linear-gradient(129deg, #5e60ce 0%, #4ea8de 100%);
   }
 
+  .secondary-gradient {
+    background: linear-gradient(129deg, #f28927 0%, #ffd760 100%);
+  }
+
   .dark-gradient {
     background: linear-gradient(
       232deg,

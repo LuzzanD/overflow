@@ -66,6 +66,11 @@ const Question = ({ id }: QuestionProps) => {
     }
   };
 
+  const handleClose = (name: string) => {
+    const newTagArray = tagArray.filter((tag) => tag !== name);
+    setTagArray(newTagArray);
+  };
+
   const handleEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && tagInput) {
       if (tagArray.length === 5) {
@@ -74,17 +79,12 @@ const Question = ({ id }: QuestionProps) => {
       } else {
         setTagArray((prevValue) =>
           Array.from(
-            new Set([...prevValue, ...tagInput.toLowerCase().split(" ")])
+            new Set([...prevValue, ...tagInput.toUpperCase().split(" ")])
           )
         );
         setTagInput("");
       }
     }
-  };
-
-  const handleClose = (name: string) => {
-    const newTagArray = tagArray.filter((tag) => tag !== name);
-    setTagArray(newTagArray);
   };
 
   const tagsArrayRender =
@@ -110,7 +110,7 @@ const Question = ({ id }: QuestionProps) => {
               <FormControl>
                 <Input
                   placeholder="Please insert the question title."
-                  className="w-[90%] rounded-lg bg-white text-sm hover:bg-slate-200 focus:outline-none"
+                  className="w-[90%] rounded-lg border-none bg-white text-sm hover:bg-slate-200 focus:outline-none dark:bg-dark-100 dark:text-slate-100 dark:hover:bg-dark-100/70"
                   {...field}
                 />
               </FormControl>
@@ -139,13 +139,14 @@ const Question = ({ id }: QuestionProps) => {
                     // @ts-ignore
                     editorRef.current = editor;
                   }}
-                  initialValue="Please enter the detailed explanation of your question."
                   onBlur={field.onBlur}
                   onEditorChange={(content) => field.onChange(content)}
                   init={{
                     height: 500,
                     width: "90%",
                     menubar: false,
+                    placeholder:
+                      "Please enter the detailed explanation of your question.",
                     plugins: [
                       "advlist",
                       "autolink",
@@ -198,22 +199,23 @@ const Question = ({ id }: QuestionProps) => {
                   value={tagInput}
                   onChange={(e) => setTagInput(e.target.value)}
                   placeholder="Please insert tag names related to your question above."
-                  className="w-[90%] rounded-lg bg-white text-sm hover:bg-slate-200 focus:outline-none"
+                  className="w-[90%] rounded-lg border-none bg-white text-sm hover:bg-slate-200 focus:outline-none dark:bg-dark-100 dark:text-slate-100 dark:hover:bg-dark-100/70"
                   onKeyDown={(e) => handleEnterKey(e)}
                 />
               </FormControl>
-              <div className="flex gap-1">{tagsArrayRender}</div>
+
               <FormDescription className="text-[12px] font-normal leading-[15.6px] text-sky-600">
                 Add up to 5 tags to describe what your question is about. Start
                 typing to see suggestions.
               </FormDescription>
+              <div className="flex gap-1">{tagsArrayRender}</div>
               <FormMessage />
             </FormItem>
           )}
         />
         <Button
           type="submit"
-          className="primary-gradient ml-auto block w-[200px] text-white"
+          className="primary-gradient dark:secondary-gradient ml-auto block w-[200px] text-white"
         >
           Ask the question!
         </Button>
