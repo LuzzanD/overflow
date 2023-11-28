@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/form";
 import { createQuestion } from "@/lib/actions/question.actions";
 import Tag from "../shared/Tag";
+import { useTheme } from "@/context/ThemeProvider";
 
 const formSchema = z.object({
   title: z.string().min(10, {
@@ -37,6 +38,7 @@ interface QuestionProps {
 
 const Question = ({ id }: QuestionProps) => {
   const editorRef = useRef(null);
+  const { mode } = useTheme();
   const [tagInput, setTagInput] = useState("");
   const [tagArray, setTagArray] = useState<string[]>([]);
 
@@ -60,7 +62,6 @@ const Question = ({ id }: QuestionProps) => {
         downvotes: [],
         createdAt: new Date(),
       });
-      console.log(values.tags, values.text, values.title);
     } catch (error) {
       console.log(error);
     }
@@ -142,6 +143,20 @@ const Question = ({ id }: QuestionProps) => {
                   onBlur={field.onBlur}
                   onEditorChange={(content) => field.onChange(content)}
                   init={{
+                    skin:
+                      typeof window !== "undefined" &&
+                      (window.matchMedia("(prefers-color-scheme: dark)")
+                        .matches ||
+                        mode === "dark")
+                        ? "oxide-dark"
+                        : "oxide",
+                    content_css:
+                      typeof window !== "undefined" &&
+                      (window.matchMedia("(prefers-color-scheme: dark)")
+                        .matches ||
+                        mode === "dark")
+                        ? "dark"
+                        : "default",
                     height: 500,
                     width: "90%",
                     menubar: false,
@@ -172,7 +187,7 @@ const Question = ({ id }: QuestionProps) => {
                       "bold italic forecolor  | bullist numlist outdent indent | " +
                       "removeformat | help",
                     content_style:
-                      "body { font-family:Helvetica,Arial,sans-serif; font-size:16px; color: grey;}",
+                      "body { font-family:Helvetica,sans-serif; font-size:16px; color: grey;}",
                   }}
                 />
               </FormControl>

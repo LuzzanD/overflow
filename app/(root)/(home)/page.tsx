@@ -12,7 +12,7 @@ const Home = async () => {
     <div className="flex w-full flex-col gap-8">
       <div className="flex items-center justify-between">
         <h1 className="h1-bold mb-2 dark:text-slate-100">All questions</h1>
-        <Button className="primary-gradient ml-auto block w-[200px] text-white">
+        <Button className="primary-gradient dark:secondary-gradient ml-auto block w-[200px] text-white">
           Ask the question!
         </Button>
       </div>

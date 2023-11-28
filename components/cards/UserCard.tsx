@@ -10,7 +10,7 @@ const UserCard = async ({ userId }: Params) => {
   const user = await getUserById({ userId });
   return (
     user && (
-      <div className=" flex h-[220px] w-1/5 flex-col items-center justify-between rounded-md border-2 bg-slate-100 px-2 pb-4 pt-8 dark:border-dark-100/70 dark:bg-dark-200/80">
+      <div className=" flex h-[220px] w-[100%] flex-col items-center justify-between rounded-md border-2 bg-slate-100 px-2 pb-4 pt-8 dark:border-dark-100/70 dark:bg-dark-200/80">
         <div className="relative aspect-square w-[100px] overflow-hidden rounded-full bg-slate-200">
           <Image
             src={user.profilePictureUrl}
