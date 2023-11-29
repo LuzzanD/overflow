@@ -3,6 +3,10 @@
 import { Question, IQuestion } from "@/database/QuestionModel";
 import { connectToDatabase } from "../mongoose";
 
+interface GetQuestionByIdPararam {
+  id: string;
+}
+
 export const createQuestion = async (params: IQuestion) => {
   try {
     const { author, title, text, tags, createdAt } = params;
@@ -14,10 +18,12 @@ export const createQuestion = async (params: IQuestion) => {
   }
 };
 
-export const getQuestion = async () => {
+export const getQuestionById = async ({ id }: GetQuestionByIdPararam) => {
   try {
     await connectToDatabase();
-    console.log("hello");
+    console.log(id);
+    const question = await Question.findOne({ _id: id });
+    return question;
   } catch (error) {}
 };
 

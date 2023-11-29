@@ -1,4 +1,11 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, models, Document } from "mongoose";
+
+export interface IAnswer extends Document {
+  title: string;
+  text: string;
+  tags: string;
+  createdAt: Date;
+}
 
 const answerSchema = new Schema({
   title: String,
@@ -7,4 +14,4 @@ const answerSchema = new Schema({
   createdAt: Date,
 });
 
-export const Answer = model("Answer", answerSchema);
+export const Answer = models.Answer || model("Answer", answerSchema);
