@@ -2,6 +2,7 @@
 
 import { Question, IQuestion } from "@/database/QuestionModel";
 import { connectToDatabase } from "../mongoose";
+import { User } from "@/database/UserModel";
 
 interface GetQuestionByIdPararam {
   id: string;
@@ -22,7 +23,10 @@ export const getQuestionById = async ({ id }: GetQuestionByIdPararam) => {
   try {
     await connectToDatabase();
     console.log(id);
-    const question = await Question.findOne({ _id: id });
+    const question = await Question.findOne({ _id: id }).populate({
+      path: "author",
+      model: User,
+    });
     return question;
   } catch (error) {}
 };
@@ -30,7 +34,9 @@ export const getQuestionById = async ({ id }: GetQuestionByIdPararam) => {
 export const getQuestions = async () => {
   try {
     await connectToDatabase();
-    const allQuestions = await Question.find();
+    const allQuestions = await Question.find().sort({
+      createdAt: -1,
+    });
     return allQuestions;
   } catch (error) {
     console.log("Unable to connect to database", error);

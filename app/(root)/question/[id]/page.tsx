@@ -1,24 +1,58 @@
+import Tag from "@/components/shared/Tag";
 import { getQuestionById } from "@/lib/actions/question.actions";
 import React from "react";
+import Image from "next/image";
+import VotingMetric from "@/components/shared/VotingMetric";
+import { getUserById } from "@/lib/actions/user.actions";
+import { currentUser } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 // interface Params {
 //   id: string;
 // }
 
 const page = async ({ params, searchParams }: any) => {
-  console.log(params.id);
+  const user = await currentUser();
+  if (!user) redirect("/sign-in");
   const question = await getQuestionById({ id: params.id });
+  const mongoUser = await getUserById({ userId: user.id });
+
   return question ? (
-    <div className="">
-      <div>
-        <div>User pic and username</div>
-        <div>Voting</div>
+    <div className="flex flex-col gap-4">
+      <div className="flex justify-between">
+        <div className="flex items-center gap-2">
+          <div className="relative aspect-square w-[26px] overflow-hidden rounded-full bg-slate-200">
+            <Image
+              src={question.author.profilePictureUrl}
+              alt="User profile picture"
+              fill={true}
+              className="object-cover"
+            />
+          </div>
+          <p className="body-semibold dark:text-slate-100">
+            {question.author.username}
+          </p>
+        </div>
+        <div>
+          <VotingMetric
+            questionId={question._id}
+            userId={mongoUser._id}
+            upvotes={question.upvotes.length}
+            downvotes={question.downvotes.length}
+          />
+        </div>
       </div>
-      <h2>{question.title}</h2>
+      <h2 className="text-2xl font-semibold leading-[20.8px] dark:text-slate-100">
+        {question.title}
+      </h2>
       <div>About question</div>
-      <p>{question.explanation}</p>
+      <p className="body-regular dark:text-slate-100">{question.text}</p>
       <div>Code Sample</div>
-      <div>Tags</div>
+      <div className="flex gap-2">
+        {["javascript", "html", "react", "nextjs"].map((tag) => {
+          return <Tag key={tag} name={tag} />;
+        })}
+      </div>
     </div>
   ) : (
     <p>Something went wrong</p>
