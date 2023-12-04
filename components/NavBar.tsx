@@ -17,15 +17,13 @@ const NavBar = () => {
   console.log(user);
 
   return (
-    <nav className="z-10 flex h-[60px] w-full items-center justify-around bg-slate-50 p-4 shadow-md dark:bg-dark-300 dark:shadow-dark-100 md:justify-between md:p-6 lg:p-10">
+    <nav className="z-10 flex h-[60px] w-full items-center justify-between bg-slate-50 p-4 shadow-md dark:bg-dark-300 dark:shadow-dark-100 md:p-6 lg:p-10">
       <Link href="/">
         <div className="relative block aspect-square w-[30px] sm:hidden">
           <Image
             src="/assets/images/site-logo.svg"
             alt="overflow logo"
             fill={true}
-            // height={50}
-            // width={200}
             className="object-contain"
           />
         </div>
@@ -34,22 +32,20 @@ const NavBar = () => {
             src="/assets/images/logo-dark.svg"
             alt="overflow logo"
             fill={true}
-            // height={50}
-            // width={200}
             className="hidden object-contain dark:block"
           />
           <Image
             src="/assets/images/logo-light.svg"
             alt="overflow logo"
             fill={true}
-            // height={50}
-            // width={200}
             className="object-contain dark:hidden"
           />
         </div>
       </Link>
-      <GlobalSearch />
-      <div className="flex items-center gap-1 md:gap-2 lg:gap-[10px]">
+      <div className="w-[60%] sm:w-[50%]">
+        <GlobalSearch />
+      </div>
+      <div className="flex items-center gap-2 lg:gap-[10px]">
         <ThemeChanger />
         <SignedOut>
           <Link
@@ -60,9 +56,16 @@ const NavBar = () => {
           </Link>
         </SignedOut>
         <SignedIn>
-          <UserButton />
+          <UserButton
+            appearance={{
+              elements: {
+                avatarBox:
+                  "w-[28px] h-[28px] md:h-[30px] lg:w-[35px] md:w-[30px] lg:h-[35px]",
+              },
+            }}
+          />
         </SignedIn>
-        <div className="ml-1 lg:hidden">
+        <div className="lg:hidden">
           <MobileNavbar />
         </div>
       </div>

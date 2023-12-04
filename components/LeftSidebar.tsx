@@ -11,7 +11,7 @@ const LeftSidebar = () => {
   const pathname = usePathname();
 
   return (
-    <section className="z-[8] hidden min-h-screen flex-col gap-1 bg-slate-50 py-8 shadow-xl dark:bg-dark-200 dark:shadow-dark-100 lg:flex lg:w-[16%] xl:gap-2 xl:px-1 2xl:px-2">
+    <section className="z-[8] hidden min-h-screen flex-col gap-1 bg-slate-50 py-8 shadow-xl dark:bg-dark-200 dark:shadow-dark-100 lg:flex lg:w-[16%] xl:gap-2 xl:px-0 2xl:px-1">
       {navbarOptions.map((option) => {
         const isActive =
           pathname === option.href ||
@@ -21,7 +21,7 @@ const LeftSidebar = () => {
             <div
               className={`${
                 isActive ? "dark:secondary-gradient primary-gradient" : ""
-              } hover:primary-gradient dark:hover:secondary-gradient group mx-auto flex h-[50px] w-[80%] items-center justify-start gap-3 rounded-lg px-2 xl:px-4`}
+              } hover:primary-gradient dark:hover:secondary-gradient group mx-auto flex h-[45px] w-[85%] items-center justify-start gap-3 rounded-lg px-2 xl:h-[50px] xl:px-4`}
             >
               <Image
                 src={option.icon}
@@ -35,7 +35,7 @@ const LeftSidebar = () => {
               <p
                 className={`${
                   isActive ? "text-white" : ""
-                } small-regular xl:body-regular group-hover:text-white dark:text-slate-100`}
+                } text-[12px] group-hover:text-white dark:text-slate-100 xl:text-[14px]`}
               >
                 {option.value}
               </p>

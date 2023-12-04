@@ -1,6 +1,6 @@
-import { Question } from "@/database/QuestionModel";
+// import { Question } from "@/database/QuestionModel";
 import { connectToDatabase } from "../mongoose";
-import { User } from "@/database/UserModel";
+// import { User } from "@/database/UserModel";
 
 interface HandleVoteParams {
   userId: string;
@@ -9,7 +9,7 @@ interface HandleVoteParams {
 export const handleUpvote = async (params: HandleVoteParams) => {
   try {
     connectToDatabase();
-    const { userId, questionId } = params;
+    // const { userId, questionId } = params;
     // const mongoQuestion = Question.findOne({ _id: questionId });
     // const mongoUser = User.findOne({ _id: userId });
   } catch (error) {
