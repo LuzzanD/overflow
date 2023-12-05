@@ -42,7 +42,7 @@ const NavBar = () => {
           />
         </div>
       </Link>
-      <div className="w-[60%] sm:w-[50%]">
+      <div className="w-[50%]">
         <GlobalSearch />
       </div>
       <div className="flex items-center gap-2 lg:gap-[10px]">

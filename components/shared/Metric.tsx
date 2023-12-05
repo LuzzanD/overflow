@@ -9,15 +9,15 @@ const Metric = () => {
     <div className="flex gap-3">
       <div className="flex items-center gap-[3px]">
         <Image alt="metric icon" src={upvote} height={14} width={14} />
-        <p className="text-xs text-sky-600">1.2k Votes</p>
+        <p className="text-[10px] text-sky-600 xl:text-[12px]">1.2k Votes</p>
       </div>
       <div className="flex items-center gap-[3px]">
         <Image alt="metric icon" src={comment} height={14} width={14} />
-        <p className="text-xs text-sky-600">900 Answers</p>
+        <p className="text-[10px] text-sky-600 xl:text-[12px]">900 Answers</p>
       </div>
       <div className="flex items-center gap-[3px]">
         <Image alt="metric icon" src={eye} height={14} width={14} />
-        <p className="text-xs text-sky-600">5.2k Views</p>
+        <p className="text-[10px] text-sky-600 xl:text-[12px]">5.2k Views</p>
       </div>
     </div>
   );

@@ -48,7 +48,7 @@ const RightSideBar = async () => {
       );
     });
   return (
-    <section className="min-h-screen w-[100%] flex-col gap-4 bg-slate-50 p-4 pt-8 shadow-xl dark:bg-dark-200 dark:shadow-dark-100 sm:w-[25%] lg:w-[24%] 2xl:w-[20%]">
+    <section className="min-h-screen w-[100%] flex-col gap-4 bg-slate-50 p-3 pt-6 shadow-xl dark:bg-dark-200 dark:shadow-dark-100 sm:w-[25%] md:p-4 md:pt-8 lg:w-[24%] 2xl:w-[20%]">
       <div>
         <h3 className="paragraph-semibold xl:base-semibold mb-3 dark:text-slate-100 lg:mb-4 xl:mb-5">
           Hot Network
