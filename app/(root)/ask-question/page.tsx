@@ -13,7 +13,7 @@ const AskQuestion = async () => {
 
   return (
     <div className="flex w-full flex-col gap-8">
-      <h1 className="h1-bold mb-2 dark:text-slate-100">
+      <h1 className="h2-bold xl:h1-bold mb-2 dark:text-slate-100">
         Ask a public question
       </h1>
       <Question id={mongoUser && JSON.stringify(mongoUser._id)} />

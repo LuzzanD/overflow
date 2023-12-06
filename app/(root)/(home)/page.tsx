@@ -20,7 +20,7 @@ const Home = async () => {
       </div>
       <div className="flex w-full rounded-lg bg-slate-200/90">
         <div className="flex-center cursor-pointer rounded-l-lg bg-slate-200 p-1 hover:bg-slate-300 dark:bg-dark-100 dark:hover:bg-dark-100/70 sm:p-2">
-          <div className="xs:w-[20px] relative aspect-square w-[16px] md:w-[22px] lg:w-[25px]">
+          <div className="relative aspect-square w-[16px] xs:w-[20px] md:w-[22px] lg:w-[25px]">
             <Image
               src="/assets/icons/search.svg"
               alt="search-icon"

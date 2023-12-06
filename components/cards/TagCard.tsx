@@ -10,14 +10,18 @@ interface TagCardProps {
 }
 const TagCard = ({ tag }: TagCardProps) => {
   return (
-    <div className=" flex h-[200px] w-[100%] flex-col items-start justify-between rounded-md border-2 bg-slate-100 px-4 py-6 dark:border-dark-100/70 dark:bg-dark-200/80">
+    <div className=" flex h-[200px] w-[100%] flex-col items-start justify-between rounded-md border-2 bg-slate-100 px-2 py-4 dark:border-dark-100/70 dark:bg-dark-200/80 lg:px-3 lg:py-6">
       <Tag name={tag.name} />
-      <p className="small-regular dark:text-slate-100">{tag.explanation}</p>
+      <p className="text-[11px] dark:text-slate-100 xl:text-[12px]">
+        {tag.explanation}
+      </p>
       <div className="flex items-center gap-1.5">
-        <span className="body-semibold bg-gradient-to-r from-[#5e60ce] to-[#4ea8de] bg-clip-text text-transparent dark:from-[#f28927] dark:to-[#ffd760]">
+        <span className="bg-gradient-to-r from-[#5e60ce] to-[#4ea8de] bg-clip-text text-[12px] text-transparent dark:from-[#f28927] dark:to-[#ffd760] xl:text-[14px]">
           2555+
         </span>
-        <p className="small-regular dark:text-slate-100">Questions</p>
+        <p className="text-[10px] dark:text-slate-100 xl:text-[11px]">
+          Questions
+        </p>
       </div>
     </div>
   );

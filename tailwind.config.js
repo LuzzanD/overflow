@@ -8,17 +8,17 @@ module.exports = {
   ],
   darkMode: ["class"],
   theme: {
+    screens: {
+      xs: "420px",
+      sm: "640px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
+      "2xl": "1400px",
+    },
     container: {
       center: true,
       padding: "2rem",
-      screens: {
-        xs: "420px",
-        sm: "640px",
-        md: "768px",
-        lg: "1024px",
-        xl: "1280px",
-        "2xl": "1400px",
-      },
     },
     extend: {
       colors: {
@@ -40,6 +40,9 @@ module.exports = {
           700: "#DCE3F1",
           500: "#7B8EC8",
           400: "#858EAD",
+        },
+        screens: {
+          "2xl": "1400px",
         },
         "accent-blue": "#72efdd",
       },
