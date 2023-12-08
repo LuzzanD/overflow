@@ -17,13 +17,13 @@ const page = async ({ params, searchParams }: any) => {
   const question = await getQuestionById({ id: params.id });
   const mongoUser = await getUserById({ userId: user.id });
 
-  return question ? (
+  return question.author ? (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between">
         <div className="flex items-center gap-2">
           <div className="relative aspect-square w-[26px] overflow-hidden rounded-full bg-slate-200">
             <Image
-              src={question.author.profilePictureUrl}
+              src={question.author ? question.author.profilePictureUrl : ""}
               alt="User profile picture"
               fill={true}
               className="object-cover"
@@ -35,10 +35,10 @@ const page = async ({ params, searchParams }: any) => {
         </div>
         <div>
           <VotingMetric
-            questionId={question._id}
-            userId={mongoUser._id}
-            upvotes={question.upvotes.length}
-            downvotes={question.downvotes.length}
+            questionId={JSON.stringify(question._id)}
+            userId={JSON.stringify(mongoUser._id)}
+            upvotes={question.upvotes}
+            downvotes={question.downvotes}
           />
         </div>
       </div>

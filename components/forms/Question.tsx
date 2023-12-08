@@ -58,9 +58,6 @@ const Question = ({ id }: QuestionProps) => {
         title: values.title,
         text: values.text,
         tags: tagArray,
-        upvotes: [],
-        downvotes: [],
-        createdAt: new Date(),
       });
     } catch (error) {
       console.log(error);
@@ -203,7 +200,7 @@ const Question = ({ id }: QuestionProps) => {
         <FormField
           control={form.control}
           name="tags"
-          render={({ field }) => (
+          render={() => (
             <FormItem>
               <FormLabel className="text-[16px] font-semibold leading-[20.8px] dark:text-slate-100">
                 Tags

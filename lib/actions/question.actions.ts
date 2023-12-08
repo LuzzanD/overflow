@@ -1,19 +1,26 @@
 "use server";
 
-import { Question, IQuestion } from "@/database/QuestionModel";
+import { Question } from "@/database/QuestionModel";
 import { connectToDatabase } from "../mongoose";
 import { User } from "@/database/UserModel";
+import { revalidatePath } from "next/cache";
 
 interface GetQuestionByIdPararam {
   id: string;
 }
 
-export const createQuestion = async (params: IQuestion) => {
+interface CreateQuestionParams {
+  author: string;
+  title: string;
+  text: string;
+  tags: string[];
+}
+
+export const createQuestion = async (params: CreateQuestionParams) => {
   try {
-    const { author, title, text, tags, createdAt } = params;
+    const { author, title, text, tags } = params;
     await connectToDatabase();
-    await Question.create({ author, title, text, tags, createdAt });
-    console.log(author, title, text, tags, createdAt);
+    await Question.create({ author, title, text, tags });
   } catch (error) {
     console.log("Unable to connect to database", error);
   }
@@ -40,5 +47,63 @@ export const getQuestions = async () => {
     return allQuestions;
   } catch (error) {
     console.log("Unable to connect to database", error);
+  }
+};
+
+export interface upvoteAndDownvoteParams {
+  userId: string;
+  questionId: string;
+  path: string;
+}
+
+export const handleUpvote = async (params: upvoteAndDownvoteParams) => {
+  try {
+    connectToDatabase();
+    const { userId, questionId, path } = params;
+    const mongoQuestion = await Question.findOne({ _id: questionId });
+    const mongoUser = await User.findOne({ _id: userId });
+
+    const isUpvoted = mongoQuestion.upvotes.find(
+      (id: string) => id === mongoUser._id
+    );
+
+    isUpvoted
+      ? await Question.findOneAndUpdate(
+          { _id: questionId },
+          { $pull: { upvotes: questionId } }
+        )
+      : await Question.findOneAndUpdate(
+          { _id: questionId },
+          { $push: { upvotes: questionId } }
+        );
+    revalidatePath(path);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const handleDownvote = async (params: upvoteAndDownvoteParams) => {
+  try {
+    connectToDatabase();
+    const { userId, questionId, path } = params;
+    const mongoQuestion = await Question.findOne({ _id: questionId });
+    const mongoUser = await User.findOne({ _id: userId });
+
+    const isDownvoted = mongoQuestion.downvotes.find(
+      (id: string) => id === mongoUser._id
+    );
+
+    isDownvoted
+      ? await Question.findOneAndUpdate(
+          { _id: questionId },
+          { $pull: { downvotes: questionId } }
+        )
+      : await Question.findOneAndUpdate(
+          { _id: questionId },
+          { $push: { downvotes: questionId } }
+        );
+    revalidatePath(path);
+  } catch (error) {
+    console.log(error);
   }
 };
