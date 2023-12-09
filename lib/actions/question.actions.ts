@@ -63,18 +63,22 @@ export const handleUpvote = async (params: upvoteAndDownvoteParams) => {
     const mongoQuestion = await Question.findOne({ _id: questionId });
     const mongoUser = await User.findOne({ _id: userId });
 
-    const isUpvoted = mongoQuestion.upvotes.find(
-      (id: string) => id === mongoUser._id
-    );
+    const isUpvoted = mongoQuestion.upvotes.includes(mongoUser._id);
+    const isDownvoted = mongoQuestion.downvotes.includes(mongoUser._id);
 
     isUpvoted
       ? await Question.findOneAndUpdate(
           { _id: questionId },
-          { $pull: { upvotes: questionId } }
+          { $pull: { upvotes: userId } }
+        )
+      : isDownvoted
+      ? await Question.findOneAndUpdate(
+          { _id: questionId },
+          { $push: { upvotes: userId }, $pull: { downvotes: userId } }
         )
       : await Question.findOneAndUpdate(
           { _id: questionId },
-          { $push: { upvotes: questionId } }
+          { $push: { upvotes: userId } }
         );
     revalidatePath(path);
   } catch (error) {
@@ -89,18 +93,22 @@ export const handleDownvote = async (params: upvoteAndDownvoteParams) => {
     const mongoQuestion = await Question.findOne({ _id: questionId });
     const mongoUser = await User.findOne({ _id: userId });
 
-    const isDownvoted = mongoQuestion.downvotes.find(
-      (id: string) => id === mongoUser._id
-    );
+    const isUpvoted = mongoQuestion.upvotes.includes(mongoUser._id);
+    const isDownvoted = mongoQuestion.downvotes.includes(mongoUser._id);
 
     isDownvoted
       ? await Question.findOneAndUpdate(
           { _id: questionId },
-          { $pull: { downvotes: questionId } }
+          { $pull: { downvotes: userId } }
+        )
+      : isUpvoted
+      ? await Question.findOneAndUpdate(
+          { _id: questionId },
+          { $push: { downvotes: userId }, $pull: { upvotes: userId } }
         )
       : await Question.findOneAndUpdate(
           { _id: questionId },
-          { $push: { downvotes: questionId } }
+          { $push: { downvotes: userId } }
         );
     revalidatePath(path);
   } catch (error) {

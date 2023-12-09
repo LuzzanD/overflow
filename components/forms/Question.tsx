@@ -77,7 +77,7 @@ const Question = ({ id }: QuestionProps) => {
       } else {
         setTagArray((prevValue) =>
           Array.from(
-            new Set([...prevValue, ...tagInput.toUpperCase().split(" ")])
+            new Set([...prevValue, ...tagInput.toLowerCase().split(" ")])
           )
         );
         setTagInput("");

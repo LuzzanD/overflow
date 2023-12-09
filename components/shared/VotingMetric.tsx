@@ -29,23 +29,25 @@ const VotingMetric = ({
   const path = usePathname();
   const handleUpvoteClick = async () => {
     await handleUpvote({
-      userId: JSON.parse(userId),
-      questionId: JSON.parse(questionId),
+      userId,
+      questionId,
       path,
     });
   };
 
-  const hasUserUpvoted = upvotes.find((id) => id === JSON.parse(userId));
+  const hasUserUpvoted = upvotes.includes(JSON.parse(JSON.stringify(userId)));
 
   const handleDownvoteClick = async () => {
     await handleDownvote({
-      userId: JSON.parse(userId),
-      questionId: JSON.parse(questionId),
+      userId,
+      questionId,
       path,
     });
   };
 
-  const hasUserDownvoted = downvotes.find((id) => id === JSON.parse(userId));
+  const hasUserDownvoted = downvotes.includes(
+    JSON.parse(JSON.stringify(userId))
+  );
 
   const handleSaveClick = () => {
     console.log("Hello");
@@ -55,7 +57,7 @@ const VotingMetric = ({
     <div className="flex items-center gap-2">
       <div className="flex gap-2">
         <div
-          className="relative aspect-square w-[20px]"
+          className="relative aspect-square w-[20px] hover:cursor-pointer"
           onClick={() => handleUpvoteClick()}
         >
           <Image
@@ -70,7 +72,7 @@ const VotingMetric = ({
       </div>
       <div className="flex gap-2">
         <div
-          className="relative aspect-square w-[20px]"
+          className="relative aspect-square w-[20px] hover:cursor-pointer"
           onClick={() => handleDownvoteClick()}
         >
           <Image
@@ -85,7 +87,7 @@ const VotingMetric = ({
         </div>
       </div>
       <div
-        className="relative aspect-square w-[17px]"
+        className="relative aspect-square w-[17px] hover:cursor-pointer"
         onClick={() => handleSaveClick()}
       >
         <Image src={star} alt="Star icon" fill={true} />

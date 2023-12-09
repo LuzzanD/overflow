@@ -17,6 +17,9 @@ const page = async ({ params, searchParams }: any) => {
   const question = await getQuestionById({ id: params.id });
   const mongoUser = await getUserById({ userId: user.id });
 
+  // const questionId = JSON.parse(JSON.stringify(question._id));
+  // const userId = JSON.parse(JSON.stringify(mongoUser._id));
+
   return question.author ? (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between">
@@ -35,8 +38,8 @@ const page = async ({ params, searchParams }: any) => {
         </div>
         <div>
           <VotingMetric
-            questionId={JSON.stringify(question._id)}
-            userId={JSON.stringify(mongoUser._id)}
+            questionId={question._id}
+            userId={mongoUser._id}
             upvotes={question.upvotes}
             downvotes={question.downvotes}
           />
