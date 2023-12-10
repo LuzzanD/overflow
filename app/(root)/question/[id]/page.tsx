@@ -11,16 +11,13 @@ import { redirect } from "next/navigation";
 //   id: string;
 // }
 
-const page = async ({ params, searchParams }: any) => {
+const QuestionDetailsPage = async ({ params, searchParams }: any) => {
   const user = await currentUser();
   if (!user) redirect("/sign-in");
   const question = await getQuestionById({ id: params.id });
   const mongoUser = await getUserById({ userId: user.id });
 
-  // const questionId = JSON.parse(JSON.stringify(question._id));
-  // const userId = JSON.parse(JSON.stringify(mongoUser._id));
-
-  return question.author ? (
+  return question ? (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between">
         <div className="flex items-center gap-2">
@@ -42,6 +39,7 @@ const page = async ({ params, searchParams }: any) => {
             userId={mongoUser._id}
             upvotes={question.upvotes}
             downvotes={question.downvotes}
+            savedQuestions={mongoUser.savedQuestions}
           />
         </div>
       </div>
@@ -62,4 +60,4 @@ const page = async ({ params, searchParams }: any) => {
   );
 };
 
-export default page;
+export default QuestionDetailsPage;

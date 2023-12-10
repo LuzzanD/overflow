@@ -115,3 +115,32 @@ export const handleDownvote = async (params: upvoteAndDownvoteParams) => {
     console.log(error);
   }
 };
+
+export const handleSave = async (params: upvoteAndDownvoteParams) => {
+  try {
+    connectToDatabase();
+    const { userId, questionId, path } = params;
+    const mongoQuestion = await Question.findOne({ _id: questionId });
+    const mongoUser = await User.findOne({ _id: userId });
+
+    const isSaved = mongoUser.savedQuestions.includes(mongoQuestion._id);
+
+    isSaved
+      ? await User.findOneAndUpdate(
+          {
+            _id: userId,
+          },
+          { $pull: { savedQuestions: questionId } }
+        )
+      : await User.findOneAndUpdate(
+          {
+            _id: userId,
+          },
+          { $push: { savedQuestions: questionId } }
+        );
+
+    revalidatePath(path);
+  } catch (error) {
+    console.log(error);
+  }
+};

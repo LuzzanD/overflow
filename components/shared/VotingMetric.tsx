@@ -7,9 +7,12 @@ import downvote from "../../public/assets/icons/downvote.svg";
 import star from "../../public/assets/icons/star-red.svg";
 import upvoted from "../../public/assets/icons/upvoted.svg";
 import downvoted from "../../public/assets/icons/downvoted.svg";
-// import filledStar from "../../public/assets/icons/star-filled.svg";
-import { handleUpvote, handleDownvote } from "@/lib/actions/question.actions";
-// import { IQuestion } from "@/database/QuestionModel";
+import filledStar from "../../public/assets/icons/star-filled.svg";
+import {
+  handleUpvote,
+  handleDownvote,
+  handleSave,
+} from "@/lib/actions/question.actions";
 import { Schema } from "mongoose";
 import { usePathname } from "next/navigation";
 
@@ -18,6 +21,7 @@ interface VotingParams {
   userId: string;
   upvotes: Schema.Types.ObjectId[];
   downvotes: Schema.Types.ObjectId[];
+  savedQuestions: Schema.Types.ObjectId[];
 }
 
 const VotingMetric = ({
@@ -25,8 +29,19 @@ const VotingMetric = ({
   userId,
   upvotes,
   downvotes,
+  savedQuestions,
 }: VotingParams) => {
   const path = usePathname();
+  console.log(savedQuestions);
+
+  const hasUserUpvoted = upvotes.includes(JSON.parse(JSON.stringify(userId)));
+  const hasUserDownvoted = downvotes.includes(
+    JSON.parse(JSON.stringify(userId))
+  );
+  const hasUserSaved = savedQuestions.includes(
+    JSON.parse(JSON.stringify(questionId))
+  );
+
   const handleUpvoteClick = async () => {
     await handleUpvote({
       userId,
@@ -34,8 +49,6 @@ const VotingMetric = ({
       path,
     });
   };
-
-  const hasUserUpvoted = upvotes.includes(JSON.parse(JSON.stringify(userId)));
 
   const handleDownvoteClick = async () => {
     await handleDownvote({
@@ -45,12 +58,12 @@ const VotingMetric = ({
     });
   };
 
-  const hasUserDownvoted = downvotes.includes(
-    JSON.parse(JSON.stringify(userId))
-  );
-
-  const handleSaveClick = () => {
-    console.log("Hello");
+  const handleSaveClick = async () => {
+    await handleSave({
+      userId,
+      questionId,
+      path,
+    });
   };
 
   return (
@@ -90,7 +103,11 @@ const VotingMetric = ({
         className="relative aspect-square w-[17px] hover:cursor-pointer"
         onClick={() => handleSaveClick()}
       >
-        <Image src={star} alt="Star icon" fill={true} />
+        <Image
+          src={hasUserSaved ? filledStar : star}
+          alt="Star icon"
+          fill={true}
+        />
       </div>
     </div>
   );
