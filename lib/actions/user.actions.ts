@@ -32,7 +32,10 @@ export const getUserById = async (params: GetUserParams) => {
   const { userId } = params;
   try {
     await connectToDatabase();
-    const user = await User.findOne({ clerkId: userId });
+    const user = await User.findOne({ clerkId: userId }).populate({
+      path: "savedQuestions",
+      model: Question,
+    });
     return user;
   } catch (error) {
     console.log(error);

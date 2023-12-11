@@ -27,7 +27,7 @@ const userSchema = new Schema({
   questions: [{ type: Schema.Types.ObjectId, ref: "Question" }],
   answers: [{ type: Schema.Types.ObjectId, ref: "Answers" }],
   tags: [{ type: Schema.Types.ObjectId, ref: "Tags" }],
-  savedQuestions: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  savedQuestions: [{ type: Schema.Types.ObjectId, ref: "Question" }],
 });
 
 export const User = models.User || model("User", userSchema);

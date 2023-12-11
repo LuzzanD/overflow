@@ -21,7 +21,9 @@ interface VotingParams {
   userId: string;
   upvotes: Schema.Types.ObjectId[];
   downvotes: Schema.Types.ObjectId[];
-  savedQuestions: Schema.Types.ObjectId[];
+  hasUserUpvoted: boolean;
+  hasUserDownvoted: boolean;
+  hasUserSaved: boolean;
 }
 
 const VotingMetric = ({
@@ -29,18 +31,11 @@ const VotingMetric = ({
   userId,
   upvotes,
   downvotes,
-  savedQuestions,
+  hasUserUpvoted,
+  hasUserDownvoted,
+  hasUserSaved,
 }: VotingParams) => {
   const path = usePathname();
-  console.log(savedQuestions);
-
-  const hasUserUpvoted = upvotes.includes(JSON.parse(JSON.stringify(userId)));
-  const hasUserDownvoted = downvotes.includes(
-    JSON.parse(JSON.stringify(userId))
-  );
-  const hasUserSaved = savedQuestions.includes(
-    JSON.parse(JSON.stringify(questionId))
-  );
 
   const handleUpvoteClick = async () => {
     await handleUpvote({

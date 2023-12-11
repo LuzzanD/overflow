@@ -1,9 +1,10 @@
 "use server";
 
-import { Question } from "@/database/QuestionModel";
+import { Question, IQuestion } from "@/database/QuestionModel";
 import { connectToDatabase } from "../mongoose";
 import { User } from "@/database/UserModel";
 import { revalidatePath } from "next/cache";
+// import { ObjectId } from "mongodb";
 
 interface GetQuestionByIdPararam {
   id: string;
@@ -29,7 +30,6 @@ export const createQuestion = async (params: CreateQuestionParams) => {
 export const getQuestionById = async ({ id }: GetQuestionByIdPararam) => {
   try {
     await connectToDatabase();
-    console.log(id);
     const question = await Question.findOne({ _id: id }).populate({
       path: "author",
       model: User,
@@ -120,25 +120,30 @@ export const handleSave = async (params: upvoteAndDownvoteParams) => {
   try {
     connectToDatabase();
     const { userId, questionId, path } = params;
+
     const mongoQuestion = await Question.findOne({ _id: questionId });
     const mongoUser = await User.findOne({ _id: userId });
+    const mongoQuestionId = JSON.parse(JSON.stringify(mongoQuestion._id));
 
-    const isSaved = mongoUser.savedQuestions.includes(mongoQuestion._id);
-
+    const isSaved = mongoUser.savedQuestions.some((element: IQuestion) => {
+      const parsedElementId = JSON.parse(JSON.stringify(element._id));
+      return parsedElementId === mongoQuestionId;
+    });
+    console.log(mongoQuestion._id);
     isSaved
       ? await User.findOneAndUpdate(
+          { _id: userId },
           {
-            _id: userId,
-          },
-          { $pull: { savedQuestions: questionId } }
+            $pull: {
+              savedQuestions: mongoQuestion._id,
+            },
+          }
         )
       : await User.findOneAndUpdate(
-          {
-            _id: userId,
-          },
-          { $push: { savedQuestions: questionId } }
+          { _id: userId },
+          { $push: { savedQuestions: mongoQuestion._id } }
         );
-
+    console.log(mongoUser.savedQuestions);
     revalidatePath(path);
   } catch (error) {
     console.log(error);

@@ -27,9 +27,11 @@ const formSchema = z.object({
   text: z.string().min(50, {
     message: "Explanation of the question must be at least 50 characters.",
   }),
-  tags: z.string().min(2, {
-    message: "Tags must be at least 2 characters.",
-  }),
+  tags: z
+    .string()
+    .array()
+    .min(0)
+    .max(5, { message: "Please add only up to 5 tags" }),
 });
 
 interface QuestionProps {
@@ -47,7 +49,7 @@ const Question = ({ id }: QuestionProps) => {
     defaultValues: {
       title: "",
       text: "",
-      tags: "",
+      tags: [],
     },
   });
 
@@ -71,6 +73,7 @@ const Question = ({ id }: QuestionProps) => {
 
   const handleEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && tagInput) {
+      e.preventDefault();
       if (tagArray.length === 5) {
         alert("There should be max 5 tags related to a question.");
         setTagInput("");
@@ -156,6 +159,7 @@ const Question = ({ id }: QuestionProps) => {
                         : "default",
                     height: 500,
                     width: "90%",
+                    statusbar: false,
                     menubar: false,
                     placeholder:
                       "Please enter the detailed explanation of your question.",

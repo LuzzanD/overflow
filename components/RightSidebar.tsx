@@ -11,7 +11,7 @@ const RightSideBar = async () => {
 
   const questionCards =
     allQuestions &&
-    allQuestions.map((question) => {
+    allQuestions.slice(0, 5).map((question) => {
       return (
         <div
           key={question}

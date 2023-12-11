@@ -6,18 +6,29 @@ import VotingMetric from "@/components/shared/VotingMetric";
 import { getUserById } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-
-// interface Params {
-//   id: string;
-// }
+import { IQuestion } from "@/database/QuestionModel";
 
 const QuestionDetailsPage = async ({ params, searchParams }: any) => {
   const user = await currentUser();
   if (!user) redirect("/sign-in");
   const question = await getQuestionById({ id: params.id });
   const mongoUser = await getUserById({ userId: user.id });
+  const parsedQuestionId = question && JSON.parse(JSON.stringify(question._id));
+  const parsedUserId = mongoUser && JSON.parse(JSON.stringify(mongoUser._id));
 
-  return question ? (
+  const hasUserUpvoted = question.upvotes.includes(
+    JSON.parse(JSON.stringify(parsedUserId))
+  );
+  const hasUserDownvoted = question.downvotes.includes(
+    JSON.parse(JSON.stringify(parsedUserId))
+  );
+
+  const hasUserSaved = mongoUser.savedQuestions.some((element: IQuestion) => {
+    const parsedElementId = JSON.parse(JSON.stringify(element._id));
+    return parsedElementId === parsedQuestionId;
+  });
+
+  return question && mongoUser ? (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between">
         <div className="flex items-center gap-2">
@@ -35,11 +46,13 @@ const QuestionDetailsPage = async ({ params, searchParams }: any) => {
         </div>
         <div>
           <VotingMetric
-            questionId={question._id}
-            userId={mongoUser._id}
+            questionId={parsedQuestionId}
+            userId={parsedUserId}
             upvotes={question.upvotes}
             downvotes={question.downvotes}
-            savedQuestions={mongoUser.savedQuestions}
+            hasUserUpvoted={hasUserUpvoted}
+            hasUserDownvoted={hasUserDownvoted}
+            hasUserSaved={hasUserSaved}
           />
         </div>
       </div>

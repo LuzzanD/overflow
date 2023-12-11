@@ -10,19 +10,18 @@ import Link from "next/link";
 
 interface Params {
   id: string;
-  text: string;
   title: string;
   createdAt: Date;
 }
 
-const QuestionCard = ({ id, text, title, createdAt }: Params) => {
+const QuestionCard = ({ id, title, createdAt }: Params) => {
+  const parsedDate = calculateTimePassed(JSON.parse(JSON.stringify(createdAt)));
   return (
     <Link href={`/question/${id}`}>
       <div className="flex w-full flex-col gap-4 rounded-md bg-slate-100 p-6 dark:bg-dark-100">
-        <h3 className="text-[16px] font-semibold leading-[20.8px] dark:text-slate-100 xl:text-[18px]">
+        <h3 className="text-[22px] font-semibold leading-[20.8px] dark:text-slate-100 xl:text-[18px]">
           {title}
         </h3>
-        <p className="text-[12px] dark:text-slate-100 xl:text-[13px]">{text}</p>
         <div className="flex gap-2">
           {["javascript", "html", "react", "nextjs"].map((tag) => {
             return <Tag key={tag} name={tag} />;
@@ -41,7 +40,7 @@ const QuestionCard = ({ id, text, title, createdAt }: Params) => {
               Username
             </p>
             <span className="text-[10px] dark:text-slate-100 xl:text-[12px]">
-              {calculateTimePassed(JSON.parse(JSON.stringify(createdAt)))}
+              {parsedDate}
             </span>
           </div>
           <Metric />
