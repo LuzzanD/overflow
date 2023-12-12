@@ -27,6 +27,7 @@ const Collections = async () => {
                 key={question._id}
                 id={parsedQuestion}
                 title={question.title}
+                tags={question.tags}
                 createdAt={question.createdAt}
               />
             );

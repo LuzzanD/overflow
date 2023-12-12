@@ -11,10 +11,11 @@ import Link from "next/link";
 interface Params {
   id: string;
   title: string;
+  tags: string[];
   createdAt: Date;
 }
 
-const QuestionCard = ({ id, title, createdAt }: Params) => {
+const QuestionCard = ({ id, title, tags, createdAt }: Params) => {
   const parsedDate = calculateTimePassed(JSON.parse(JSON.stringify(createdAt)));
   return (
     <Link href={`/question/${id}`}>
@@ -23,7 +24,7 @@ const QuestionCard = ({ id, title, createdAt }: Params) => {
           {title}
         </h3>
         <div className="flex gap-2">
-          {["javascript", "html", "react", "nextjs"].map((tag) => {
+          {tags.map((tag) => {
             return <Tag key={tag} name={tag} />;
           })}
         </div>

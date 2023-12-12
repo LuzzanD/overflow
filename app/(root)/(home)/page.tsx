@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { getQuestions } from "@/lib/actions/question.actions";
+import Link from "next/link";
 
 const Home = async () => {
   const fetchedQuestions = await getQuestions();
@@ -14,9 +15,11 @@ const Home = async () => {
         <h1 className="h2-bold xl:h1-bold mb-2 dark:text-slate-100">
           All questions
         </h1>
-        <Button className="primary-gradient dark:secondary-gradient text-[12px] text-white sm:px-6 sm:text-[13px] lg:px-10 lg:text-[14px]">
-          Ask the question!
-        </Button>
+        <Link href="/ask-question">
+          <Button className="primary-gradient dark:secondary-gradient text-[12px] text-white sm:px-6 sm:text-[13px] lg:px-10 lg:text-[14px]">
+            Ask the question!
+          </Button>
+        </Link>
       </div>
       <div className="flex w-full rounded-lg bg-slate-200/90">
         <div className="flex-center cursor-pointer rounded-l-lg bg-slate-200 p-1 hover:bg-slate-300 dark:bg-dark-100 dark:hover:bg-dark-100/70 sm:p-2">
@@ -40,6 +43,7 @@ const Home = async () => {
                 key={parsedQuestion}
                 id={parsedQuestion}
                 title={question.title}
+                tags={question.tags}
                 createdAt={question.createdAt}
               />
             );

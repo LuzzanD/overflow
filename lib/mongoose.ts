@@ -6,11 +6,11 @@ export const connectToDatabase = async () => {
   mongoose.set("strictQuery", true);
 
   if (!process.env.MONGODB_URL) {
-    return console.log("Missing MongoDB URL!");
+    throw new Error("Missing MongoDB URL!");
   }
 
   if (isConnected) {
-    return "MongoDB is already connected!";
+    return Promise.resolve("MongoDB is already connected!");
   }
 
   try {
@@ -19,8 +19,9 @@ export const connectToDatabase = async () => {
     });
 
     isConnected = true;
-    console.log("Connected!");
+    Promise.resolve("Connected!");
   } catch (error) {
     console.log("MongoDB connection failed!", error);
+    throw new Error("MongoDB connection failed!");
   }
 };

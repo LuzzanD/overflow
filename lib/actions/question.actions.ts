@@ -22,6 +22,7 @@ export const createQuestion = async (params: CreateQuestionParams) => {
     const { author, title, text, tags } = params;
     await connectToDatabase();
     await Question.create({ author, title, text, tags });
+    revalidatePath("/");
   } catch (error) {
     console.log("Unable to connect to database", error);
   }
@@ -41,9 +42,11 @@ export const getQuestionById = async ({ id }: GetQuestionByIdPararam) => {
 export const getQuestions = async () => {
   try {
     await connectToDatabase();
-    const allQuestions = await Question.find().sort({
-      createdAt: -1,
-    });
+    const allQuestions = await Question.find()
+      .populate({ path: "author", model: User })
+      .sort({
+        createdAt: -1,
+      });
     return allQuestions;
   } catch (error) {
     console.log("Unable to connect to database", error);

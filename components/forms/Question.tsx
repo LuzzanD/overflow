@@ -19,6 +19,7 @@ import {
 import { createQuestion } from "@/lib/actions/question.actions";
 import Tag from "../shared/Tag";
 import { useTheme } from "@/context/ThemeProvider";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   title: z.string().min(10, {
@@ -39,6 +40,7 @@ interface QuestionProps {
 }
 
 const Question = ({ id }: QuestionProps) => {
+  const router = useRouter();
   const editorRef = useRef(null);
   const { mode } = useTheme();
   const [tagInput, setTagInput] = useState("");
@@ -61,6 +63,7 @@ const Question = ({ id }: QuestionProps) => {
         text: values.text,
         tags: tagArray,
       });
+      router.push("/");
     } catch (error) {
       console.log(error);
     }
@@ -72,8 +75,8 @@ const Question = ({ id }: QuestionProps) => {
   };
 
   const handleEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
     if (e.key === "Enter" && tagInput) {
-      e.preventDefault();
       if (tagArray.length === 5) {
         alert("There should be max 5 tags related to a question.");
         setTagInput("");
@@ -141,7 +144,13 @@ const Question = ({ id }: QuestionProps) => {
                     editorRef.current = editor;
                   }}
                   onBlur={field.onBlur}
-                  onEditorChange={(content) => field.onChange(content)}
+                  onEditorChange={(content) => {
+                    const plainTextContent = new DOMParser().parseFromString(
+                      content,
+                      "text/html"
+                    ).body.textContent;
+                    field.onChange(plainTextContent);
+                  }}
                   init={{
                     skin:
                       typeof window !== "undefined" &&
@@ -159,7 +168,6 @@ const Question = ({ id }: QuestionProps) => {
                         : "default",
                     height: 500,
                     width: "90%",
-                    statusbar: false,
                     menubar: false,
                     placeholder:
                       "Please enter the detailed explanation of your question.",
