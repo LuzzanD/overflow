@@ -14,7 +14,7 @@ const RightSideBar = async () => {
     allQuestions.slice(0, 5).map((question) => {
       return (
         <div
-          key={question}
+          key={question._id}
           className="group mb-4 flex h-[65px] items-center justify-between rounded-lg bg-slate-200/90 p-2 pr-0 hover:cursor-pointer hover:bg-slate-200/50 dark:bg-dark-100 hover:dark:bg-dark-100/50 lg:pr-1 xl:pr-2"
         >
           <p className="h-[100%] w-[90%] overflow-hidden text-ellipsis text-[9px] dark:text-slate-100 lg:w-[80%] lg:text-[10px] xl:text-[12px]">
