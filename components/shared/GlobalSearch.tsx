@@ -8,7 +8,7 @@ const GlobalSearch = () => {
   return (
     <div className="flex h-[26px] rounded-lg sm:h-[30px] md:h-[34px] lg:h-[38px]">
       <div className="flex-center cursor-pointer rounded-l-lg bg-slate-200 p-1 hover:bg-slate-300 dark:bg-dark-100 dark:hover:bg-dark-100/70 sm:p-2">
-        <div className="xs:w-[20px] relative aspect-square w-[16px] md:w-[22px] lg:w-[25px]">
+        <div className="relative aspect-square w-[14px] xs:w-[16px] md:w-[22px] lg:w-[25px]">
           <Image
             src="/assets/icons/search.svg"
             alt="search-icon"

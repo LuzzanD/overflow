@@ -22,13 +22,14 @@ const Collections = async () => {
         {mongoUser &&
           mongoUser.savedQuestions.map((question: IQuestion) => {
             const parsedQuestion = JSON.parse(JSON.stringify(question._id));
+            const parsedDate = JSON.parse(JSON.stringify(question.createdAt));
             return (
               <QuestionCard
                 key={question._id}
                 id={parsedQuestion}
                 title={question.title}
                 tags={question.tags}
-                createdAt={question.createdAt}
+                createdAt={parsedDate}
               />
             );
           })}

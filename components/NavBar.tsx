@@ -19,7 +19,7 @@ const NavBar = () => {
   return (
     <nav className="z-10 flex h-[60px] w-full items-center justify-between bg-slate-50 p-4 shadow-md dark:bg-dark-300 dark:shadow-dark-100 md:p-6 lg:p-10">
       <Link href="/">
-        <div className="relative block aspect-square w-[30px] sm:hidden">
+        <div className="relative block aspect-square w-[26px] xs:w-[30px] sm:hidden">
           <Image
             src="/assets/images/site-logo.svg"
             alt="overflow logo"
@@ -45,12 +45,12 @@ const NavBar = () => {
       <div className="w-[50%]">
         <GlobalSearch />
       </div>
-      <div className="flex items-center gap-2 lg:gap-[10px]">
+      <div className="flex items-center gap-1 md:gap-2 lg:gap-[10px]">
         <ThemeChanger />
         <SignedOut>
           <Link
             href="/sign-in"
-            className="btn primary-gradient rounded-md px-4 py-2 text-light-900"
+            className="btn primary-gradient rounded-md px-2.5 py-1.5 text-[10px] text-light-900 sm:text-[12px] md:text-[13px] lg:px-4 lg:py-2 lg:text-[15px]"
           >
             Sign In
           </Link>
