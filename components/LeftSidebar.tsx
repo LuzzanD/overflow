@@ -2,9 +2,9 @@
 
 /* eslint-disable tailwindcss/no-custom-classname */
 import React from "react";
-import { navbarOptions } from "../constants";
 import Link from "next/link";
 import Image from "next/image";
+import { navbarOptions } from "../constants";
 import { usePathname } from "next/navigation";
 
 const LeftSidebar = () => {

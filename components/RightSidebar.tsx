@@ -1,9 +1,9 @@
 import React from "react";
 import Image from "next/image";
+import Tag from "./shared/Tag";
 import chevronImage from "../public/assets/icons/chevron-right.svg";
 import { getAllTags } from "@/lib/actions/tag.actions";
 import { getQuestions } from "@/lib/actions/question.actions";
-import Tag from "./shared/Tag";
 
 const RightSideBar = async () => {
   const allTags = await getAllTags();

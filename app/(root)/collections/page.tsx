@@ -1,5 +1,5 @@
-import QuestionCard from "@/components/cards/QuestionCard";
 import React from "react";
+import QuestionCard from "@/components/cards/QuestionCard";
 import { getUserById } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
@@ -9,7 +9,6 @@ const Collections = async () => {
   const user = await currentUser();
   if (!user) redirect("/sign-in");
   const mongoUser = await getUserById({ userId: user.id });
-  console.log(mongoUser);
 
   return (
     <div className="flex w-full flex-col gap-8">
@@ -19,20 +18,25 @@ const Collections = async () => {
         </h1>
       </div>
       <div className="flex flex-col gap-4">
-        {mongoUser &&
+        {mongoUser ? (
           mongoUser.savedQuestions.map((question: IQuestion) => {
-            const parsedQuestion = JSON.parse(JSON.stringify(question._id));
+            const parsedQuestionId = JSON.parse(JSON.stringify(question._id));
             const parsedDate = JSON.parse(JSON.stringify(question.createdAt));
             return (
               <QuestionCard
-                key={question._id}
-                id={parsedQuestion}
+                key={parsedQuestionId}
+                id={parsedQuestionId}
                 title={question.title}
                 tags={question.tags}
                 createdAt={parsedDate}
               />
             );
-          })}
+          })
+        ) : (
+          <div className="mt-8 w-[90%] text-center">
+            Waiting for the questions...
+          </div>
+        )}
       </div>
     </div>
   );

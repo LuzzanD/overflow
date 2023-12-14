@@ -1,22 +1,22 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
+import Image from "next/image";
 import Tag from "../shared/Tag";
 import Metric from "../shared/Metric";
-import Image from "next/image";
 import UserPic from "../../public/assets/images/site-logo.svg";
 import { calculateTimePassed } from "@/lib/utils";
-import Link from "next/link";
 
-interface Params {
+interface QuestionCardProps {
   id: string;
   title: string;
   tags: string[];
   createdAt: string;
 }
 
-const QuestionCard = ({ id, title, tags, createdAt }: Params) => {
-  const parsedDate = calculateTimePassed(createdAt);
+const QuestionCard = ({ id, title, tags, createdAt }: QuestionCardProps) => {
+  const creationtime = calculateTimePassed(createdAt);
   return (
     <Link href={`/question/${id}`}>
       <div className="flex w-full flex-col gap-4 rounded-md bg-slate-100 p-4 dark:bg-dark-100 md:p-5 lg:p-6">
@@ -42,7 +42,7 @@ const QuestionCard = ({ id, title, tags, createdAt }: Params) => {
               Username
             </p>
             <span className="text-[8px] dark:text-slate-100 sm:text-[10px] md:text-[11px] xl:text-[12px]">
-              {parsedDate}
+              {creationtime}
             </span>
           </div>
           <Metric />

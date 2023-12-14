@@ -1,9 +1,9 @@
+import React from "react";
 import "./globals.css";
 import "../styles/theme.css";
-import type { Metadata } from "next";
-import React from "react";
-import { Inter } from "next/font/google";
 
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/context/ThemeProvider";
 

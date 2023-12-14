@@ -1,8 +1,8 @@
-import Tag from "@/components/shared/Tag";
-import { getQuestionById } from "@/lib/actions/question.actions";
 import React from "react";
 import Image from "next/image";
+import Tag from "@/components/shared/Tag";
 import VotingMetric from "@/components/shared/VotingMetric";
+import { getQuestionById } from "@/lib/actions/question.actions";
 import { getUserById } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";

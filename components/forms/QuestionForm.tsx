@@ -39,7 +39,7 @@ interface QuestionProps {
   id: string;
 }
 
-const Question = ({ id }: QuestionProps) => {
+const QuestionForm = ({ id }: QuestionProps) => {
   const router = useRouter();
   const editorRef = useRef(null);
   const { mode } = useTheme();
@@ -75,8 +75,8 @@ const Question = ({ id }: QuestionProps) => {
   };
 
   const handleEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    e.preventDefault();
     if (e.key === "Enter" && tagInput) {
+      e.preventDefault();
       if (tagArray.length === 5) {
         alert("There should be max 5 tags related to a question.");
         setTagInput("");
@@ -248,4 +248,4 @@ const Question = ({ id }: QuestionProps) => {
   );
 };
 
-export default Question;
+export default QuestionForm;

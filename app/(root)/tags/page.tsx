@@ -1,9 +1,9 @@
-import { getAllTags } from "@/lib/actions/tag.actions";
 import React from "react";
+import Image from "next/image";
 import TagCard from "@/components/cards/TagCard";
 import { ITag } from "@/database/TagModel";
 import { Input } from "@/components/ui/input";
-import Image from "next/image";
+import { getAllTags } from "@/lib/actions/tag.actions";
 
 const Tags = async () => {
   const allTags = await getAllTags();
@@ -22,8 +22,19 @@ const Tags = async () => {
         <Input className="rounded-r-lg border-none bg-transparent hover:bg-transparent/5 focus:outline-none" />
       </div>
       <div className="grid grid-cols-2 gap-3 xs:grid-cols-3 md:grid-cols-4 lg:gap-4 xl:grid-cols-5">
-        {allTags &&
-          allTags.map((tag: ITag) => <TagCard key={tag.name} tag={tag} />)}
+        {allTags ? (
+          allTags.map((tag: ITag) => (
+            <TagCard
+              key={tag.name}
+              name={tag.name}
+              explanation={tag.explanation}
+            />
+          ))
+        ) : (
+          <div>
+            <p>There are no saved tags.</p>
+          </div>
+        )}
       </div>
     </div>
   );

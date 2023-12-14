@@ -1,8 +1,8 @@
 import React from "react";
-import { getAllUsers } from "@/lib/actions/user.actions";
+import Image from "next/image";
 import UserCard from "@/components/cards/UserCard";
 import { Input } from "@/components/ui/input";
-import Image from "next/image";
+import { getAllUsers } from "@/lib/actions/user.actions";
 
 const Communities = async () => {
   const allUsers = await getAllUsers();
@@ -22,8 +22,15 @@ const Communities = async () => {
       </div>
       {allUsers ? (
         <div className="grid grid-cols-2 gap-3 xs:grid-cols-3 md:grid-cols-4 lg:gap-4 xl:grid-cols-5">
-          {allUsers.map(({ clerkId }) => {
-            return <UserCard key={clerkId} userId={clerkId} />;
+          {allUsers.map((user) => {
+            return (
+              <UserCard
+                key={user.clerkId}
+                profilePic={user.profilePictureUrl}
+                name={user.name}
+                username={user.username}
+              />
+            );
           })}
         </div>
       ) : (

@@ -1,10 +1,10 @@
-import QuestionCard from "@/components/cards/QuestionCard";
 import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import QuestionCard from "@/components/cards/QuestionCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import Image from "next/image";
 import { getQuestions } from "@/lib/actions/question.actions";
-import Link from "next/link";
 
 const Home = async () => {
   const fetchedQuestions = await getQuestions();
@@ -35,7 +35,7 @@ const Home = async () => {
         <Input className="h-full rounded-r-lg border-none bg-slate-200 px-1 text-[10px] hover:bg-slate-300 focus:outline-none dark:bg-dark-100 dark:text-slate-100 dark:hover:bg-dark-100/70 sm:px-2 sm:text-[12px] md:text-[14px] lg:px-4" />
       </div>
       <div className="flex flex-col gap-4">
-        {fetchedQuestions &&
+        {fetchedQuestions ? (
           fetchedQuestions.map((question) => {
             const parsedQuestionId = JSON.parse(JSON.stringify(question._id));
             const parsedDate = JSON.parse(JSON.stringify(question.createdAt));
@@ -48,7 +48,12 @@ const Home = async () => {
                 createdAt={parsedDate}
               />
             );
-          })}
+          })
+        ) : (
+          <div className="mt-8 w-[90%] text-center">
+            Waiting for the questions...
+          </div>
+        )}
       </div>
     </div>
   );
