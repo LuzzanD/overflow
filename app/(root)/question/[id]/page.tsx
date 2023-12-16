@@ -7,6 +7,7 @@ import { getUserById } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { IQuestion } from "@/database/QuestionModel";
+import AnswerForm from "@/components/forms/AnswerForm";
 
 const QuestionDetailsPage = async ({ params, searchParams }: any) => {
   const user = await currentUser();
@@ -67,6 +68,7 @@ const QuestionDetailsPage = async ({ params, searchParams }: any) => {
           return <Tag key={tag} name={tag} />;
         })}
       </div>
+      <AnswerForm userId={parsedUserId} questionId={parsedQuestionId} />
     </div>
   ) : (
     <p>Something went wrong</p>

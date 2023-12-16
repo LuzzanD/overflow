@@ -5,11 +5,6 @@ export const navbarOptions = [
     icon: "/assets/icons/home.svg",
   },
   {
-    href: "/community",
-    value: "Community",
-    icon: "/assets/icons/suitcase.svg",
-  },
-  {
     href: "/collections",
     value: "Collections",
     icon: "/assets/icons/star.svg",
@@ -25,8 +20,8 @@ export const navbarOptions = [
     icon: "/assets/icons/tag.svg",
   },
   {
-    href: "/communities",
-    value: "Communities",
+    href: "/community",
+    value: "Community",
     icon: "/assets/icons/users.svg",
   },
   {

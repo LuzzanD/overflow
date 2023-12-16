@@ -166,7 +166,7 @@ const QuestionForm = ({ id }: QuestionProps) => {
                         mode === "dark")
                         ? "dark"
                         : "default",
-                    height: 500,
+                    height: 350,
                     width: "90%",
                     menubar: false,
                     placeholder:
@@ -190,13 +190,15 @@ const QuestionForm = ({ id }: QuestionProps) => {
                       "code",
                       "help",
                       "wordcount",
+                      "codesample",
                     ],
                     toolbar:
-                      "undo redo | blocks | " +
+                      "undo redo | blocks " +
+                      " codesample  " +
                       "bold italic forecolor  | bullist numlist outdent indent | " +
                       "removeformat | help",
                     content_style:
-                      "body { font-family:Helvetica,sans-serif; font-size:16px; color: grey;}",
+                      "body { font-family:Inter,sans-serif; font-size:16px; color: grey;}",
                   }}
                 />
               </FormControl>

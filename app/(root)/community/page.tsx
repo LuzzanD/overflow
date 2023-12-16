@@ -4,7 +4,7 @@ import UserCard from "@/components/cards/UserCard";
 import { Input } from "@/components/ui/input";
 import { getAllUsers } from "@/lib/actions/user.actions";
 
-const Communities = async () => {
+const Community = async () => {
   const allUsers = await getAllUsers();
   return (
     <div className="flex w-full flex-col gap-8">
@@ -42,4 +42,4 @@ const Communities = async () => {
   );
 };
 
-export default Communities;
+export default Community;

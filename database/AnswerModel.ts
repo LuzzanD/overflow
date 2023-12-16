@@ -1,17 +1,19 @@
 import { Schema, model, models, Document } from "mongoose";
 
 export interface IAnswer extends Document {
-  title: string;
+  author: Schema.Types.ObjectId;
   text: string;
-  tags: string;
+  upvotes: Schema.Types.ObjectId[];
+  downvotes: Schema.Types.ObjectId[];
   createdAt: Date;
 }
 
 const answerSchema = new Schema({
-  title: String,
+  author: { type: Schema.Types.ObjectId, ref: "User" },
   text: String,
-  tags: String,
-  createdAt: Date,
+  upvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  downvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  createdAt: { type: Date, default: Date.now },
 });
 
 export const Answer = models.Answer || model("Answer", answerSchema);

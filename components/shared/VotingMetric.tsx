@@ -91,7 +91,7 @@ const VotingMetric = ({
         </div>
 
         <div className="small-semibold flex w-[20px] items-center justify-center bg-slate-400 px-3 py-1 text-slate-200">
-          {downvotes.length}
+          {downvotes.length ? -downvotes.length : downvotes.length}
         </div>
       </div>
       <div
