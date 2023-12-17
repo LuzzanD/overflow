@@ -8,19 +8,16 @@ import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { IQuestion } from "@/database/QuestionModel";
 import AnswerForm from "@/components/forms/AnswerForm";
-import { IAnswer } from "@/database/AnswerModel";
-import Answer from "@/components/shared/Answer";
-// import { getAnswersByQuestionId } from "@/lib/actions/answer.actions";
+import { IUser } from "@/database/UserModel";
+import { Answer } from "@/database/AnswerModel";
 
-const QuestionDetailsPage = async ({ params, searchParams }: any) => {
+// import { Schema } from "mongoose";
+export const QuestionDetailsPage = async ({ params, searchParams }: any) => {
   const user = await currentUser();
   if (!user) redirect("/sign-in");
 
   const question = await getQuestionById({ id: params.id });
   const mongoUser = await getUserById({ userId: user.id });
-  // const questionAnswers = await getAnswersByQuestionId({
-  //   passedQuestionId: params.id,
-  // });
 
   const parsedQuestionId = question && JSON.parse(JSON.stringify(question._id));
   const parsedUserId = mongoUser && JSON.parse(JSON.stringify(mongoUser._id));
@@ -36,6 +33,7 @@ const QuestionDetailsPage = async ({ params, searchParams }: any) => {
     const parsedElementId = JSON.parse(JSON.stringify(element._id));
     return parsedElementId === parsedQuestionId;
   });
+
   const questionAnswers = question.answers;
   console.log(questionAnswers);
 
@@ -81,16 +79,24 @@ const QuestionDetailsPage = async ({ params, searchParams }: any) => {
       </div>
       <AnswerForm userId={parsedUserId} questionId={parsedQuestionId} />
       <div>
-        {questionAnswers.map((answer: IAnswer, index: number) => {
-          const { text } = answer;
-          // const parsedAnswerId = _id.toString();
-          return <Answer key={index} text={text} />;
-        })}
+        {questionAnswers.length ? (
+          questionAnswers.map((answer: IUser) => {
+            const { _id } = answer;
+            const parsedAnswerId = JSON.parse(JSON.stringify(answer));
+            return (
+              <Answer
+                key={_id}
+                answerId={parsedAnswerId}
+                userId={parsedUserId}
+              />
+            );
+          })
+        ) : (
+          <p>no answers yet</p>
+        )}
       </div>
     </div>
   ) : (
     <p>Something went wrong</p>
   );
 };
-
-export default QuestionDetailsPage;

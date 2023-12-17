@@ -15,8 +15,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-// import { createAnswer } from "@/lib/actions/answer.actions";
-// import router from "next/router";
+import { createAnswer } from "@/lib/actions/answer.actions";
+import router from "next/router";
 
 const formSchema = z.object({
   text: z.string().min(50, {
@@ -42,16 +42,16 @@ const AnswerForm = ({ userId, questionId }: AnswerProps) => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    // try {
-    //   await createAnswer({
-    //     author: JSON.parse(userId),
-    // question: JSON.parse(questionId);
-    //     text: values.text,
-    //   });
-    //   router.push("/");
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      await createAnswer({
+        author: userId,
+        questionId,
+        text: values.text,
+      });
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleEditorOpen = () => {

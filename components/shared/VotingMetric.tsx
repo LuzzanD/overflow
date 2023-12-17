@@ -13,21 +13,22 @@ import {
   handleDownvote,
   handleSave,
 } from "@/lib/actions/question.actions";
-import { Schema } from "mongoose";
 import { usePathname } from "next/navigation";
 
 interface VotingParams {
-  questionId: string;
+  type: string;
+  id: string;
   userId: string;
-  upvotes: Schema.Types.ObjectId[];
-  downvotes: Schema.Types.ObjectId[];
+  upvotes: number;
+  downvotes: number;
   hasUserUpvoted: boolean;
   hasUserDownvoted: boolean;
-  hasUserSaved: boolean;
+  hasUserSaved?: boolean;
 }
 
 const VotingMetric = ({
-  questionId,
+  type,
+  id,
   userId,
   upvotes,
   downvotes,
@@ -40,7 +41,8 @@ const VotingMetric = ({
   const handleUpvoteClick = async () => {
     await handleUpvote({
       userId,
-      questionId,
+      id,
+      type,
       path,
     });
   };
@@ -48,7 +50,8 @@ const VotingMetric = ({
   const handleDownvoteClick = async () => {
     await handleDownvote({
       userId,
-      questionId,
+      id,
+      type,
       path,
     });
   };
@@ -56,7 +59,8 @@ const VotingMetric = ({
   const handleSaveClick = async () => {
     await handleSave({
       userId,
-      questionId,
+      id,
+      type,
       path,
     });
   };
@@ -75,7 +79,7 @@ const VotingMetric = ({
           />
         </div>
         <div className="small-semibold flex w-[20px] items-center justify-center bg-slate-400 px-3 py-1 text-slate-200">
-          {upvotes.length}
+          {upvotes}
         </div>
       </div>
       <div className="flex gap-2">
@@ -91,7 +95,7 @@ const VotingMetric = ({
         </div>
 
         <div className="small-semibold flex w-[20px] items-center justify-center bg-slate-400 px-3 py-1 text-slate-200">
-          {downvotes.length ? -downvotes.length : downvotes.length}
+          {downvotes ? -downvotes : downvotes}
         </div>
       </div>
       <div

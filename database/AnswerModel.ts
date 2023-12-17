@@ -10,7 +10,7 @@ export interface IAnswer extends Document {
 
 const answerSchema = new Schema({
   author: { type: Schema.Types.ObjectId, ref: "User" },
-  text: String,
+  text: { type: String, required: true },
   upvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
   downvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
   createdAt: { type: Date, default: Date.now },
