@@ -67,9 +67,9 @@ const VotingMetric = ({
 
   return (
     <div className="flex items-center gap-2">
-      <div className="flex gap-1">
+      <div className="flex gap-1.5">
         <div
-          className="relative aspect-square w-[15px] hover:cursor-pointer sm:w-[16px] md:w-[18px] xl:w-[20px]"
+          className="relative aspect-square w-[16px] hover:cursor-pointer sm:w-[18px] md:w-[20px] xl:w-[22px]"
           onClick={() => handleUpvoteClick()}
         >
           <Image
@@ -78,13 +78,13 @@ const VotingMetric = ({
             fill={true}
           />
         </div>
-        <div className="flex aspect-square w-[16px] items-center justify-center bg-slate-400 text-[9px] text-slate-200 sm:w-[18px] sm:text-[10px] md:w-[20px] md:text-[11px] xl:w-[22px] xl:text-[12px]">
+        <div className="flex aspect-square w-[16px] items-center justify-center bg-slate-200 text-[9px] font-semibold text-slate-700 dark:bg-slate-700 dark:text-slate-200 sm:w-[18px] sm:text-[10px] md:w-[20px] md:text-[11px] xl:w-[22px] xl:text-[12px]">
           {upvotes}
         </div>
       </div>
-      <div className="flex gap-1">
+      <div className="flex gap-1.5">
         <div
-          className="relative aspect-square w-[15px] hover:cursor-pointer sm:w-[16px] md:w-[18px] xl:w-[20px]"
+          className="relative aspect-square w-[16px] hover:cursor-pointer sm:w-[18px] md:w-[20px] xl:w-[22px]"
           onClick={() => handleDownvoteClick()}
         >
           <Image
@@ -94,11 +94,11 @@ const VotingMetric = ({
           />
         </div>
 
-        <div className="flex aspect-square w-[16px] items-center justify-center bg-slate-400 text-[9px] text-slate-200 sm:w-[18px] sm:text-[10px] md:w-[20px] md:text-[11px] xl:w-[22px] xl:text-[12px]">
+        <div className="flex aspect-square w-[16px] items-center justify-center bg-slate-200 text-[9px] font-semibold text-slate-700 dark:bg-slate-700 dark:text-slate-200 sm:w-[18px] sm:text-[10px] md:w-[20px] md:text-[11px] xl:w-[22px] xl:text-[12px]">
           {downvotes ? -downvotes : downvotes}
         </div>
       </div>
-      {hasUserSaved && (
+      {type === "question" && (
         <div
           className="relative aspect-square w-[15px] hover:cursor-pointer sm:w-[16px] md:w-[18px] xl:w-[20px]"
           onClick={() => handleSaveClick()}

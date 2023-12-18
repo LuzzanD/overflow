@@ -35,6 +35,11 @@ export const getUserById = async (params: GetUserParams) => {
     const user = await User.findOne({ clerkId: userId }).populate({
       path: "savedQuestions",
       model: Question,
+      populate: {
+        path: "author",
+        model: User,
+        select: "name profilePictureUrl",
+      },
     });
     return user;
   } catch (error) {

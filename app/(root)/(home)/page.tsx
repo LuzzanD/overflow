@@ -39,9 +39,12 @@ const Home = async () => {
           fetchedQuestions.map((question) => {
             const parsedQuestionId = JSON.parse(JSON.stringify(question._id));
             const parsedDate = JSON.parse(JSON.stringify(question.createdAt));
+            const { name, profilePictureUrl } = question.author;
             return (
               <QuestionCard
                 key={parsedQuestionId}
+                name={name}
+                profilePictureUrl={profilePictureUrl}
                 id={parsedQuestionId}
                 title={question.title}
                 tags={question.tags}

@@ -47,6 +47,7 @@ export const getQuestionById = async ({ id }: GetQuestionByIdParam) => {
         },
       });
 
+    console.log(question);
     return question;
   } catch (error: any) {
     throw new Error(error);
@@ -57,7 +58,11 @@ export const getQuestions = async () => {
   try {
     await connectToDatabase();
     const allQuestions = await Question.find()
-      .populate({ path: "author", model: User })
+      .populate({
+        path: "author",
+        model: User,
+        select: "_id name profilePictureUrl",
+      })
       .sort({
         createdAt: -1,
       });
