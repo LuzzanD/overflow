@@ -67,9 +67,9 @@ const VotingMetric = ({
 
   return (
     <div className="flex items-center gap-2">
-      <div className="flex gap-2">
+      <div className="flex gap-1">
         <div
-          className="relative aspect-square w-[20px] hover:cursor-pointer"
+          className="relative aspect-square w-[15px] hover:cursor-pointer sm:w-[16px] md:w-[18px] xl:w-[20px]"
           onClick={() => handleUpvoteClick()}
         >
           <Image
@@ -78,13 +78,13 @@ const VotingMetric = ({
             fill={true}
           />
         </div>
-        <div className="small-semibold flex w-[20px] items-center justify-center bg-slate-400 px-3 py-1 text-slate-200">
+        <div className="flex aspect-square w-[16px] items-center justify-center bg-slate-400 text-[9px] text-slate-200 sm:w-[18px] sm:text-[10px] md:w-[20px] md:text-[11px] xl:w-[22px] xl:text-[12px]">
           {upvotes}
         </div>
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-1">
         <div
-          className="relative aspect-square w-[20px] hover:cursor-pointer"
+          className="relative aspect-square w-[15px] hover:cursor-pointer sm:w-[16px] md:w-[18px] xl:w-[20px]"
           onClick={() => handleDownvoteClick()}
         >
           <Image
@@ -94,20 +94,22 @@ const VotingMetric = ({
           />
         </div>
 
-        <div className="small-semibold flex w-[20px] items-center justify-center bg-slate-400 px-3 py-1 text-slate-200">
+        <div className="flex aspect-square w-[16px] items-center justify-center bg-slate-400 text-[9px] text-slate-200 sm:w-[18px] sm:text-[10px] md:w-[20px] md:text-[11px] xl:w-[22px] xl:text-[12px]">
           {downvotes ? -downvotes : downvotes}
         </div>
       </div>
-      <div
-        className="relative aspect-square w-[17px] hover:cursor-pointer"
-        onClick={() => handleSaveClick()}
-      >
-        <Image
-          src={hasUserSaved ? filledStar : star}
-          alt="Star icon"
-          fill={true}
-        />
-      </div>
+      {hasUserSaved && (
+        <div
+          className="relative aspect-square w-[15px] hover:cursor-pointer sm:w-[16px] md:w-[18px] xl:w-[20px]"
+          onClick={() => handleSaveClick()}
+        >
+          <Image
+            src={hasUserSaved ? filledStar : star}
+            alt="Star icon"
+            fill={true}
+          />
+        </div>
+      )}
     </div>
   );
 };

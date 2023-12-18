@@ -4,7 +4,6 @@ import { Question, IQuestion } from "@/database/QuestionModel";
 import { connectToDatabase } from "../mongoose";
 import { User } from "@/database/UserModel";
 import { revalidatePath } from "next/cache";
-// import { ObjectId } from "mongodb";
 import { Answer } from "@/database/AnswerModel";
 
 interface GetQuestionByIdParam {
@@ -36,8 +35,17 @@ export const getQuestionById = async ({ id }: GetQuestionByIdParam) => {
       .populate({
         path: "author",
         model: User,
+        select: "_id name profilePictureUrl",
       })
-      .populate({ path: "answers", model: Answer });
+      .populate({
+        path: "answers",
+        model: Answer,
+        populate: {
+          path: "author",
+          model: User,
+          select: "_id name profilePictureUrl",
+        },
+      });
 
     return question;
   } catch (error: any) {

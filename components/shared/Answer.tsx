@@ -1,68 +1,85 @@
 import React from "react";
 
-// import Image from "next/image";
-// import VotingMetric from "./VotingMetric";
-// import { IUser } from "@/database/UserModel";
-// import { getAnswerById } from "@/lib/actions/answer.actions";
+import Image from "next/image";
+import VotingMetric from "./VotingMetric";
+import { Schema } from "mongoose";
+// import { calculateTimePassed } from "@/lib/utils";
 
 interface Props {
-  //   answerId: string;
-  //   userId: string;
-  //   answerId: string;
-  //   author: IUser;
+  userId: string;
+  answerId: string;
   text: string;
-  //   upvotes: IUser[];
-  //   downvotes: IUser[];
-  //   createdAt: Date;
+  author: {
+    _id: string;
+    name: string;
+    profilePictureUrl: string;
+  };
+  upvotes: Schema.Types.ObjectId[];
+  downvotes: Schema.Types.ObjectId[];
+  createdAt: Date;
 }
 const Answer = async ({
-  //   answerId,
-  //   upvotes,
-  text, //   userId,
-  //   downvotes,
-} //   author,
-//   createdAt,
-: Props) => {
-  console.log(text);
-  //   const answerData = await getAnswerById(JSON.parse(JSON.stringify(answerId)));
-  //   const parsedAnswerId = answerId && JSON.parse(JSON.stringify(answerId));
+  userId,
+  answerId,
+  text,
+  author,
+  upvotes,
+  downvotes,
+  createdAt,
+}: Props) => {
+  console.log(author);
+  // const creationtime = calculateTimePassed(createdAt);
+  const dateObject = new Date(createdAt);
+  const year = dateObject.getFullYear();
+  const month = dateObject.getMonth() + 1; // Month is zero-based
+  const day = dateObject.getDate();
+  const hours = dateObject.getHours();
+  const minutes = dateObject.getMinutes();
+  const seconds = dateObject.getSeconds();
 
-  //   console.log(answerData);
-
-  //   const hasUserUpvoted = upvotes.includes(JSON.parse(JSON.stringify(userId)));
-  //   const hasUserDownvoted = downvotes.includes(
-  //     JSON.parse(JSON.stringify(userId))
-  //   );
+  const hasUserUpvoted = upvotes.includes(JSON.parse(JSON.stringify(userId)));
+  const hasUserDownvoted = downvotes.includes(
+    JSON.parse(JSON.stringify(userId))
+  );
+  // console.log(hasUserUpvoted);
+  // console.log(hasUserDownvoted);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex h-[150px] flex-col gap-4">
       <div className="flex justify-between">
         <div className="flex items-center gap-2">
           <div className="relative aspect-square w-[26px] overflow-hidden rounded-full bg-slate-200">
-            {/* <Image
-              src="../../public/assets/images/site-logo.svg"
+            <Image
+              src={
+                author.profilePictureUrl
+                  ? author.profilePictureUrl
+                  : "../../public/assets/images/site-logo.svg"
+              }
               alt="User profile picture"
               fill={true}
               className="object-cover"
-            /> */}
+            />
           </div>
-          <p className="body-semibold dark:text-slate-100">username</p>
+          <p className="body-semibold dark:text-slate-100">{author.name}</p>
+          <span className="text-[9px] text-sky-600 sm:text-[10px] md:text-[11px] xl:text-[12px]">
+            - answered {year}-{month}-{day} {hours}:{minutes}:{seconds}
+          </span>
         </div>
-        {/* <div>
+        <div>
           <VotingMetric
-            id={parsedAnswerId}
-            type="asnwer"
+            id={answerId}
+            type="answer"
             userId={userId}
             upvotes={upvotes.length}
             downvotes={downvotes.length}
             hasUserUpvoted={hasUserUpvoted}
             hasUserDownvoted={hasUserDownvoted}
           />
-        </div> */}
+        </div>
       </div>
-      <div>About question</div>
-      <p className="body-regular dark:text-slate-100">{text}</p>
+      <p className="body-regular truncate dark:text-slate-100">{text}</p>
       <div>Code Sample</div>
+      <div className="h-[1px] w-full bg-slate-300"></div>
     </div>
   );
 };

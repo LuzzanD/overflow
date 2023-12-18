@@ -27,6 +27,21 @@ export const createAnswer = async (params: CreateAnswerParams) => {
   }
 };
 
+interface getAnswersProps {
+  answerId: string;
+}
+
+export const getAnswerById = async ({ answerId }: getAnswersProps) => {
+  try {
+    await connectToDatabase();
+    const answer = await Answer.findOne({ _id: answerId });
+
+    return answer;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
 interface getAnswersByIdProps {
   passedQuestionId: string;
 }

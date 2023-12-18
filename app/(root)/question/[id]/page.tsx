@@ -8,8 +8,10 @@ import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { IQuestion } from "@/database/QuestionModel";
 import AnswerForm from "@/components/forms/AnswerForm";
-import { IAnswer } from "@/database/AnswerModel";
+// import { IAnswer } from "@/database/AnswerModel";
 import Answer from "@/components/shared/Answer";
+import { Schema } from "mongoose";
+import Metric from "@/components/shared/Metric";
 // import { getAnswersByQuestionId } from "@/lib/actions/answer.actions";
 
 const QuestionDetailsPage = async ({ params, searchParams }: any) => {
@@ -21,6 +23,20 @@ const QuestionDetailsPage = async ({ params, searchParams }: any) => {
   // const questionAnswers = await getAnswersByQuestionId({
   //   passedQuestionId: params.id,
   // });
+
+  interface Props {
+    userId: string;
+    _id: string;
+    text: string;
+    author: {
+      _id: string;
+      name: string;
+      profilePictureUrl: string;
+    };
+    upvotes: Schema.Types.ObjectId[];
+    downvotes: Schema.Types.ObjectId[];
+    createdAt: Date;
+  }
 
   const parsedQuestionId = question && JSON.parse(JSON.stringify(question._id));
   const parsedUserId = mongoUser && JSON.parse(JSON.stringify(mongoUser._id));
@@ -37,7 +53,7 @@ const QuestionDetailsPage = async ({ params, searchParams }: any) => {
     return parsedElementId === parsedQuestionId;
   });
   const questionAnswers = question.answers;
-  console.log(questionAnswers);
+  // console.log(question);
 
   return question && mongoUser ? (
     <div className="flex flex-col gap-4">
@@ -52,7 +68,7 @@ const QuestionDetailsPage = async ({ params, searchParams }: any) => {
             />
           </div>
           <p className="body-semibold dark:text-slate-100">
-            {question.author.username}
+            {question.author.name}
           </p>
         </div>
         <div>
@@ -71,7 +87,9 @@ const QuestionDetailsPage = async ({ params, searchParams }: any) => {
       <h2 className="text-2xl font-semibold leading-[20.8px] dark:text-slate-100">
         {question.title}
       </h2>
-      <div>About question</div>
+      <div>
+        <Metric />
+      </div>
       <p className="body-regular dark:text-slate-100">{question.text}</p>
       <div>Code Sample</div>
       <div className="flex gap-2">
@@ -79,13 +97,31 @@ const QuestionDetailsPage = async ({ params, searchParams }: any) => {
           return <Tag key={tag} name={tag} />;
         })}
       </div>
-      <AnswerForm userId={parsedUserId} questionId={parsedQuestionId} />
       <div>
-        {questionAnswers.map((answer: IAnswer, index: number) => {
-          const { text } = answer;
-          // const parsedAnswerId = _id.toString();
-          return <Answer key={index} text={text} />;
-        })}
+        <AnswerForm userId={parsedUserId} questionId={parsedQuestionId} />
+      </div>
+      <div>
+        {questionAnswers.map(
+          (
+            { _id, text, author, upvotes, downvotes, createdAt }: Props,
+            index: number
+          ) => {
+            // const { _id, text, author, upvotes, downvotes, createdAt } = answer;
+            const parsedAnswerId = JSON.parse(JSON.stringify(_id));
+            return (
+              <Answer
+                key={index}
+                userId={parsedUserId}
+                answerId={parsedAnswerId}
+                text={text}
+                author={author}
+                upvotes={upvotes}
+                downvotes={downvotes}
+                createdAt={createdAt}
+              />
+            );
+          }
+        )}
       </div>
     </div>
   ) : (

@@ -52,6 +52,7 @@ const AnswerForm = ({ userId, questionId }: AnswerProps) => {
     } catch (error) {
       console.log(error);
     }
+    setEditorOpen(false);
   };
 
   const handleEditorOpen = () => {
@@ -60,9 +61,10 @@ const AnswerForm = ({ userId, questionId }: AnswerProps) => {
 
   return (
     <div>
-      <div>
+      <div className="flex items-center gap-8">
+        <div className="h-[1px] flex-1 bg-slate-300"></div>
         <Button
-          className="ml-auto block w-[200px] border-[1px] border-slate-400 bg-slate-100/40 text-black"
+          className="ml-auto block w-[200px] border-[1px] border-slate-400  bg-transparent text-slate-800 dark:border-slate-100 dark:text-slate-200"
           onClick={handleEditorOpen}
         >
           {editorOpen ? "Close the editor." : "Open the editor."}
