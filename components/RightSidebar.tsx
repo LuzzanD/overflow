@@ -4,6 +4,7 @@ import Tag from "./shared/Tag";
 import chevronImage from "../public/assets/icons/chevron-right.svg";
 import { getAllTags } from "@/lib/actions/tag.actions";
 import { getQuestions } from "@/lib/actions/question.actions";
+import Link from "next/link";
 
 const RightSideBar = async () => {
   const allTags = await getAllTags();
@@ -13,22 +14,21 @@ const RightSideBar = async () => {
     allQuestions &&
     allQuestions.slice(0, 5).map((question) => {
       return (
-        <div
-          key={question._id}
-          className="group mb-4 flex h-[65px] items-center justify-between rounded-lg bg-slate-200/90 p-2 pr-0 hover:cursor-pointer hover:bg-slate-200/50 dark:bg-dark-100 hover:dark:bg-dark-100/50 lg:pr-1 xl:pr-2"
-        >
-          <p className="h-[100%] w-[90%] overflow-hidden text-ellipsis text-[9px] dark:text-slate-100 lg:w-[80%] lg:text-[10px] xl:text-[12px]">
-            {question.text}
-          </p>
-          <div className="relative h-[18px] w-[18px] lg:h-[20px] lg:w-[20px] xl:h-[22px] xl:w-[22px]">
-            <Image
-              src={chevronImage}
-              alt="chevron icon"
-              fill={true}
-              className="object-contain invert dark:invert-0"
-            />
+        <Link key={question._id} href={`/question/${question._id}`}>
+          <div className="group mb-4 flex h-[65px] items-center justify-between rounded-lg bg-slate-200/90 p-2 pr-0 hover:cursor-pointer hover:bg-slate-200/50 dark:bg-dark-100 hover:dark:bg-dark-100/50 lg:pr-1 xl:pr-2">
+            <p className="h-[100%] w-[90%] overflow-hidden text-ellipsis text-[9px] dark:text-slate-100 lg:w-[80%] lg:text-[10px] xl:text-[12px]">
+              {question.text}
+            </p>
+            <div className="relative h-[18px] w-[18px] lg:h-[20px] lg:w-[20px] xl:h-[22px] xl:w-[22px]">
+              <Image
+                src={chevronImage}
+                alt="chevron icon"
+                fill={true}
+                className="object-contain invert dark:invert-0"
+              />
+            </div>
           </div>
-        </div>
+        </Link>
       );
     });
 

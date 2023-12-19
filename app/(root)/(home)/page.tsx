@@ -17,7 +17,7 @@ const Home = async () => {
         </h1>
         <Link href="/ask-question">
           <Button className="primary-gradient dark:secondary-gradient text-[12px] text-white sm:px-6 sm:text-[13px] lg:px-10 lg:text-[14px]">
-            Ask the question!
+            Ask a question!
           </Button>
         </Link>
       </div>

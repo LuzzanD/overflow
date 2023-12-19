@@ -77,7 +77,7 @@ const Answer = async ({
           />
         </div>
       </div>
-      <p className="body-regular truncate dark:text-slate-100">{text}</p>
+      <p className="body-regular w-[90%] dark:text-slate-100">{text}</p>
       <div>Code Sample</div>
       <div className="h-[1px] w-full bg-slate-300"></div>
     </div>

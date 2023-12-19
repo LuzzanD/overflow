@@ -5,6 +5,7 @@ import { connectToDatabase } from "../mongoose";
 import { User } from "@/database/UserModel";
 import { revalidatePath } from "next/cache";
 import { Answer } from "@/database/AnswerModel";
+import { Tag } from "@/database/TagModel";
 
 interface GetQuestionByIdParam {
   id: string;
@@ -21,6 +22,9 @@ export const createQuestion = async (params: CreateQuestionParams) => {
   try {
     const { author, title, text, tags } = params;
     await connectToDatabase();
+    tags.map(async (tag: string) => {
+      await Tag.create({ name: tag });
+    });
     await Question.create({ author, title, text, tags });
     revalidatePath("/");
   } catch (error) {
