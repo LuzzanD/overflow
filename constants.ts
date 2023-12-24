@@ -25,6 +25,11 @@ export const navbarOptions = [
     icon: "/assets/icons/users.svg",
   },
   {
+    href: "/profile",
+    value: "Profile",
+    icon: "/assets/icons/user.svg",
+  },
+  {
     href: "/ask-question",
     value: "Ask a Question",
     icon: "/assets/icons/question.svg",
