@@ -4,6 +4,7 @@
 import { connectToDatabase } from "../mongoose";
 import { User } from "@/database/UserModel";
 import { Question } from "@/database/QuestionModel";
+import { revalidatePath } from "next/cache";
 
 interface GetUserParams {
   userId: string;
@@ -14,6 +15,7 @@ interface CreateUserParams {
   username: string;
   name: string;
   profilePictureUrl: string;
+  createdAt: Date;
 }
 
 interface UpdateUserParams {
@@ -47,6 +49,38 @@ export const getUserById = async (params: GetUserParams) => {
   }
 };
 
+interface EditUserProps {
+  userId: string;
+  fullname: string;
+  username: string;
+  portfolioLink: string;
+  locationString: string;
+  bio: string;
+  path: string;
+}
+
+export const editUser = async (params: EditUserProps) => {
+  const {
+    userId,
+    fullname,
+    username,
+    portfolioLink,
+    locationString,
+    bio,
+    path,
+  } = params;
+  try {
+    await connectToDatabase();
+    await User.findOneAndUpdate(
+      { _id: JSON.parse(userId) },
+      { name: fullname, username, portfolioLink, locationString, bio }
+    );
+    revalidatePath(path);
+  } catch (error) {
+    console.log("Unable to connect to database", error);
+  }
+};
+
 export const getAllUsers = async () => {
   try {
     await connectToDatabase();
@@ -58,7 +92,7 @@ export const getAllUsers = async () => {
 };
 
 export const createUser = async (params: CreateUserParams) => {
-  const { clerkId, username, name, profilePictureUrl } = params;
+  const { clerkId, username, name, profilePictureUrl, createdAt } = params;
   try {
     await connectToDatabase();
     const user = await User.create({
@@ -66,6 +100,7 @@ export const createUser = async (params: CreateUserParams) => {
       username,
       name,
       profilePictureUrl,
+      createdAt,
     });
     return user;
   } catch (error) {

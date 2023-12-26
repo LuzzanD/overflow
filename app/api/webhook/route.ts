@@ -59,6 +59,7 @@ export async function POST(req: Request) {
       username: username!,
       name: `${first_name} ${last_name && last_name}`,
       profilePictureUrl: image_url,
+      createdAt: new Date(),
     });
 
     return NextResponse.json({ message: "Ok", user: newUser });

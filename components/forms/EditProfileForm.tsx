@@ -15,13 +15,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { editUser } from "@/lib/actions/user.actions";
 
 const formSchema = z.object({
   fullname: z.string().min(10, {
     message: "Question must be at least 10 characters long.",
   }),
-  username: z.string().min(50, {
+  username: z.string().min(1, {
     message: "Explanation of the question must be at least 50 characters.",
   }),
   portfolio: z.string().min(10, {
@@ -35,23 +36,49 @@ const formSchema = z.object({
   }),
 });
 
-const EditProfileForm = () => {
+interface Props {
+  userId: string;
+  name: string;
+  username: string;
+  bio: string;
+  portfolioLink: string;
+  locationString: string;
+}
+
+const EditProfileForm = ({
+  userId,
+  name,
+  username,
+  bio,
+  portfolioLink,
+  locationString,
+}: Props) => {
   const router = useRouter();
+  const path = usePathname();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      fullname: "",
-      username: "",
-      portfolio: "",
-      location: "",
-      bio: "",
+      fullname: name || "",
+      username: username || "",
+      portfolio: portfolioLink || "",
+      location: locationString || "",
+      bio: bio || "",
     },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      router.push("/");
+      await editUser({
+        userId,
+        fullname: values.fullname,
+        username: values.username,
+        portfolioLink: values.portfolio,
+        locationString: values.location,
+        bio: values.bio,
+        path,
+      });
+      router.push("/profile");
     } catch (error) {
       console.log(error);
     }
