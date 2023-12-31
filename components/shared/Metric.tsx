@@ -15,7 +15,9 @@ const Metric = ({ views, answersNumber, upvoteNumber }: Props) => {
       <div className="flex items-center gap-[3px]">
         <Image alt="metric icon" src={upvote} height={14} width={14} />
         <p className="text-[9px] text-sky-600 sm:text-[10px] md:text-[11px] xl:text-[12px]">
-          {upvoteNumber} Votes
+          {upvoteNumber === 1
+            ? `${upvoteNumber} Vote`
+            : `${upvoteNumber} Votes`}
         </p>
       </div>
       <div className="flex items-center gap-[3px]">

@@ -62,9 +62,9 @@ const AnswerForm = ({ userId, questionId }: AnswerProps) => {
   return (
     <div>
       <div className="flex items-center gap-8">
-        <div className="h-[1px] flex-1 bg-slate-300"></div>
+        <div className="h-[1px] flex-1 bg-slate-300 dark:bg-slate-900"></div>
         <Button
-          className="ml-auto block w-[200px] border-[1px] border-slate-400  bg-transparent text-slate-800 dark:border-slate-100 dark:text-slate-200"
+          className="ml-auto block w-[200px] border-[1px] border-slate-400 text-slate-800 dark:border-slate-800 dark:bg-dark-200  dark:text-slate-200"
           onClick={handleEditorOpen}
         >
           {editorOpen ? "Close the editor." : "Open the editor."}

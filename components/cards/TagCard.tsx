@@ -8,7 +8,7 @@ interface TagCardProps {
 const TagCard = ({ name, explanation }: TagCardProps) => {
   return (
     <div className=" flex h-[200px] w-[100%] flex-col items-start justify-between rounded-md border-2 bg-slate-100 px-2 py-4 dark:border-dark-100/70 dark:bg-dark-200/80 lg:px-3 lg:py-6">
-      <Tag name={name} />
+      <Tag name={name} hasCloseButton={false} />
       <p className="text-[11px] dark:text-slate-100 xl:text-[12px]">
         {explanation}
       </p>

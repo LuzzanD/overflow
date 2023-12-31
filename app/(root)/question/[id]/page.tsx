@@ -97,10 +97,8 @@ const QuestionDetailsPage = async ({ params, searchParams }: any) => {
           return <Tag key={tag} name={tag} />;
         })}
       </div>
-      <div>
-        <AnswerForm userId={parsedUserId} questionId={parsedQuestionId} />
-      </div>
-      <div>
+      <AnswerForm userId={parsedUserId} questionId={parsedQuestionId} />
+      <div className="mt-4">
         {questionAnswers.map(
           (
             { _id, text, author, upvotes, downvotes, createdAt }: Props,

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -37,20 +37,27 @@ const formSchema = z.object({
 
 interface QuestionProps {
   id: string;
+  question?: string;
+  type: string;
 }
 
-const QuestionForm = ({ id }: QuestionProps) => {
+const QuestionForm = ({ id, question, type }: QuestionProps) => {
   const router = useRouter();
   const editorRef = useRef(null);
   const { mode } = useTheme();
   const [tagInput, setTagInput] = useState("");
   const [tagArray, setTagArray] = useState<string[]>([]);
+  const parsedQuestion = question && JSON.parse(question);
+
+  useEffect(() => {
+    setTagArray(parsedQuestion.tags);
+  }, [parsedQuestion]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      text: "",
+      title: (parsedQuestion && parsedQuestion.title) || "",
+      text: (parsedQuestion && parsedQuestion.text) || "",
       tags: [],
     },
   });
@@ -95,7 +102,12 @@ const QuestionForm = ({ id }: QuestionProps) => {
     tagArray.length > 0 &&
     tagArray.map((tag, index) => {
       return (
-        <Tag key={index} name={tag} changeable handleTagClose={handleClose} />
+        <Tag
+          key={index}
+          name={tag}
+          hasCloseButton={type === "edit" && false}
+          handleTagClose={handleClose}
+        />
       );
     });
 
@@ -138,6 +150,7 @@ const QuestionForm = ({ id }: QuestionProps) => {
               </FormLabel>
               <FormControl>
                 <Editor
+                  initialValue={(parsedQuestion && parsedQuestion.text) || ""}
                   apiKey={process.env.NEXT_PUBLIC_TINY_API_KEY}
                   onInit={(evt, editor) => {
                     // @ts-ignore
@@ -222,10 +235,11 @@ const QuestionForm = ({ id }: QuestionProps) => {
               </FormLabel>
               <FormControl>
                 <Input
+                  disabled={type === "edit" && true}
                   value={tagInput}
                   onChange={(e) => setTagInput(e.target.value)}
                   placeholder="Please insert tag names related to your question above."
-                  className="w-[90%] rounded-lg border-none bg-white text-sm hover:bg-slate-200 focus:outline-none dark:bg-dark-100 dark:text-slate-100 dark:hover:bg-dark-100/70"
+                  className={`w-[90%] rounded-lg border-none bg-white text-sm hover:bg-slate-200 focus:outline-none dark:bg-dark-100 dark:text-slate-100 dark:hover:bg-dark-100/70`}
                   onKeyDown={(e) => handleEnterKey(e)}
                 />
               </FormControl>
@@ -234,7 +248,7 @@ const QuestionForm = ({ id }: QuestionProps) => {
                 Add up to 5 tags to describe what your question is about. Start
                 typing to see suggestions.
               </FormDescription>
-              <div className="flex gap-1">{tagsArrayRender}</div>
+              <div className={`flex gap-1`}>{tagsArrayRender}</div>
               <FormMessage />
             </FormItem>
           )}

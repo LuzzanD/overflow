@@ -41,8 +41,7 @@ const VotingMetric = ({
 
   useEffect(() => {
     handleView({ id: JSON.stringify(id), path });
-    console.log(path);
-  }, [id, path]);
+  }, [userId, id, path]);
 
   const handleUpvoteClick = async () => {
     await handleUpvote({

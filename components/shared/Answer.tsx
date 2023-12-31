@@ -27,8 +27,6 @@ const Answer = async ({
   downvotes,
   createdAt,
 }: Props) => {
-  console.log(author);
-  // const creationtime = calculateTimePassed(createdAt);
   const dateObject = new Date(createdAt);
   const year = dateObject.getFullYear();
   const month = dateObject.getMonth() + 1; // Month is zero-based
@@ -41,8 +39,6 @@ const Answer = async ({
   const hasUserDownvoted = downvotes.includes(
     JSON.parse(JSON.stringify(userId))
   );
-  // console.log(hasUserUpvoted);
-  // console.log(hasUserDownvoted);
 
   return (
     <div className="flex h-[150px] flex-col gap-4">
@@ -79,7 +75,7 @@ const Answer = async ({
       </div>
       <p className="body-regular w-[90%] dark:text-slate-100">{text}</p>
       <div>Code Sample</div>
-      <div className="h-[1px] w-full bg-slate-300"></div>
+      <div className="h-[1px] w-full bg-slate-300 dark:bg-slate-900"></div>
     </div>
   );
 };

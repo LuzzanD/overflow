@@ -40,7 +40,7 @@ const RightSideBar = async () => {
           key={index}
           className="mb-4 flex items-center justify-between rounded-lg bg-slate-200/90 p-1.5 hover:cursor-pointer hover:bg-slate-200/50 dark:bg-dark-100 hover:dark:bg-dark-100/50 lg:p-2"
         >
-          <Tag name={tag.name} />
+          <Tag name={tag.name} hasCloseButton={false} />
           <div className="small-regular dark:text-slate-100">
             {tag.questions ? tag.questions.length : 0}
           </div>
