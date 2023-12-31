@@ -94,7 +94,7 @@ const QuestionDetailsPage = async ({ params, searchParams }: any) => {
       <div>Code Sample</div>
       <div className="flex gap-2">
         {["javascript", "html", "react", "nextjs"].map((tag) => {
-          return <Tag key={tag} name={tag} />;
+          return <Tag key={tag} name={tag} hasCloseButton={false} />;
         })}
       </div>
       <AnswerForm userId={parsedUserId} questionId={parsedQuestionId} />
