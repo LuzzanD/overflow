@@ -39,7 +39,7 @@ const QuestionCard = ({
         </h3>
         <div className="flex gap-2">
           {tags.map((tag) => {
-            return <Tag key={tag} name={tag} />;
+            return <Tag key={tag} name={tag} hasCloseButton={false} />;
           })}
         </div>
         <div className="flex items-center justify-between">
