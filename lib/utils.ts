@@ -38,3 +38,30 @@ export function calculateTimePassed(creationDate: string): string {
     return `${seconds} seconds ago`;
   }
 }
+
+export function convertDateFormat(inputDate: Date): string {
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  const monthAbbreviation = months[inputDate.getMonth()];
+
+  // Ensure hours and minutes have two digits (pad with leading zeros if necessary)
+  const paddedHours = String(inputDate.getHours()).padStart(2, "0");
+  const paddedMinutes = String(inputDate.getMinutes()).padStart(2, "0");
+
+  const formattedDate = `${monthAbbreviation} ${inputDate.getDate()}, ${inputDate.getFullYear()} at ${paddedHours}:${paddedMinutes}`;
+
+  return formattedDate;
+}

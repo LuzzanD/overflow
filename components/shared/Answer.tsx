@@ -3,6 +3,7 @@ import React from "react";
 import Image from "next/image";
 import VotingMetric from "./VotingMetric";
 import { Schema } from "mongoose";
+import { convertDateFormat } from "@/lib/utils";
 // import { calculateTimePassed } from "@/lib/utils";
 
 interface Props {
@@ -28,12 +29,6 @@ const Answer = async ({
   createdAt,
 }: Props) => {
   const dateObject = new Date(createdAt);
-  const year = dateObject.getFullYear();
-  const month = dateObject.getMonth() + 1; // Month is zero-based
-  const day = dateObject.getDate();
-  const hours = dateObject.getHours();
-  const minutes = dateObject.getMinutes();
-  const seconds = dateObject.getSeconds();
 
   const hasUserUpvoted = upvotes.includes(JSON.parse(JSON.stringify(userId)));
   const hasUserDownvoted = downvotes.includes(
@@ -58,7 +53,7 @@ const Answer = async ({
           </div>
           <p className="body-semibold dark:text-slate-100">{author.name}</p>
           <span className="text-[9px] text-sky-600 sm:text-[10px] md:text-[11px] xl:text-[12px]">
-            - answered {year}-{month}-{day} {hours}:{minutes}:{seconds}
+            - answered {convertDateFormat(dateObject)}
           </span>
         </div>
         <div>

@@ -50,7 +50,7 @@ const QuestionForm = ({ id, question, type }: QuestionProps) => {
   const parsedQuestion = question && JSON.parse(question);
 
   useEffect(() => {
-    setTagArray(parsedQuestion.tags);
+    type === "edit" && setTagArray(parsedQuestion.tags);
   }, [parsedQuestion]);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -257,7 +257,7 @@ const QuestionForm = ({ id, question, type }: QuestionProps) => {
           type="submit"
           className="primary-gradient dark:secondary-gradient ml-auto block w-[200px] text-white"
         >
-          Ask the question!
+          {type === "edit" ? "Submit changes!" : "Ask the question!"}
         </Button>
       </form>
     </Form>

@@ -23,13 +23,13 @@ interface Params {
   questions: string;
 }
 
-const TabsComponent = ({ questions }: Params) => {
+const ProfileTabs = ({ questions }: Params) => {
   const [active, setActive] = useState("questions");
   const parsedQuestions = JSON.parse(questions);
   return (
-    <div className="mt-8">
+    <div className="mt-12">
       <Tabs defaultValue="questions" className="">
-        <TabsList className="mb-6">
+        <TabsList className="mb-4">
           <TabsTrigger
             value="questions"
             onClick={() => {
@@ -39,7 +39,7 @@ const TabsComponent = ({ questions }: Params) => {
               active === "questions"
                 ? "bg-slate-300/50  text-orange-500 dark:bg-dark-100/50"
                 : "bg-slate-200/70 text-slate-500 dark:bg-dark-200 dark:text-slate-200"
-            } w-[120px] rounded-l-md px-4 py-3 text-[14px] font-semibold`}
+            } w-[120px] rounded-l-md px-2 py-3 text-[13px] font-semibold`}
           >
             Questions
           </TabsTrigger>
@@ -52,7 +52,7 @@ const TabsComponent = ({ questions }: Params) => {
               active === "answers"
                 ? "bg-slate-300/50  text-orange-500 dark:bg-dark-100/50"
                 : "bg-slate-200/70 text-slate-500 dark:bg-dark-200 dark:text-slate-200"
-            } w-[120px]  rounded-r-md px-4 py-3 text-[14px] font-semibold  `}
+            } w-[120px]  rounded-r-md px-2 py-3 text-[13px] font-semibold  `}
           >
             Answers
           </TabsTrigger>
@@ -84,4 +84,4 @@ const TabsComponent = ({ questions }: Params) => {
   );
 };
 
-export default TabsComponent;
+export default ProfileTabs;

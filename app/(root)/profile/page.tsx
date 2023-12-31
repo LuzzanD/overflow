@@ -11,7 +11,7 @@ import calendarIcon from "../../../public/assets/icons/calendar.svg";
 import StatsCard from "@/components/cards/StatsCard";
 
 import { getQuestionsByUserId } from "@/lib/actions/question.actions";
-import TabsComponent from "@/components/shared/TabsComponent";
+import ProfileTabs from "@/components/shared/ProfileTabs";
 
 const Profile = async () => {
   const { userId } = auth();
@@ -109,7 +109,7 @@ const Profile = async () => {
           <StatsCard />
         </div>
       </div>
-      <TabsComponent questions={JSON.stringify(questions)} />
+      <ProfileTabs questions={JSON.stringify(questions)} />
     </div>
   );
 };
