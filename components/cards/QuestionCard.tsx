@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import Tag from "../shared/Tag";
 import Metric from "../shared/Metric";
-// import UserPic from "../../public/assets/images/site-logo.svg";
 import { calculateTimePassed } from "@/lib/utils";
 
 interface QuestionCardProps {
@@ -13,8 +12,11 @@ interface QuestionCardProps {
   title: string;
   tags: string[];
   createdAt: string;
-  name: string;
+  author: string;
   profilePictureUrl: string;
+  views: number;
+  upvoteNumber: number;
+  answersNumber: number;
 }
 
 const QuestionCard = ({
@@ -22,12 +24,15 @@ const QuestionCard = ({
   title,
   tags,
   createdAt,
-  name,
+  author,
   profilePictureUrl,
+  views,
+  upvoteNumber,
+  answersNumber,
 }: QuestionCardProps) => {
-  const creationtime = calculateTimePassed(createdAt);
+  const timeOfCreation = calculateTimePassed(JSON.parse(createdAt));
   return (
-    <Link href={`/question/${id}`}>
+    <Link href={`/question/${JSON.parse(id)}`}>
       <div className="flex w-full flex-col gap-4 rounded-md bg-slate-100 p-4 dark:bg-dark-100 md:p-5 lg:p-6">
         <h3 className="text-[16px] font-semibold leading-[20.8px] dark:text-slate-100 md:text-[18px] lg:text-[20px] xl:text-[22px]">
           {title}
@@ -48,13 +53,17 @@ const QuestionCard = ({
               />
             </div>
             <p className="text-[11px] dark:text-slate-100 sm:text-[12px] md:text-[13px] xl:text-[14px]">
-              {name}
+              {author}
             </p>
             <span className="text-[8px] dark:text-slate-100 sm:text-[10px] md:text-[11px] xl:text-[12px]">
-              {creationtime}
+              {timeOfCreation}
             </span>
           </div>
-          <Metric />
+          <Metric
+            views={views}
+            upvoteNumber={upvoteNumber}
+            answersNumber={answersNumber}
+          />
         </div>
       </div>
     </Link>

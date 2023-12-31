@@ -4,17 +4,14 @@ import React from "react";
 import Image from "next/image";
 import MobileNavbar from "./shared/MobileNavbar";
 
-// import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { SignedIn, SignedOut, useUser, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 import ThemeChanger from "./theme/ThemeChanger";
 import GlobalSearch from "./shared/GlobalSearch";
 
 const NavBar = () => {
-  const { user } = useUser();
-
-  console.log(user);
+  // const { user } = useUser();
 
   return (
     <nav className="z-10 flex h-[60px] w-full items-center justify-between bg-slate-50 p-4 shadow-md dark:bg-dark-300 dark:shadow-dark-100 md:p-6 lg:p-10">

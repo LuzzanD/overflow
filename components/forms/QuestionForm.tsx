@@ -32,7 +32,7 @@ const formSchema = z.object({
     .string()
     .array()
     .min(0)
-    .max(5, { message: "Please add only up to 5 tags" }),
+    .max(5, { message: "Please add only up to 5 tags." }),
 });
 
 interface QuestionProps {

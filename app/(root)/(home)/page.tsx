@@ -37,18 +37,21 @@ const Home = async () => {
       <div className="flex flex-col gap-4">
         {fetchedQuestions ? (
           fetchedQuestions.map((question) => {
-            const parsedQuestionId = JSON.parse(JSON.stringify(question._id));
-            const parsedDate = JSON.parse(JSON.stringify(question.createdAt));
+            const questionId = JSON.stringify(question._id);
+            const dateString = JSON.stringify(question.createdAt);
             const { name, profilePictureUrl } = question.author;
             return (
               <QuestionCard
-                key={parsedQuestionId}
-                name={name}
-                profilePictureUrl={profilePictureUrl}
-                id={parsedQuestionId}
+                key={questionId}
+                id={questionId}
                 title={question.title}
                 tags={question.tags}
-                createdAt={parsedDate}
+                createdAt={dateString}
+                author={name}
+                profilePictureUrl={profilePictureUrl}
+                views={question.views}
+                upvoteNumber={question.upvotes.length}
+                answersNumber={question.answers.length}
               />
             );
           })

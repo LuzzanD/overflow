@@ -8,11 +8,9 @@ import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { IQuestion } from "@/database/QuestionModel";
 import AnswerForm from "@/components/forms/AnswerForm";
-// import { IAnswer } from "@/database/AnswerModel";
 import Answer from "@/components/shared/Answer";
 import { Schema } from "mongoose";
 import Metric from "@/components/shared/Metric";
-// import { getAnswersByQuestionId } from "@/lib/actions/answer.actions";
 
 const QuestionDetailsPage = async ({ params, searchParams }: any) => {
   const user = await currentUser();
@@ -20,9 +18,6 @@ const QuestionDetailsPage = async ({ params, searchParams }: any) => {
 
   const question = await getQuestionById({ id: params.id });
   const mongoUser = await getUserById({ userId: user.id });
-  // const questionAnswers = await getAnswersByQuestionId({
-  //   passedQuestionId: params.id,
-  // });
 
   interface Props {
     userId: string;
@@ -33,7 +28,9 @@ const QuestionDetailsPage = async ({ params, searchParams }: any) => {
       name: string;
       profilePictureUrl: string;
     };
+    views: number;
     upvotes: Schema.Types.ObjectId[];
+    answers: Schema.Types.ObjectId[];
     downvotes: Schema.Types.ObjectId[];
     createdAt: Date;
   }
@@ -53,7 +50,6 @@ const QuestionDetailsPage = async ({ params, searchParams }: any) => {
     return parsedElementId === parsedQuestionId;
   });
   const questionAnswers = question.answers;
-  // console.log(question);
 
   return question && mongoUser ? (
     <div className="flex flex-col gap-4">
@@ -88,7 +84,11 @@ const QuestionDetailsPage = async ({ params, searchParams }: any) => {
         {question.title}
       </h2>
       <div>
-        <Metric />
+        <Metric
+          views={question.views}
+          upvoteNumber={question.upvotes.length}
+          answersNumber={question.answers.length}
+        />
       </div>
       <p className="body-regular dark:text-slate-100">{question.text}</p>
       <div>Code Sample</div>

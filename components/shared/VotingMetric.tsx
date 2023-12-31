@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import upvote from "../../public/assets/icons/upvote.svg";
 import downvote from "../../public/assets/icons/downvote.svg";
@@ -12,7 +12,8 @@ import {
   handleUpvote,
   handleDownvote,
   handleSave,
-} from "@/lib/actions/question.actions";
+  handleView,
+} from "@/lib/actions/interaction.actions";
 import { usePathname } from "next/navigation";
 
 interface VotingParams {
@@ -37,6 +38,11 @@ const VotingMetric = ({
   hasUserSaved,
 }: VotingParams) => {
   const path = usePathname();
+
+  useEffect(() => {
+    handleView({ id: JSON.stringify(id), path });
+    console.log(path);
+  }, [id, path]);
 
   const handleUpvoteClick = async () => {
     await handleUpvote({
