@@ -8,7 +8,7 @@ import React, { useState } from "react";
 interface Props {
   _id: string;
   title: string;
-  tags: string[];
+  tags: { name: string }[];
   createdAt: string;
   author: {
     name: string;
@@ -58,7 +58,7 @@ const ProfileTabs = ({ questions }: Params) => {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="questions">
-          <div>
+          <div className="flex flex-col gap-4">
             {parsedQuestions.map((question: Props) => {
               const { name, profilePictureUrl } = question.author;
               return (

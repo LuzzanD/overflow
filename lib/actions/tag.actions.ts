@@ -1,12 +1,12 @@
 import { connectToDatabase } from "../mongoose";
-import { Tag, ITag } from "@/database/TagModel";
+import { Tag } from "@/database/TagModel";
 
 export const getAllTags = async () => {
   try {
     connectToDatabase();
-    const allTags: ITag[] = await Tag.find();
+    const allTags = await Tag.find();
     return allTags;
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    throw new Error(error);
   }
 };

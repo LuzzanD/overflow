@@ -8,7 +8,7 @@ import { Schema } from "mongoose";
 interface Props {
   _id: string;
   title: string;
-  tags: string[];
+  tags: { name: string }[];
   createdAt: string;
   author: {
     name: string;

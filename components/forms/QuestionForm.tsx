@@ -16,7 +16,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { createQuestion } from "@/lib/actions/question.actions";
+import { createQuestion, editQuestion } from "@/lib/actions/question.actions";
 import Tag from "../shared/Tag";
 import { useTheme } from "@/context/ThemeProvider";
 import { useRouter } from "next/navigation";
@@ -41,6 +41,10 @@ interface QuestionProps {
   type: string;
 }
 
+interface TagProps {
+  name: string;
+}
+
 const QuestionForm = ({ id, question, type }: QuestionProps) => {
   const router = useRouter();
   const editorRef = useRef(null);
@@ -50,8 +54,11 @@ const QuestionForm = ({ id, question, type }: QuestionProps) => {
   const parsedQuestion = question && JSON.parse(question);
 
   useEffect(() => {
-    type === "edit" && setTagArray(parsedQuestion.tags);
-  }, [parsedQuestion]);
+    if (type === "edit") {
+      const editTagArray = parsedQuestion.tags.map((tag: TagProps) => tag.name);
+      setTagArray(editTagArray);
+    }
+  }, [parsedQuestion, type]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -63,16 +70,29 @@ const QuestionForm = ({ id, question, type }: QuestionProps) => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    try {
-      await createQuestion({
-        author: JSON.parse(id),
-        title: values.title,
-        text: values.text,
-        tags: tagArray,
-      });
-      router.push("/");
-    } catch (error) {
-      console.log(error);
+    if (type === "create") {
+      try {
+        await createQuestion({
+          author: JSON.parse(id),
+          title: values.title,
+          text: values.text,
+          tags: tagArray,
+        });
+        router.push("/");
+      } catch (error) {
+        console.log(error);
+      }
+    } else if (type === "edit") {
+      try {
+        await editQuestion({
+          id: JSON.stringify(parsedQuestion._id),
+          title: values.title,
+          text: values.text,
+        });
+        router.push("/");
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -105,7 +125,8 @@ const QuestionForm = ({ id, question, type }: QuestionProps) => {
         <Tag
           key={index}
           name={tag}
-          hasCloseButton={type === "edit" && false}
+          // eslint-disable-next-line no-unneeded-ternary
+          hasCloseButton={type === "edit" ? false : true}
           handleTagClose={handleClose}
         />
       );

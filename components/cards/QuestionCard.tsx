@@ -10,7 +10,9 @@ import { calculateTimePassed } from "@/lib/utils";
 interface QuestionCardProps {
   id: string;
   title: string;
-  tags: string[];
+  tags: {
+    name: string;
+  }[];
   createdAt: string;
   author: string;
   profilePictureUrl: string;
@@ -38,9 +40,12 @@ const QuestionCard = ({
           {title}
         </h3>
         <div className="flex gap-2">
-          {tags.map((tag) => {
-            return <Tag key={tag} name={tag} hasCloseButton={false} />;
-          })}
+          {tags &&
+            tags.map((tag) => {
+              return (
+                <Tag key={tag.name} name={tag.name} hasCloseButton={false} />
+              );
+            })}
         </div>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5 lg:gap-2">

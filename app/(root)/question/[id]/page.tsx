@@ -12,28 +12,32 @@ import Answer from "@/components/shared/Answer";
 import { Schema } from "mongoose";
 import Metric from "@/components/shared/Metric";
 
+interface Props {
+  userId: string;
+  _id: string;
+  text: string;
+  author: {
+    _id: string;
+    name: string;
+    profilePictureUrl: string;
+  };
+  views: number;
+  upvotes: Schema.Types.ObjectId[];
+  answers: Schema.Types.ObjectId[];
+  downvotes: Schema.Types.ObjectId[];
+  createdAt: Date;
+}
+
+interface QuestionTagProps {
+  name: string;
+}
+
 const QuestionDetailsPage = async ({ params, searchParams }: any) => {
   const user = await currentUser();
   if (!user) redirect("/sign-in");
 
   const question = await getQuestionById({ id: params.id });
   const mongoUser = await getUserById({ userId: user.id });
-
-  interface Props {
-    userId: string;
-    _id: string;
-    text: string;
-    author: {
-      _id: string;
-      name: string;
-      profilePictureUrl: string;
-    };
-    views: number;
-    upvotes: Schema.Types.ObjectId[];
-    answers: Schema.Types.ObjectId[];
-    downvotes: Schema.Types.ObjectId[];
-    createdAt: Date;
-  }
 
   const parsedQuestionId = question && JSON.parse(JSON.stringify(question._id));
   const parsedUserId = mongoUser && JSON.parse(JSON.stringify(mongoUser._id));
@@ -93,8 +97,8 @@ const QuestionDetailsPage = async ({ params, searchParams }: any) => {
       <p className="body-regular dark:text-slate-100">{question.text}</p>
       <div>Code Sample</div>
       <div className="flex gap-2">
-        {["javascript", "html", "react", "nextjs"].map((tag) => {
-          return <Tag key={tag} name={tag} hasCloseButton={false} />;
+        {question.tags.map((tag: QuestionTagProps) => {
+          return <Tag key={tag.name} name={tag.name} hasCloseButton={false} />;
         })}
       </div>
       <AnswerForm userId={parsedUserId} questionId={parsedQuestionId} />
