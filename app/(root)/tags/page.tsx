@@ -3,6 +3,7 @@ import Image from "next/image";
 import TagCard from "@/components/cards/TagCard";
 import { Input } from "@/components/ui/input";
 import { getAllTags } from "@/lib/actions/tag.actions";
+import Link from "next/link";
 
 interface Props {
   name: string;
@@ -29,7 +30,9 @@ const Tags = async () => {
       <div className="grid grid-cols-2 gap-3 xs:grid-cols-3 md:grid-cols-4 lg:gap-4 xl:grid-cols-5">
         {allTags ? (
           allTags.map((tag: Props) => (
-            <TagCard key={tag.name} name={tag.name} />
+            <Link href={`/tags/${tag.name}`} key={tag.name}>
+              <TagCard name={tag.name} />
+            </Link>
           ))
         ) : (
           <div>

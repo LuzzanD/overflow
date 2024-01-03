@@ -45,13 +45,13 @@ const QuestionCard = ({
 
   return (
     <Link href={`/question/${JSON.parse(id)}`}>
-      <div className="flex w-full flex-col gap-4 rounded-md bg-slate-100 p-4 dark:bg-dark-100 md:p-5 lg:p-6">
+      <div className="flex w-full flex-col gap-4 rounded-md bg-slate-200/50 p-4 dark:bg-dark-100 md:p-5 lg:p-6">
         <div className="flex justify-between">
           <h3 className="text-[16px] font-semibold leading-[20.8px] dark:text-slate-100 md:text-[18px] lg:text-[20px] xl:text-[22px]">
             {title}
           </h3>
-          {user!.id === JSON.parse(authorId) && (
-            <div className="flex items-center gap-3">
+          {user.id === JSON.parse(authorId) && (
+            <div className="flex items-baseline gap-3">
               <div
                 className="relative aspect-square w-[16px]"
                 onClick={() => deleteQuestion({ questionId: id })}
@@ -64,15 +64,16 @@ const QuestionCard = ({
                 />
               </div>
 
-              <Link href={`/question/${JSON.parse(id)}/edit`}>
-                <div className="relative aspect-square w-[16px]">
-                  <Image
-                    src={editIcon}
-                    alt="edit icon"
-                    fill={true}
-                    className="object-contain"
-                  />
-                </div>
+              <Link
+                href={`/question/${JSON.parse(id)}/edit`}
+                className="relative aspect-square w-[16px]"
+              >
+                <Image
+                  src={editIcon}
+                  alt="edit icon"
+                  fill={true}
+                  className="object-contain"
+                />
               </Link>
             </div>
           )}
