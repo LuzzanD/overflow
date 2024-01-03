@@ -1,9 +1,9 @@
 "use server";
 
-import { Question } from "@/database/QuestionModel";
 import { connectToDatabase } from "../mongoose";
-import { User } from "@/database/UserModel";
 import { revalidatePath } from "next/cache";
+import { User } from "@/database/UserModel";
+import { Question } from "@/database/QuestionModel";
 import { Answer } from "@/database/AnswerModel";
 import { Tag } from "@/database/TagModel";
 
@@ -60,7 +60,7 @@ export const getQuestions = async () => {
       .populate({
         path: "author",
         model: User,
-        select: "_id name profilePictureUrl",
+        select: "clerkId name profilePictureUrl",
       })
       .populate({
         path: "tags",
@@ -123,7 +123,7 @@ export const getQuestionsByUserId = async ({
         {
           path: "author",
           model: User,
-          select: "_id name profilePictureUrl",
+          select: "clerkId name profilePictureUrl",
         },
         {
           path: "tags",

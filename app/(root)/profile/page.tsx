@@ -12,6 +12,7 @@ import StatsCard from "@/components/cards/StatsCard";
 
 import { getQuestionsByUserId } from "@/lib/actions/question.actions";
 import ProfileTabs from "@/components/shared/ProfileTabs";
+import { getAnswersByUserId } from "@/lib/actions/answer.actions";
 
 const Profile = async () => {
   const { userId } = auth();
@@ -26,7 +27,7 @@ const Profile = async () => {
   } = await getUserById({ userId });
 
   const questions = await getQuestionsByUserId({ id: userId });
-  console.log(userId);
+  const answers = await getAnswersByUserId({ id: userId });
 
   return (
     <div>
@@ -109,7 +110,10 @@ const Profile = async () => {
           <StatsCard />
         </div>
       </div>
-      <ProfileTabs questions={JSON.stringify(questions)} />
+      <ProfileTabs
+        questions={JSON.stringify(questions)}
+        answers={JSON.stringify(answers)}
+      />
     </div>
   );
 };

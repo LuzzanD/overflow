@@ -11,6 +11,7 @@ interface Props {
   tags: { name: string }[];
   createdAt: string;
   author: {
+    clerkId: string;
     name: string;
     profilePictureUrl: string;
   };
@@ -36,11 +37,12 @@ const Collections = async () => {
           mongoUser.savedQuestions.reverse().map((question: Props) => {
             const parsedQuestionId = JSON.stringify(question._id);
             const parsedDate = JSON.stringify(question.createdAt);
-            const { name, profilePictureUrl } = question.author;
+            const { clerkId, name, profilePictureUrl } = question.author;
             return (
               <QuestionCard
                 key={parsedQuestionId}
                 author={name}
+                authorId={JSON.stringify(clerkId)}
                 profilePictureUrl={profilePictureUrl}
                 id={parsedQuestionId}
                 title={question.title}

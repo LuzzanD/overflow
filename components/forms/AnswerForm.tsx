@@ -45,7 +45,7 @@ const AnswerForm = ({ userId, questionId }: AnswerProps) => {
     try {
       await createAnswer({
         author: userId,
-        questionId,
+        question: questionId,
         text: values.text,
       });
       router.push("/");

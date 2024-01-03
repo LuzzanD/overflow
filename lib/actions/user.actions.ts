@@ -40,7 +40,7 @@ export const getUserById = async (params: GetUserParams) => {
       populate: {
         path: "author",
         model: User,
-        select: "name profilePictureUrl",
+        select: "clerkId name profilePictureUrl",
       },
     });
     return user;

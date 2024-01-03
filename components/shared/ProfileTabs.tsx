@@ -4,13 +4,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import QuestionCard from "@/components/cards/QuestionCard";
 import { Schema } from "mongoose";
 import React, { useState } from "react";
+import AnswerCard from "../cards/AnswerCard";
 
-interface Props {
+interface QuestionProps {
   _id: string;
   title: string;
+
   tags: { name: string }[];
   createdAt: string;
   author: {
+    clerkId: string;
     name: string;
     profilePictureUrl: string;
   };
@@ -19,13 +22,30 @@ interface Props {
   answers: Schema.Types.ObjectId[];
 }
 
-interface Params {
-  questions: string;
+interface AnswerProps {
+  _id: string;
+  createdAt: string;
+  question: {
+    _id: Schema.Types.ObjectId;
+    title: string;
+    tags: { name: string }[];
+  };
+  author: {
+    name: string;
+    profilePictureUrl: string;
+  };
+  upvotes: Schema.Types.ObjectId[];
 }
 
-const ProfileTabs = ({ questions }: Params) => {
+interface Params {
+  questions: string;
+  answers: string;
+}
+
+const ProfileTabs = ({ questions, answers }: Params) => {
   const [active, setActive] = useState("questions");
   const parsedQuestions = JSON.parse(questions);
+  const parsedAnswers = JSON.parse(answers);
   return (
     <div className="mt-12">
       <Tabs defaultValue="questions" className="">
@@ -59,12 +79,13 @@ const ProfileTabs = ({ questions }: Params) => {
         </TabsList>
         <TabsContent value="questions">
           <div className="flex flex-col gap-4">
-            {parsedQuestions.map((question: Props) => {
-              const { name, profilePictureUrl } = question.author;
+            {parsedQuestions.map((question: QuestionProps) => {
+              const { clerkId, name, profilePictureUrl } = question.author;
               return (
                 <QuestionCard
                   key={JSON.stringify(question._id)}
                   id={JSON.stringify(question._id)}
+                  authorId={JSON.stringify(clerkId)}
                   title={question.title}
                   tags={question.tags}
                   createdAt={JSON.stringify(question.createdAt)}
@@ -78,7 +99,27 @@ const ProfileTabs = ({ questions }: Params) => {
             })}
           </div>
         </TabsContent>
-        <TabsContent value="answers">Answers</TabsContent>
+        <TabsContent value="answers">
+          <div className="flex flex-col gap-4">
+            {parsedAnswers.map((answer: AnswerProps) => {
+              const { _id, title, tags } = answer.question;
+              const { name, profilePictureUrl } = answer.author;
+              return (
+                <AnswerCard
+                  key={JSON.stringify(answer._id)}
+                  answerId={JSON.stringify(answer._id)}
+                  questionId={JSON.stringify(_id)}
+                  tags={tags}
+                  title={title}
+                  createdAt={JSON.stringify(answer.createdAt)}
+                  author={name}
+                  profilePictureUrl={profilePictureUrl}
+                  upvoteNumber={answer.upvotes.length}
+                />
+              );
+            })}
+          </div>
+        </TabsContent>
       </Tabs>
     </div>
   );

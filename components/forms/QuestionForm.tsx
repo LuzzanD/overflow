@@ -58,7 +58,7 @@ const QuestionForm = ({ id, question, type }: QuestionProps) => {
       const editTagArray = parsedQuestion.tags.map((tag: TagProps) => tag.name);
       setTagArray(editTagArray);
     }
-  }, [parsedQuestion, type]);
+  }, [type]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -269,7 +269,7 @@ const QuestionForm = ({ id, question, type }: QuestionProps) => {
                 Add up to 5 tags to describe what your question is about. Start
                 typing to see suggestions.
               </FormDescription>
-              <div className={`flex gap-1`}>{tagsArrayRender}</div>
+              <div className={`flex h-[25px] gap-3`}>{tagsArrayRender}</div>
               <FormMessage />
             </FormItem>
           )}

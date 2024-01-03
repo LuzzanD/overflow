@@ -13,7 +13,7 @@ const Tag = ({ name, hasCloseButton, handleTagClose }: TagProps) => {
   return (
     <Badge
       variant="outline"
-      className="subtle-medium lg:small-regular rounded-md border-none bg-slate-300 px-3 py-1 text-[10px] text-slate-600 hover:cursor-pointer hover:bg-slate-300/50 dark:bg-dark-400 dark:text-slate-100 hover:dark:bg-dark-400/40"
+      className="rounded-md border-none bg-slate-300 px-3 py-1 text-[11px] text-slate-600 shadow-sm shadow-slate-500 hover:cursor-pointer hover:bg-slate-300/50 dark:bg-slate-700 dark:text-slate-100 dark:shadow-none hover:dark:bg-dark-400/40 lg:text-[13px]"
     >
       {name}
       {hasCloseButton && (

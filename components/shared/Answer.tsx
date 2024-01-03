@@ -53,7 +53,7 @@ const Answer = async ({
           </div>
           <p className="body-semibold dark:text-slate-100">{author.name}</p>
           <span className="text-[9px] text-sky-600 sm:text-[10px] md:text-[11px] xl:text-[12px]">
-            - answered {convertDateFormat(dateObject)}
+            • answered {convertDateFormat(dateObject)}
           </span>
         </div>
         <div>
