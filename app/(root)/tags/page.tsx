@@ -32,7 +32,7 @@ const Tags = async () => {
       <div className="grid grid-cols-2 gap-3 xs:grid-cols-3 md:grid-cols-4 lg:gap-4 xl:grid-cols-5">
         {allTags ? (
           allTags.map((tag: Props) => (
-            <Link href={`/tags/${tag.name}`} key={tag.name}>
+            <Link key={tag.name} href={`/tags/${tag.name}`}>
               <TagCard
                 name={tag.name}
                 numberOfQuestions={tag.questions.length}

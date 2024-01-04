@@ -8,10 +8,7 @@ import { User } from "@/database/UserModel";
 export const getAllTags = async () => {
   try {
     connectToDatabase();
-    const allTags = await Tag.find().populate({
-      path: "questions",
-      model: Question,
-    });
+    const allTags = await Tag.find();
     return allTags;
   } catch (error: any) {
     throw new Error(error);
