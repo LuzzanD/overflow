@@ -66,7 +66,7 @@ const Profile = async () => {
               </div>
               <Link href={portfolioLink} target="_blank">
                 <span className="text-[9px] text-sky-600 sm:text-[10px] md:text-[12px] xl:text-[14px]">
-                  {portfolioLink}
+                  {portfolioLink && portfolioLink}
                 </span>
               </Link>
             </div>
@@ -81,7 +81,7 @@ const Profile = async () => {
               </div>
 
               <span className="text-[9px] text-sky-600 sm:text-[10px] md:text-[12px] xl:text-[14px]">
-                {locationString}
+                {locationString && locationString}
               </span>
             </div>
             <div className="flex gap-1">
@@ -97,7 +97,7 @@ const Profile = async () => {
             </div>
           </div>
           <p className="mb-[5px] text-[10px] dark:text-slate-100 sm:text-[12px] md:text-[14px] lg:text-[16px]">
-            {bio}
+            {bio && bio}
           </p>
         </div>
       </div>

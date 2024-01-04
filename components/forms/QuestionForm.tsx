@@ -120,10 +120,10 @@ const QuestionForm = ({ id, question, type }: QuestionProps) => {
 
   const tagsArrayRender =
     tagArray.length > 0 &&
-    tagArray.map((tag, index) => {
+    tagArray.map((tag) => {
       return (
         <Tag
-          key={index}
+          key={tag}
           name={tag}
           // eslint-disable-next-line no-unneeded-ternary
           hasCloseButton={type === "edit" ? false : true}

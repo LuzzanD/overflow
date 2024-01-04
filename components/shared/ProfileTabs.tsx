@@ -9,7 +9,6 @@ import AnswerCard from "../cards/AnswerCard";
 interface QuestionProps {
   _id: string;
   title: string;
-
   tags: { name: string }[];
   createdAt: string;
   author: {
@@ -38,14 +37,14 @@ interface AnswerProps {
 }
 
 interface Params {
-  questions: string;
-  answers: string;
+  questions?: string;
+  answers?: string;
 }
 
 const ProfileTabs = ({ questions, answers }: Params) => {
   const [active, setActive] = useState("questions");
-  const parsedQuestions = JSON.parse(questions);
-  const parsedAnswers = JSON.parse(answers);
+  const parsedQuestions = questions && JSON.parse(questions);
+  const parsedAnswers = answers && JSON.parse(answers);
   return (
     <div className="mt-12">
       <Tabs defaultValue="questions" className="">
@@ -85,7 +84,7 @@ const ProfileTabs = ({ questions, answers }: Params) => {
                 <QuestionCard
                   key={JSON.stringify(question._id)}
                   id={JSON.stringify(question._id)}
-                  authorId={JSON.stringify(clerkId)}
+                  authorId={clerkId}
                   title={question.title}
                   tags={question.tags}
                   createdAt={JSON.stringify(question.createdAt)}

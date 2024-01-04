@@ -4,9 +4,11 @@ import TagCard from "@/components/cards/TagCard";
 import { Input } from "@/components/ui/input";
 import { getAllTags } from "@/lib/actions/tag.actions";
 import Link from "next/link";
+import { Schema } from "mongoose";
 
 interface Props {
   name: string;
+  questions: Schema.Types.ObjectId[];
 }
 
 const Tags = async () => {
@@ -31,7 +33,10 @@ const Tags = async () => {
         {allTags ? (
           allTags.map((tag: Props) => (
             <Link href={`/tags/${tag.name}`} key={tag.name}>
-              <TagCard name={tag.name} />
+              <TagCard
+                name={tag.name}
+                numberOfQuestions={tag.questions.length}
+              />
             </Link>
           ))
         ) : (

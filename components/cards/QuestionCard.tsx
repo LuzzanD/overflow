@@ -43,6 +43,8 @@ const QuestionCard = ({
   const { user } = useUser();
   if (!user) redirect("sign-in");
 
+  // const parsedId = JSON.parse(authorId);
+
   return (
     <Link href={`/question/${JSON.parse(id)}`}>
       <div className="flex w-full flex-col gap-4 rounded-md bg-slate-200/50 p-4 dark:bg-dark-100 md:p-5 lg:p-6">
@@ -50,11 +52,11 @@ const QuestionCard = ({
           <h3 className="text-[16px] font-semibold leading-[20.8px] dark:text-slate-100 md:text-[18px] lg:text-[20px] xl:text-[22px]">
             {title}
           </h3>
-          {user.id === JSON.parse(authorId) && (
+          {user.id === authorId && (
             <div className="flex items-baseline gap-3">
               <div
                 className="relative aspect-square w-[16px]"
-                onClick={() => deleteQuestion({ questionId: id })}
+                onClick={() => deleteQuestion({ questionId: id, authorId })}
               >
                 <Image
                   src={deleteIcon}
@@ -94,9 +96,14 @@ const QuestionCard = ({
                 className="object-fill"
               />
             </div>
-            <p className="text-[11px] dark:text-slate-100 sm:text-[12px] md:text-[13px] xl:text-[14px]">
-              {author}
-            </p>
+            <Link
+              href={`/profile/${authorId}`}
+              className="flex items-center gap-1.5 lg:gap-2"
+            >
+              <p className="text-[11px] dark:text-slate-100 sm:text-[12px] md:text-[13px] xl:text-[14px]">
+                {author}
+              </p>
+            </Link>
             <span className="text-[8px] dark:text-slate-100 sm:text-[10px] md:text-[11px] xl:text-[12px]">
               • {timeOfCreation}
             </span>

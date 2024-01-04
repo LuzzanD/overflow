@@ -13,7 +13,7 @@ export interface IUser extends Document {
   answers: Schema.Types.ObjectId[];
   tags: Schema.Types.ObjectId[];
   savedQuestions: Schema.Types.ObjectId[];
-  createdAt: Date;
+  joinedAt: Date;
 }
 
 const userSchema = new Schema({
@@ -29,7 +29,7 @@ const userSchema = new Schema({
   answers: [{ type: Schema.Types.ObjectId, ref: "Answers" }],
   tags: [{ type: Schema.Types.ObjectId, ref: "Tags" }],
   savedQuestions: [{ type: Schema.Types.ObjectId, ref: "Question" }],
-  createdAt: { type: Date, default: Date.now },
+  joinedAt: { type: Date, default: Date.now },
 });
 
 export const User = models.User || model("User", userSchema);

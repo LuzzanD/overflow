@@ -66,11 +66,13 @@ export const getQuestions = async () => {
         path: "tags",
         model: Tag,
         select: "name",
+        options: {
+          lean: true,
+        },
       })
       .sort({
         createdAt: -1,
-      })
-      .lean();
+      });
     return allQuestions;
   } catch (error: any) {
     throw new Error(error);
@@ -88,7 +90,7 @@ export const getQuestionById = async ({ id }: GetQuestionByIdParams) => {
       .populate({
         path: "author",
         model: User,
-        select: "_id name profilePictureUrl",
+        select: "clerkId name profilePictureUrl",
       })
       .populate({
         path: "answers",
@@ -96,7 +98,7 @@ export const getQuestionById = async ({ id }: GetQuestionByIdParams) => {
         populate: {
           path: "author",
           model: User,
-          select: "_id name profilePictureUrl",
+          select: "clerkId name profilePictureUrl",
         },
       })
       .populate({ path: "tags", model: Tag, select: "name" });
@@ -159,10 +161,11 @@ export const editQuestion = async (params: EditQuestionParams) => {
 
 interface DeleteQuestionParams {
   questionId: string;
+  authorId: string;
 }
 
 export const deleteQuestion = async (params: DeleteQuestionParams) => {
-  const { questionId } = params;
+  const { questionId, authorId } = params;
   try {
     await connectToDatabase();
     const question = await Question.findOneAndDelete({ _id: questionId });
@@ -175,6 +178,11 @@ export const deleteQuestion = async (params: DeleteQuestionParams) => {
         { $pull: { questions: question._id } }
       );
     }
+    await Answer.deleteMany({ question: questionId });
+    await User.findOneAndUpdate(
+      { clerkId: authorId },
+      { $pull: { questions: questionId } }
+    );
   } catch (error: any) {
     throw new Error(error);
   }

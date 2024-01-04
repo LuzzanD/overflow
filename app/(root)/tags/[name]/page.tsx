@@ -32,7 +32,7 @@ const TagDetail = async ({ params, searchParams }: any) => {
           const questionId = JSON.stringify(question._id);
           const dateString = JSON.stringify(question.createdAt);
           const { clerkId, name, profilePictureUrl } = question.author;
-          const authorId = JSON.stringify(clerkId);
+          // const authorId = JSON.stringify(clerkId);
 
           return (
             <QuestionCard
@@ -41,7 +41,7 @@ const TagDetail = async ({ params, searchParams }: any) => {
               title={question.title}
               tags={question.tags}
               createdAt={dateString}
-              authorId={authorId}
+              authorId={clerkId}
               author={name}
               profilePictureUrl={profilePictureUrl}
               views={question.views}

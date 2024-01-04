@@ -42,7 +42,7 @@ const Collections = async () => {
               <QuestionCard
                 key={parsedQuestionId}
                 author={name}
-                authorId={JSON.stringify(clerkId)}
+                authorId={clerkId}
                 profilePictureUrl={profilePictureUrl}
                 id={parsedQuestionId}
                 title={question.title}

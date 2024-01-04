@@ -80,7 +80,11 @@ export const getAnswersByUserId = async (params: getAnswersByUserIdProps) => {
       path: "answers",
       model: Answer,
       populate: [
-        { path: "author", model: User, select: "name profilePictureUrl" },
+        {
+          path: "author",
+          model: User,
+          select: "clerkId name profilePictureUrl",
+        },
         {
           path: "question",
           model: Question,

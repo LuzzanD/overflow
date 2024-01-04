@@ -8,7 +8,10 @@ import { User } from "@/database/UserModel";
 export const getAllTags = async () => {
   try {
     connectToDatabase();
-    const allTags = await Tag.find();
+    const allTags = await Tag.find().populate({
+      path: "questions",
+      model: Question,
+    });
     return allTags;
   } catch (error: any) {
     throw new Error(error);
@@ -31,7 +34,6 @@ export const getTagByName = async (params: GetTagByName) => {
           path: "author",
           model: User,
           select: "clerkId name profilePictureUrl",
-          options: { lean: true },
         },
         {
           path: "tags",

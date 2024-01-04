@@ -37,7 +37,7 @@ const RightSideBar = async () => {
 
   const tagCards =
     allTags &&
-    allTags.map((tag) => {
+    allTags.slice(0, 5).map((tag) => {
       return (
         <div
           key={tag.name}
@@ -45,7 +45,7 @@ const RightSideBar = async () => {
         >
           <Tag name={tag.name} hasCloseButton={false} />
           <div className="text-[14px] dark:text-slate-100">
-            {tag.questions ? tag.questions.length : 0}
+            {tag.questions.length !== 0 ? tag.questions.length : 0}
           </div>
         </div>
       );
