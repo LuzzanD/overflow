@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/form";
 import { createAnswer } from "@/lib/actions/answer.actions";
 import router from "next/router";
+import { usePathname } from "next/navigation";
 
 const formSchema = z.object({
   text: z.string().min(50, {
@@ -33,6 +34,7 @@ const AnswerForm = ({ userId, questionId }: AnswerProps) => {
   const { mode } = useTheme();
   const editorRef = useRef(null);
   const [editorOpen, setEditorOpen] = useState(false);
+  const path = usePathname();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -47,6 +49,7 @@ const AnswerForm = ({ userId, questionId }: AnswerProps) => {
         author: userId,
         question: questionId,
         text: values.text,
+        path,
       });
       router.push("/");
     } catch (error) {

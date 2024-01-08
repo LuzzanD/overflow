@@ -9,7 +9,7 @@ import { calculateTimePassed } from "@/lib/utils";
 import { useUser } from "@clerk/nextjs";
 import deleteIcon from "../../public/assets/icons/trash.svg";
 import editIcon from "../../public/assets/icons/edit.svg";
-import { redirect } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import { deleteQuestion } from "@/lib/actions/question.actions";
 
 interface QuestionCardProps {
@@ -40,6 +40,7 @@ const QuestionCard = ({
   answersNumber,
 }: QuestionCardProps) => {
   const timeOfCreation = calculateTimePassed(JSON.parse(createdAt));
+  const path = usePathname();
   const { user } = useUser();
   if (!user) redirect("sign-in");
 
@@ -56,7 +57,13 @@ const QuestionCard = ({
             <div className="flex items-baseline gap-3">
               <div
                 className="relative aspect-square w-[16px]"
-                onClick={() => deleteQuestion({ questionId: id, authorId })}
+                onClick={async () =>
+                  await deleteQuestion({
+                    questionId: JSON.parse(id),
+                    authorId,
+                    path,
+                  })
+                }
               >
                 <Image
                   src={deleteIcon}

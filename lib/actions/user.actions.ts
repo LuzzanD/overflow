@@ -1,10 +1,10 @@
 /* eslint-disable camelcase */
 "use server";
 
-import { connectToDatabase } from "../mongoose";
 import { User } from "@/database/UserModel";
 import { Question } from "@/database/QuestionModel";
 import { revalidatePath } from "next/cache";
+import { connectToDatabase } from "../mongoose";
 
 interface GetUserParams {
   userId: string;
@@ -40,7 +40,7 @@ export const getUserById = async (params: GetUserParams) => {
       populate: {
         path: "author",
         model: User,
-        select: "clerkId name profilePictureUrl",
+        select: "_id clerkId name profilePictureUrl",
       },
     });
     return user;

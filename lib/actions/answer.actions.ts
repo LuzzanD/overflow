@@ -11,11 +11,12 @@ interface CreateAnswerParams {
   author: string;
   question: string;
   text: string;
+  path: string;
 }
 
 export const createAnswer = async (params: CreateAnswerParams) => {
   try {
-    const { author, question, text } = params;
+    const { author, question, text, path } = params;
     await connectToDatabase();
     const newAnswer = await Answer.create({ author, question, text });
     await Question.findOneAndUpdate(
@@ -28,43 +29,11 @@ export const createAnswer = async (params: CreateAnswerParams) => {
       { $push: { answers: newAnswer._id } },
       { new: true }
     );
-    revalidatePath("/");
+    revalidatePath(path);
   } catch (error: any) {
     throw new Error(error);
   }
 };
-
-interface getAnswerByIdProps {
-  answerId: string;
-}
-
-export const getAnswerById = async ({ answerId }: getAnswerByIdProps) => {
-  try {
-    await connectToDatabase();
-    const answer = await Answer.findOne({ _id: answerId });
-
-    return answer;
-  } catch (error: any) {
-    throw new Error(error);
-  }
-};
-
-// interface getAnswersByIdProps {
-//   passedQuestionId: string;
-// }
-
-// export const getAnswersByQuestionId = async (params: getAnswersByIdProps) => {
-//   const { passedQuestionId } = params;
-//   try {
-//     await connectToDatabase();
-//     // Find the question by ID and populate the "answers" field
-//     const answers = await Answer.find({ questionId: passedQuestionId });
-
-//     return answers;
-//   } catch (error: any) {
-//     throw new Error(error);
-//   }
-// };
 
 interface getAnswersByUserIdProps {
   id: string;
@@ -72,29 +41,24 @@ interface getAnswersByUserIdProps {
 
 export const getAnswersByUserId = async (params: getAnswersByUserIdProps) => {
   const { id } = params;
-  // const parsedId = JSON.parse(id);
   try {
     await connectToDatabase();
 
-    const user = await User.findOne({ author: id }).populate({
-      path: "answers",
-      model: Answer,
-      populate: [
-        {
-          path: "author",
-          model: User,
-          select: "clerkId name profilePictureUrl",
-        },
-        {
-          path: "question",
-          model: Question,
-          populate: { path: "tags", model: Tag, select: "name" },
-          select: "_id title tags",
-        },
-      ],
-    });
+    const userAnswers = await Answer.find({ author: id }).populate([
+      {
+        path: "author",
+        model: User,
+        select: "clerkId name profilePictureUrl",
+      },
+      {
+        path: "question",
+        model: Question,
+        populate: { path: "tags", model: Tag, select: "name" },
+        select: "_id title tags",
+      },
+    ]);
 
-    return user.answers;
+    return userAnswers;
   } catch (error: any) {
     throw new Error(error);
   }

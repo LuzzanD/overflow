@@ -2,9 +2,9 @@
 
 import { connectToDatabase } from "../mongoose";
 import { revalidatePath } from "next/cache";
-import { User } from "@/database/UserModel";
 import { Question } from "@/database/QuestionModel";
 import { Answer } from "@/database/AnswerModel";
+import { User } from "@/database/UserModel";
 import { Tag } from "@/database/TagModel";
 
 interface CreateQuestionParams {
@@ -118,25 +118,54 @@ export const getQuestionsByUserId = async ({
 }: GetQuestionByUserIdParams) => {
   try {
     await connectToDatabase();
-    const user = await User.findOne({ clerkId: id }).populate({
-      path: "questions",
-      model: Question,
-      populate: [
-        {
-          path: "author",
-          model: User,
-          select: "clerkId name profilePictureUrl",
-        },
-        {
-          path: "tags",
-          model: Tag,
-          select: "name",
-        },
-      ],
-    });
-    return user.questions;
+    const userQuestions = await Question.find({ author: id }).populate([
+      {
+        path: "author",
+        model: User,
+        select: "_id clerkId name profilePictureUrl",
+      },
+      {
+        path: "tags",
+        model: Tag,
+        select: "name",
+      },
+    ]);
+    return userQuestions;
   } catch (error: any) {
     throw new Error(error);
+  }
+};
+
+interface GetSavedQuestionsProps {
+  userId: string;
+}
+
+export const getSavedQuestions = async (params: GetSavedQuestionsProps) => {
+  const { userId } = params;
+  try {
+    await connectToDatabase();
+    const user = await User.findOne({ clerkId: userId })
+      .populate({
+        path: "savedQuestions",
+        model: Question,
+        populate: [
+          {
+            path: "author",
+            model: User,
+            select: "clerkId name profilePictureUrl",
+          },
+          {
+            path: "tags",
+            model: Tag,
+            select: "name",
+            options: { lean: true },
+          },
+        ],
+      })
+      .sort({ createdAt: -1 });
+    return user.savedQuestions;
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -162,10 +191,12 @@ export const editQuestion = async (params: EditQuestionParams) => {
 interface DeleteQuestionParams {
   questionId: string;
   authorId: string;
+  path: string;
 }
 
 export const deleteQuestion = async (params: DeleteQuestionParams) => {
-  const { questionId, authorId } = params;
+  const { questionId, authorId, path } = params;
+  console.log(questionId, authorId, path);
   try {
     await connectToDatabase();
     const question = await Question.findOneAndDelete({ _id: questionId });
@@ -174,15 +205,27 @@ export const deleteQuestion = async (params: DeleteQuestionParams) => {
     }
     for (const tag of question.tags) {
       await Tag.findOneAndUpdate(
-        { _id: tag },
+        { _id: tag._id },
         { $pull: { questions: question._id } }
       );
     }
-    await Answer.deleteMany({ question: questionId });
-    await User.findOneAndUpdate(
-      { clerkId: authorId },
-      { $pull: { questions: questionId } }
+    const deletedAnswers = await Answer.find({ question: question._id });
+    await Answer.deleteMany({ question: question._id });
+    await User.updateMany(
+      {
+        $or: [
+          { clerkId: authorId }, // Remove references for the question creator
+          { answers: { $in: deletedAnswers.map((answer) => answer._id) } }, // Remove references for all users who answered the question
+        ],
+      },
+      {
+        $pull: {
+          questions: question._id,
+          answers: { $in: deletedAnswers.map((answer) => answer._id) },
+        },
+      }
     );
+    revalidatePath(path);
   } catch (error: any) {
     throw new Error(error);
   }

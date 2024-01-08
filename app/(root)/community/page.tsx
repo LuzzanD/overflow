@@ -6,6 +6,7 @@ import { getAllUsers } from "@/lib/actions/user.actions";
 
 const Community = async () => {
   const allUsers = await getAllUsers();
+
   return (
     <div className="flex w-full flex-col gap-8">
       <h1 className="h2-bold xl:h1-bold mb-2 dark:text-slate-100">Community</h1>

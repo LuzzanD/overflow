@@ -18,6 +18,7 @@ const Profile = async () => {
   const { userId } = auth();
   if (!userId) redirect("/sign-in");
   const {
+    _id,
     name,
     username,
     portfolioLink,
@@ -26,15 +27,15 @@ const Profile = async () => {
     bio,
   } = await getUserById({ userId });
 
-  const questions = await getQuestionsByUserId({ id: userId });
-  const answers = await getAnswersByUserId({ id: userId });
+  const questions = await getQuestionsByUserId({ id: _id });
+  const answers = await getAnswersByUserId({ id: _id });
 
   return (
     <div>
       <div className="flex gap-6">
         <div className="relative aspect-square w-[150px] overflow-hidden rounded-full border-[2px] border-slate-800 dark:border-slate-200">
           <Image
-            src={profilePictureUrl}
+            src={profilePictureUrl && profilePictureUrl}
             alt="Profile picture"
             className="object-cover"
             fill={true}
@@ -55,35 +56,39 @@ const Profile = async () => {
             @{username}
           </h3>
           <div className="flex items-center gap-1 md:gap-2 lg:gap-3">
-            <div className="flex gap-1">
-              <div className="relative w-[15px]">
-                <Image
-                  src={linkIcon}
-                  alt="Link icon"
-                  className="object-contain"
-                  fill={true}
-                />
+            {portfolioLink && (
+              <div className="flex gap-1">
+                <div className="relative w-[15px]">
+                  <Image
+                    src={linkIcon}
+                    alt="Link icon"
+                    className="object-contain"
+                    fill={true}
+                  />
+                </div>
+                <Link href={`https://${portfolioLink}`} target="_blank">
+                  <span className="text-[9px] text-sky-600 sm:text-[10px] md:text-[12px] xl:text-[14px]">
+                    {portfolioLink}
+                  </span>
+                </Link>
               </div>
-              <Link href={portfolioLink} target="_blank">
-                <span className="text-[9px] text-sky-600 sm:text-[10px] md:text-[12px] xl:text-[14px]">
-                  {portfolioLink && portfolioLink}
-                </span>
-              </Link>
-            </div>
-            <div className="flex gap-1">
-              <div className="relative w-[15px]">
-                <Image
-                  src={locationIcon}
-                  alt="Location icon"
-                  className="object-contain"
-                  fill={true}
-                />
-              </div>
+            )}
+            {locationString && (
+              <div className="flex gap-1">
+                <div className="relative w-[15px]">
+                  <Image
+                    src={locationIcon}
+                    alt="Location icon"
+                    className="object-contain"
+                    fill={true}
+                  />
+                </div>
 
-              <span className="text-[9px] text-sky-600 sm:text-[10px] md:text-[12px] xl:text-[14px]">
-                {locationString && locationString}
-              </span>
-            </div>
+                <span className="text-[9px] text-sky-600 sm:text-[10px] md:text-[12px] xl:text-[14px]">
+                  {locationString}
+                </span>
+              </div>
+            )}
             <div className="flex gap-1">
               <div className="relative w-[15px]">
                 <Image
@@ -96,9 +101,11 @@ const Profile = async () => {
               <span className="text-[9px] text-sky-600 sm:text-[10px] md:text-[12px] xl:text-[14px]"></span>
             </div>
           </div>
-          <p className="mb-[5px] text-[10px] dark:text-slate-100 sm:text-[12px] md:text-[14px] lg:text-[16px]">
-            {bio && bio}
-          </p>
+          {bio && (
+            <p className="mb-[5px] text-[10px] dark:text-slate-100 sm:text-[12px] md:text-[14px] lg:text-[16px]">
+              {bio}
+            </p>
+          )}
         </div>
       </div>
       <div className="mt-16 flex flex-col gap-6">
@@ -111,8 +118,8 @@ const Profile = async () => {
         </div>
       </div>
       <ProfileTabs
-        questions={JSON.stringify(questions)}
-        answers={JSON.stringify(answers)}
+        questions={questions && JSON.stringify(questions)}
+        answers={answers && JSON.stringify(answers)}
       />
     </div>
   );
