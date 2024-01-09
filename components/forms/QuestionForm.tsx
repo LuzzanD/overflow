@@ -20,6 +20,7 @@ import { createQuestion, editQuestion } from "@/lib/actions/question.actions";
 import Tag from "../shared/Tag";
 import { useTheme } from "@/context/ThemeProvider";
 import { useRouter } from "next/navigation";
+import { useToast } from "../ui/use-toast";
 
 const formSchema = z.object({
   title: z.string().min(10, {
@@ -52,6 +53,7 @@ const QuestionForm = ({ id, question, type }: QuestionProps) => {
   const [tagInput, setTagInput] = useState("");
   const [tagArray, setTagArray] = useState<string[]>([]);
   const parsedQuestion = question && JSON.parse(question);
+  const { toast } = useToast();
 
   useEffect(() => {
     if (type === "edit") {
@@ -78,6 +80,7 @@ const QuestionForm = ({ id, question, type }: QuestionProps) => {
           text: values.text,
           tags: tagArray,
         });
+        toast({ description: "Question has been succesfully submitted!" });
         router.push("/");
       } catch (error) {
         console.log(error);
@@ -89,6 +92,7 @@ const QuestionForm = ({ id, question, type }: QuestionProps) => {
           title: values.title,
           text: values.text,
         });
+        toast({ description: "Question has been succesfully edited!" });
         router.push("/");
       } catch (error) {
         console.log(error);

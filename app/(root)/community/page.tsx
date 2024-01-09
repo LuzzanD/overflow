@@ -3,6 +3,7 @@ import Image from "next/image";
 import UserCard from "@/components/cards/UserCard";
 import { Input } from "@/components/ui/input";
 import { getAllUsers } from "@/lib/actions/user.actions";
+import Link from "next/link";
 
 const Community = async () => {
   const allUsers = await getAllUsers();
@@ -27,12 +28,13 @@ const Community = async () => {
         <div className="grid grid-cols-2 gap-3 xs:grid-cols-3 md:grid-cols-4 lg:gap-4 xl:grid-cols-5">
           {allUsers.map((user) => {
             return (
-              <UserCard
-                key={user.clerkId}
-                profilePic={user.profilePictureUrl}
-                name={user.name}
-                username={user.username}
-              />
+              <Link key={user.clerkId} href={`/profile/${user.clerkId}`}>
+                <UserCard
+                  profilePic={user.profilePictureUrl}
+                  name={user.name}
+                  username={user.username}
+                />
+              </Link>
             );
           })}
         </div>

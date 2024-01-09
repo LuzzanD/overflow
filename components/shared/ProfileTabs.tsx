@@ -56,8 +56,8 @@ const ProfileTabs = ({ questions, answers }: Params) => {
             }}
             className={`${
               active === "questions"
-                ? " bg-orange-200/70 text-orange-500 dark:bg-dark-100/50"
-                : "bg-slate-200/70  text-slate-500 dark:bg-dark-200 dark:text-slate-200"
+                ? "primary-gradient dark:secondary-gradient text-slate-100"
+                : "bg-slate-200 text-slate-500 dark:bg-dark-100 dark:text-slate-200"
             } w-[120px] rounded-l-md px-1 py-2.5 text-[13px] font-semibold `}
           >
             Questions
@@ -69,8 +69,8 @@ const ProfileTabs = ({ questions, answers }: Params) => {
             }}
             className={`${
               active === "answers"
-                ? "bg-orange-200/70 text-orange-500 dark:bg-dark-100/50"
-                : "bg-slate-200/70  text-slate-500 dark:bg-dark-200 dark:text-slate-200"
+                ? "primary-gradient dark:secondary-gradient text-slate-100"
+                : "bg-slate-200  text-slate-500 dark:bg-dark-100 dark:text-slate-200"
             } w-[120px]  rounded-r-md px-1 py-2.5 text-[13px] font-semibold  `}
           >
             Answers

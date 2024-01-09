@@ -18,6 +18,7 @@ import {
 import { createAnswer } from "@/lib/actions/answer.actions";
 import router from "next/router";
 import { usePathname } from "next/navigation";
+import { useToast } from "../ui/use-toast";
 
 const formSchema = z.object({
   text: z.string().min(50, {
@@ -35,6 +36,7 @@ const AnswerForm = ({ userId, questionId }: AnswerProps) => {
   const editorRef = useRef(null);
   const [editorOpen, setEditorOpen] = useState(false);
   const path = usePathname();
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -51,6 +53,7 @@ const AnswerForm = ({ userId, questionId }: AnswerProps) => {
         text: values.text,
         path,
       });
+      toast({ description: "Answer has been succesfully submitted!" });
       router.push("/");
     } catch (error) {
       console.log(error);

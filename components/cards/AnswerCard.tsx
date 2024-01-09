@@ -54,8 +54,8 @@ const AnswerCard = ({
             <p className="text-[11px] dark:text-slate-100 sm:text-[12px] md:text-[13px] xl:text-[14px]">
               {author}
             </p>
-            <span className="text-[8px] dark:text-slate-100 sm:text-[10px] md:text-[11px] xl:text-[12px]">
-              • {timeOfCreation}
+            <span className="ml-1 text-[8px] text-sky-600/80 sm:text-[9px] md:text-[10px] xl:text-[11px]">
+              • asked {timeOfCreation}
             </span>
           </div>
           <div />

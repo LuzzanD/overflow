@@ -111,7 +111,15 @@ const Profile = async () => {
       <div className="mt-16 flex flex-col gap-6">
         <h2 className="text-[20px] font-semibold dark:text-slate-200">Stats</h2>
         <div className="grid w-full grid-cols-4 gap-2">
-          <StatsCard />
+          <div className="flex h-[60px] w-full items-center justify-around rounded-md bg-slate-200 px-4 py-2 dark:bg-slate-800">
+            <span className="bg-gradient-to-r from-[#5e60ce] to-[#4ea8de] bg-clip-text font-semibold text-transparent dark:from-[#f28927] dark:to-[#ffd760]">
+              {questions.length}{" "}
+              {questions.length === 1 ? "Question" : "Questions"}
+            </span>
+            <span className="bg-gradient-to-r from-[#5e60ce] to-[#4ea8de] bg-clip-text font-semibold text-transparent dark:from-[#f28927] dark:to-[#ffd760]">
+              {answers.length} {answers.length === 1 ? "Answer" : "Answers"}
+            </span>
+          </div>
           <StatsCard />
           <StatsCard />
           <StatsCard />

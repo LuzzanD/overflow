@@ -11,6 +11,7 @@ import deleteIcon from "../../public/assets/icons/trash.svg";
 import editIcon from "../../public/assets/icons/edit.svg";
 import { redirect, usePathname } from "next/navigation";
 import { deleteQuestion } from "@/lib/actions/question.actions";
+import { useToast } from "../ui/use-toast";
 
 interface QuestionCardProps {
   id: string;
@@ -43,8 +44,17 @@ const QuestionCard = ({
   const path = usePathname();
   const { user } = useUser();
   if (!user) redirect("sign-in");
+  const { toast } = useToast();
 
   // const parsedId = JSON.parse(authorId);
+  const handleDeleteClick = async () => {
+    await deleteQuestion({
+      questionId: JSON.parse(id),
+      authorId,
+      path,
+    });
+    toast({ description: "Question has been succesfully deleted!" });
+  };
 
   return (
     <Link href={`/question/${JSON.parse(id)}`}>
@@ -57,13 +67,7 @@ const QuestionCard = ({
             <div className="flex items-baseline gap-3">
               <div
                 className="relative aspect-square w-[16px]"
-                onClick={async () =>
-                  await deleteQuestion({
-                    questionId: JSON.parse(id),
-                    authorId,
-                    path,
-                  })
-                }
+                onClick={handleDeleteClick}
               >
                 <Image
                   src={deleteIcon}
@@ -111,8 +115,8 @@ const QuestionCard = ({
                 {author}
               </p>
             </Link>
-            <span className="text-[8px] dark:text-slate-100 sm:text-[10px] md:text-[11px] xl:text-[12px]">
-              • {timeOfCreation}
+            <span className="ml-1 text-[8px] text-sky-600/80 sm:text-[9px] md:text-[10px] xl:text-[11px]">
+              • asked {timeOfCreation}
             </span>
           </div>
           <Metric

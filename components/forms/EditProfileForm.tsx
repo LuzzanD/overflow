@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/form";
 import { usePathname, useRouter } from "next/navigation";
 import { editUser } from "@/lib/actions/user.actions";
+import { toast } from "../ui/use-toast";
 
 const formSchema = z.object({
   fullname: z.string().min(10, {
@@ -78,6 +79,7 @@ const EditProfileForm = ({
         bio: values.bio,
         path,
       });
+      toast({ description: "Profile has been succesfully updated!" });
       router.push("/profile");
     } catch (error) {
       console.log(error);

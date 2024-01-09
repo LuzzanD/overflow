@@ -15,6 +15,7 @@ import {
   handleView,
 } from "@/lib/actions/interaction.actions";
 import { usePathname } from "next/navigation";
+import { useToast } from "../ui/use-toast";
 
 interface VotingParams {
   type: string;
@@ -38,6 +39,7 @@ const VotingMetric = ({
   hasUserSaved,
 }: VotingParams) => {
   const path = usePathname();
+  const { toast } = useToast();
 
   useEffect(() => {
     handleView({ id: JSON.stringify(id), path });
@@ -50,6 +52,12 @@ const VotingMetric = ({
       type,
       path,
     });
+    !hasUserUpvoted &&
+      toast({
+        description: `${
+          type === "answer" ? "Answer" : "Question"
+        } has been succesfully upvoted!`,
+      });
   };
 
   const handleDownvoteClick = async () => {
@@ -59,6 +67,13 @@ const VotingMetric = ({
       type,
       path,
     });
+    !hasUserDownvoted &&
+      toast({
+        variant: "destructive",
+        description: `${
+          type === "answer" ? "Answer" : "Question"
+        } has been succesfully downvoted!`,
+      });
   };
 
   const handleSaveClick = async () => {
@@ -67,6 +82,13 @@ const VotingMetric = ({
       id,
       type,
       path,
+    });
+
+    toast({
+      variant: hasUserSaved ? "destructive" : "default",
+      description: hasUserSaved
+        ? "Question has been removed from collection!"
+        : "Question has been added to collection!",
     });
   };
 

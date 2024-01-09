@@ -27,7 +27,7 @@ const TagDetail = async ({ params, searchParams }: any) => {
 
   return (
     <div className="flex w-full flex-col gap-8">
-      <h1 className="h2-bold xl:h1-bold mb-12 dark:text-slate-100">{name}</h1>
+      <h1 className="h2-bold xl:h1-bold mb-2 dark:text-slate-100">{name}</h1>
       <div className="flex h-[26px] rounded-lg sm:h-[30px] md:h-[34px] lg:h-[38px]">
         <div className="flex-center cursor-pointer rounded-l-lg bg-slate-200 p-1 hover:bg-slate-300 dark:bg-dark-100 dark:hover:bg-dark-100/70 sm:p-2">
           <div className="relative aspect-square w-[16px] xs:w-[20px] md:w-[22px] lg:w-[25px]">
