@@ -11,6 +11,7 @@ import AnswerForm from "@/components/forms/AnswerForm";
 import Answer from "@/components/shared/Answer";
 import { Schema } from "mongoose";
 import Metric from "@/components/shared/Metric";
+import { convertDateFormat } from "@/lib/utils";
 
 interface Props {
   userId: string;
@@ -70,11 +71,15 @@ const QuestionDetailsPage = async ({ params, searchParams }: any) => {
           <p className="body-semibold dark:text-slate-100">
             {question.author.name}
           </p>
+          <span className="text-[9px] text-sky-600 sm:text-[10px] md:text-[11px] xl:text-[12px]">
+            • asked {convertDateFormat(question.createdAt)}
+          </span>
         </div>
         <div>
           <VotingMetric
             type="question"
             id={parsedQuestionId}
+            author={JSON.stringify(question.author._id)}
             userId={parsedUserId}
             upvotes={question.upvotes.length}
             downvotes={question.downvotes.length}

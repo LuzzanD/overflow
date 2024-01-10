@@ -79,7 +79,7 @@ const EditProfileForm = ({
         bio: values.bio,
         path,
       });
-      toast({ description: "Profile has been succesfully updated!" });
+      toast({ description: "Profile has been successfully updated!" });
       router.push("/profile");
     } catch (error) {
       console.log(error);

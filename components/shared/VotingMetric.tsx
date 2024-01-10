@@ -20,6 +20,7 @@ import { useToast } from "../ui/use-toast";
 interface VotingParams {
   type: string;
   id: string;
+  author: string;
   userId: string;
   upvotes: number;
   downvotes: number;
@@ -31,6 +32,7 @@ interface VotingParams {
 const VotingMetric = ({
   type,
   id,
+  author,
   userId,
   upvotes,
   downvotes,
@@ -49,6 +51,7 @@ const VotingMetric = ({
     await handleUpvote({
       userId,
       id,
+      author,
       type,
       path,
     });
@@ -56,7 +59,7 @@ const VotingMetric = ({
       toast({
         description: `${
           type === "answer" ? "Answer" : "Question"
-        } has been succesfully upvoted!`,
+        } has been successfully upvoted!`,
       });
   };
 
@@ -64,6 +67,7 @@ const VotingMetric = ({
     await handleDownvote({
       userId,
       id,
+      author,
       type,
       path,
     });
@@ -72,7 +76,7 @@ const VotingMetric = ({
         variant: "destructive",
         description: `${
           type === "answer" ? "Answer" : "Question"
-        } has been succesfully downvoted!`,
+        } has been successfully downvoted!`,
       });
   };
 
@@ -80,7 +84,6 @@ const VotingMetric = ({
     await handleSave({
       userId,
       id,
-      type,
       path,
     });
 

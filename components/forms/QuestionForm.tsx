@@ -60,6 +60,7 @@ const QuestionForm = ({ id, question, type }: QuestionProps) => {
       const editTagArray = parsedQuestion.tags.map((tag: TagProps) => tag.name);
       setTagArray(editTagArray);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type]);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -80,7 +81,7 @@ const QuestionForm = ({ id, question, type }: QuestionProps) => {
           text: values.text,
           tags: tagArray,
         });
-        toast({ description: "Question has been succesfully submitted!" });
+        toast({ description: "Question has been successfully submitted!" });
         router.push("/");
       } catch (error) {
         console.log(error);
@@ -92,7 +93,7 @@ const QuestionForm = ({ id, question, type }: QuestionProps) => {
           title: values.title,
           text: values.text,
         });
-        toast({ description: "Question has been succesfully edited!" });
+        toast({ description: "Question has been successfully edited!" });
         router.push("/");
       } catch (error) {
         console.log(error);

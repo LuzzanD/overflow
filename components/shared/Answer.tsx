@@ -59,6 +59,7 @@ const Answer = async ({
         <div>
           <VotingMetric
             id={answerId}
+            author={JSON.stringify(author._id)}
             type="answer"
             userId={userId}
             upvotes={upvotes.length}

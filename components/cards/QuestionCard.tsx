@@ -53,7 +53,7 @@ const QuestionCard = ({
       authorId,
       path,
     });
-    toast({ description: "Question has been succesfully deleted!" });
+    toast({ description: "Question has been successfully deleted!" });
   };
 
   return (
@@ -93,7 +93,7 @@ const QuestionCard = ({
         </div>
         <div className="flex gap-3">
           {tags &&
-            tags.map(({ name }) => {
+            tags.map(({ name }: { name: string }) => {
               return <Tag key={name} name={name} hasCloseButton={false} />;
             })}
         </div>

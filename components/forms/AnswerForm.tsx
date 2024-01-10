@@ -53,7 +53,7 @@ const AnswerForm = ({ userId, questionId }: AnswerProps) => {
         text: values.text,
         path,
       });
-      toast({ description: "Answer has been succesfully submitted!" });
+      toast({ description: "Answer has been successfully submitted!" });
       router.push("/");
     } catch (error) {
       console.log(error);

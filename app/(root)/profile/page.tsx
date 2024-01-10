@@ -13,6 +13,7 @@ import StatsCard from "@/components/cards/StatsCard";
 import { getQuestionsByUserId } from "@/lib/actions/question.actions";
 import ProfileTabs from "@/components/shared/ProfileTabs";
 import { getAnswersByUserId } from "@/lib/actions/answer.actions";
+import { convertDateFormat } from "@/lib/utils";
 
 const Profile = async () => {
   const { userId } = auth();
@@ -24,11 +25,13 @@ const Profile = async () => {
     portfolioLink,
     profilePictureUrl,
     locationString,
+    joinedAt,
     bio,
   } = await getUserById({ userId });
 
   const questions = await getQuestionsByUserId({ id: _id });
   const answers = await getAnswersByUserId({ id: _id });
+  const joinedAtDate = convertDateFormat(joinedAt);
 
   return (
     <div>
@@ -57,7 +60,7 @@ const Profile = async () => {
           </h3>
           <div className="flex items-center gap-1 md:gap-2 lg:gap-3">
             {portfolioLink && (
-              <div className="flex gap-1">
+              <div className="flex gap-1.5">
                 <div className="relative w-[15px]">
                   <Image
                     src={linkIcon}
@@ -67,14 +70,14 @@ const Profile = async () => {
                   />
                 </div>
                 <Link href={`https://${portfolioLink}`} target="_blank">
-                  <span className="text-[9px] text-sky-600 sm:text-[10px] md:text-[12px] xl:text-[14px]">
+                  <span className="text-[9px] text-sky-600 sm:text-[10px] md:text-[12px] xl:text-[13px]">
                     {portfolioLink}
                   </span>
                 </Link>
               </div>
             )}
             {locationString && (
-              <div className="flex gap-1">
+              <div className="flex gap-1.5">
                 <div className="relative w-[15px]">
                   <Image
                     src={locationIcon}
@@ -84,12 +87,12 @@ const Profile = async () => {
                   />
                 </div>
 
-                <span className="text-[9px] text-sky-600 sm:text-[10px] md:text-[12px] xl:text-[14px]">
+                <span className="text-[9px] text-sky-600 sm:text-[10px] md:text-[12px] xl:text-[13px]">
                   {locationString}
                 </span>
               </div>
             )}
-            <div className="flex gap-1">
+            <div className="flex gap-1.5">
               <div className="relative w-[15px]">
                 <Image
                   src={calendarIcon}
@@ -98,7 +101,9 @@ const Profile = async () => {
                   fill={true}
                 />
               </div>
-              <span className="text-[9px] text-sky-600 sm:text-[10px] md:text-[12px] xl:text-[14px]"></span>
+              <span className="text-[9px] text-sky-600 sm:text-[10px] md:text-[12px] xl:text-[13px]">
+                {joinedAtDate}
+              </span>
             </div>
           </div>
           {bio && (

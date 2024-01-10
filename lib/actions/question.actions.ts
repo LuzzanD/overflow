@@ -43,7 +43,7 @@ export const createQuestion = async (params: CreateQuestionParams) => {
 
     await User.findOneAndUpdate(
       { _id: author },
-      { $push: { questions: newQuestion._id } }
+      { $push: { questions: newQuestion._id }, $inc: { reputation: 5 } }
     );
 
     questionTags = [];
@@ -86,13 +86,13 @@ interface GetQuestionByIdParams {
 export const getQuestionById = async ({ id }: GetQuestionByIdParams) => {
   try {
     await connectToDatabase();
-    const question = await Question.findOne({ _id: id })
-      .populate({
+    const question = await Question.findOne({ _id: id }).populate([
+      {
         path: "author",
         model: User,
         select: "clerkId name profilePictureUrl",
-      })
-      .populate({
+      },
+      {
         path: "answers",
         model: Answer,
         populate: {
@@ -100,8 +100,9 @@ export const getQuestionById = async ({ id }: GetQuestionByIdParams) => {
           model: User,
           select: "clerkId name profilePictureUrl",
         },
-      })
-      .populate({ path: "tags", model: Tag, select: "name" });
+      },
+      { path: "tags", model: Tag, select: "name", options: { lean: true } },
+    ]);
 
     return question;
   } catch (error: any) {
@@ -205,7 +206,7 @@ export const deleteQuestion = async (params: DeleteQuestionParams) => {
     }
     for (const tag of question.tags) {
       await Tag.findOneAndUpdate(
-        { _id: tag._id },
+        { _id: tag },
         { $pull: { questions: question._id } }
       );
     }

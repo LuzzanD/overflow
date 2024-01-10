@@ -26,7 +26,7 @@ export const createAnswer = async (params: CreateAnswerParams) => {
     );
     await User.findOneAndUpdate(
       { _id: author },
-      { $push: { answers: newAnswer._id } },
+      { $push: { answers: newAnswer._id }, $inc: { reputation: 10 } },
       { new: true }
     );
     revalidatePath(path);

@@ -13,6 +13,7 @@ export interface IUser extends Document {
   answers: Schema.Types.ObjectId[];
   tags: Schema.Types.ObjectId[];
   savedQuestions: Schema.Types.ObjectId[];
+  reputation: number;
   joinedAt: Date;
 }
 
@@ -29,6 +30,7 @@ const userSchema = new Schema({
   answers: [{ type: Schema.Types.ObjectId, ref: "Answers" }],
   tags: [{ type: Schema.Types.ObjectId, ref: "Tags" }],
   savedQuestions: [{ type: Schema.Types.ObjectId, ref: "Question" }],
+  reputation: { type: Number },
   joinedAt: { type: Date, default: Date.now },
 });
 
