@@ -53,9 +53,37 @@ export const createQuestion = async (params: CreateQuestionParams) => {
   }
 };
 
-export const getQuestions = async () => {
+interface FilterProps {
+  filter: string;
+}
+
+export const getQuestions = async (params: FilterProps) => {
   try {
     await connectToDatabase();
+    const { filter } = params;
+
+    let sortOption: {};
+
+    switch (filter) {
+      case "newest":
+        sortOption = { createdAt: -1 };
+        break;
+      case "recommended questions":
+        sortOption = { upvotes: 1 };
+        break;
+
+      case "frequent":
+        sortOption = { views: -1 };
+        break;
+
+      case "unanswered":
+        sortOption = { answers: 1 };
+        break;
+
+      default:
+        sortOption = { createdAt: -1 };
+    }
+
     const allQuestions = await Question.find()
       .populate({
         path: "author",
@@ -70,9 +98,7 @@ export const getQuestions = async () => {
           lean: true,
         },
       })
-      .sort({
-        createdAt: -1,
-      });
+      .sort(sortOption);
     return allQuestions;
   } catch (error: any) {
     throw new Error(error);

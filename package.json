@@ -39,6 +39,8 @@
     "node-fetch": "^3.3.2",
     "postcss": "8.4.30",
     "prettier": "^3.0.3",
+    "qs": "^6.11.2",
+    "query-string": "^8.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.48.2",

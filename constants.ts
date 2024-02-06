@@ -50,3 +50,10 @@ export const themeOptions = [
     icon: "/assets/icons/computer.svg",
   },
 ];
+
+export const homePageFilters = [
+  "Newest",
+  "Recommended Questions",
+  "Frequent",
+  "Unanswered",
+];

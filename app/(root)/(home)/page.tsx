@@ -5,9 +5,11 @@ import QuestionCard from "@/components/cards/QuestionCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { getQuestions } from "@/lib/actions/question.actions";
+import { homePageFilters } from "@/constants";
+import FilterTab from "@/components/shared/FilterTab";
 
-const Home = async () => {
-  const fetchedQuestions = await getQuestions();
+const Home = async ({ searchParams }: any) => {
+  const fetchedQuestions = await getQuestions({ filter: searchParams.filter });
 
   return (
     <div className="flex w-full flex-col gap-8">
@@ -33,6 +35,11 @@ const Home = async () => {
           </div>
         </div>
         <Input className="h-full rounded-r-lg border-none bg-slate-200 px-1 text-[10px] hover:bg-slate-300 focus:outline-none dark:bg-dark-100 dark:text-slate-100 dark:hover:bg-dark-100/70 sm:px-2 sm:text-[12px] md:text-[14px] lg:px-4" />
+      </div>
+      <div className="flex w-full gap-4">
+        {homePageFilters.map((filter) => {
+          return <FilterTab key={filter} filter={filter} />;
+        })}
       </div>
       <div className="flex flex-col gap-4">
         {fetchedQuestions ? (

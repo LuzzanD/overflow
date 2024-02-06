@@ -8,7 +8,7 @@ import Link from "next/link";
 
 const RightSideBar = async () => {
   const allTags = await getAllTags();
-  const allQuestions = await getQuestions();
+  const allQuestions = await getQuestions({ filter: "Newest" });
 
   const questionCards =
     allQuestions &&
