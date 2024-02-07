@@ -7,9 +7,13 @@ import { Input } from "@/components/ui/input";
 import { getQuestions } from "@/lib/actions/question.actions";
 import { homePageFilters } from "@/constants";
 import FilterTab from "@/components/shared/FilterTab";
+import Pagination from "@/components/shared/Pagination";
 
 const Home = async ({ searchParams }: any) => {
-  const fetchedQuestions = await getQuestions({ filter: searchParams.filter });
+  const result = await getQuestions({
+    filter: searchParams.filter,
+    page: searchParams.page,
+  });
 
   return (
     <div className="flex w-full flex-col gap-8">
@@ -42,8 +46,8 @@ const Home = async ({ searchParams }: any) => {
         })}
       </div>
       <div className="flex flex-col gap-4">
-        {fetchedQuestions ? (
-          fetchedQuestions.map((question) => {
+        {result.allQuestions ? (
+          result.allQuestions.map((question) => {
             const questionId = JSON.stringify(question._id);
             const dateString = JSON.stringify(question.createdAt);
             const { clerkId, name, profilePictureUrl } = question.author;
@@ -69,6 +73,9 @@ const Home = async ({ searchParams }: any) => {
             Waiting for the questions...
           </div>
         )}
+        <div className="mt-4">
+          <Pagination isNext={result.isNext} />
+        </div>
       </div>
     </div>
   );

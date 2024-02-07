@@ -2,17 +2,17 @@ import React from "react";
 import Image from "next/image";
 import Tag from "./shared/Tag";
 import chevronImage from "../public/assets/icons/chevron-right.svg";
-import { getAllTags } from "@/lib/actions/tag.actions";
+import { getRightSideBarTags } from "@/lib/actions/tag.actions";
 import { getQuestions } from "@/lib/actions/question.actions";
 import Link from "next/link";
 
 const RightSideBar = async () => {
-  const allTags = await getAllTags();
-  const allQuestions = await getQuestions({ filter: "Newest" });
+  const allTags = await getRightSideBarTags();
+  const result = await getQuestions({ filter: "Newest", page: "1" });
 
   const questionCards =
-    allQuestions &&
-    allQuestions.slice(0, 5).map((question) => {
+    result.allQuestions &&
+    result.allQuestions.slice(0, 5).map((question) => {
       return (
         <Link
           key={JSON.stringify(question._id)}

@@ -5,9 +5,10 @@ import { Input } from "@/components/ui/input";
 import { getAllUsers } from "@/lib/actions/user.actions";
 import Link from "next/link";
 import FilterSelector from "@/components/shared/FilterSelector";
+import { communityFilters } from "@/constants";
 
-const Community = async () => {
-  const allUsers = await getAllUsers();
+const Community = async ({ searchParams }: any) => {
+  const allUsers = await getAllUsers({ filter: searchParams.filter });
 
   return (
     <div className="flex w-full flex-col gap-8">
@@ -27,7 +28,7 @@ const Community = async () => {
           <Input className="h-full rounded-r-lg border-none bg-slate-200 px-1 text-[10px] hover:bg-slate-300 focus:outline-none dark:bg-dark-100 dark:text-slate-100 dark:hover:bg-dark-100/70 sm:px-2 sm:text-[12px] md:text-[14px] lg:px-4" />
         </div>
         <div className="">
-          <FilterSelector />
+          <FilterSelector filters={communityFilters} />
         </div>
       </div>
       {allUsers ? (

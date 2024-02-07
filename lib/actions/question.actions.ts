@@ -55,12 +55,16 @@ export const createQuestion = async (params: CreateQuestionParams) => {
 
 interface FilterProps {
   filter: string;
+  page: string;
 }
 
 export const getQuestions = async (params: FilterProps) => {
   try {
     await connectToDatabase();
-    const { filter } = params;
+    const { filter, page } = params;
+    const PAGE_SIZE = 1;
+    const skipAmount =
+      Number(page) - 1 === 0 ? 0 : (Number(page) - 1) * PAGE_SIZE;
 
     let sortOption: {};
 
@@ -98,8 +102,13 @@ export const getQuestions = async (params: FilterProps) => {
           lean: true,
         },
       })
+      .limit(PAGE_SIZE)
+      .skip(skipAmount)
       .sort(sortOption);
-    return allQuestions;
+
+    const questionsCount = await Question.countDocuments();
+    const isNext = questionsCount - Number(page) * PAGE_SIZE > 0;
+    return { allQuestions, isNext };
   } catch (error: any) {
     throw new Error(error);
   }

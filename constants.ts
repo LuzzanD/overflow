@@ -57,3 +57,10 @@ export const homePageFilters = [
   "Frequent",
   "Unanswered",
 ];
+
+export const communityFilters = [
+  "Most Popular",
+  "Highest Reputation",
+  "New Users",
+];
+export const tagsFilters = ["Most Popular", "Alphabetically"];

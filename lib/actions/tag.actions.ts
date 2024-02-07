@@ -5,9 +5,39 @@ import { connectToDatabase } from "../mongoose";
 import { Tag } from "@/database/TagModel";
 import { User } from "@/database/UserModel";
 
-export const getAllTags = async () => {
+interface FilterProps {
+  filter: string;
+}
+
+export const getAllTags = async (params: FilterProps) => {
   try {
     connectToDatabase();
+    const { filter } = params;
+
+    let sortOption: {};
+
+    switch (filter) {
+      case "most popular":
+        sortOption = { questions: -1 };
+        break;
+      case "alphabetically":
+        sortOption = { name: 1 };
+        break;
+
+      default:
+        sortOption = { questions: -1 };
+    }
+    const allTags = await Tag.find().sort(sortOption);
+    return allTags;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+export const getRightSideBarTags = async () => {
+  try {
+    connectToDatabase();
+
     const allTags = await Tag.find();
     return allTags;
   } catch (error: any) {

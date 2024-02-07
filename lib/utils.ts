@@ -69,15 +69,15 @@ export function convertDateFormat(inputDate: Date): string {
 
 interface Params {
   searchParams: string;
-  filterName: string;
+  value: string;
   key: string;
 }
 
 export const formUrlQuery = (params: Params) => {
-  const { searchParams, filterName, key } = params;
+  const { searchParams, value, key } = params;
   const currentUrl = qs.parse(searchParams);
 
-  currentUrl[key] = filterName;
+  currentUrl[key] = value;
   console.log(currentUrl, window.location.pathname);
 
   return qs.stringifyUrl(

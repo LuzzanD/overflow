@@ -81,10 +81,33 @@ export const editUser = async (params: EditUserProps) => {
   }
 };
 
-export const getAllUsers = async () => {
+interface FilterProps {
+  filter: string;
+}
+
+export const getAllUsers = async (params: FilterProps) => {
   try {
     await connectToDatabase();
-    const allUsers = await User.find();
+    const { filter } = params;
+
+    let sortOption: {};
+
+    switch (filter) {
+      case "most popular":
+        sortOption = { questions: -1 };
+        break;
+      case "highest reputation":
+        sortOption = { reputation: 1 };
+        break;
+
+      case "new users":
+        sortOption = { joinedAt: -1 };
+        break;
+
+      default:
+        sortOption = { joinedAt: -1 };
+    }
+    const allUsers = await User.find().sort(sortOption);
     return allUsers;
   } catch (error) {
     console.log(error);

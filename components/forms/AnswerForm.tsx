@@ -73,7 +73,7 @@ const AnswerForm = ({ userId, questionId }: AnswerProps) => {
           className="ml-auto block w-[200px] border-[1px] border-slate-400 text-slate-800 dark:border-slate-800 dark:bg-dark-200  dark:text-slate-200"
           onClick={handleEditorOpen}
         >
-          {editorOpen ? "Close the editor." : "Open the editor."}
+          {editorOpen ? "Close the editor." : "Answer the question."}
         </Button>
       </div>
       {editorOpen && (
