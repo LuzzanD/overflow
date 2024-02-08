@@ -62,7 +62,7 @@ export const getQuestions = async (params: FilterProps) => {
   try {
     await connectToDatabase();
     const { filter, page } = params;
-    const PAGE_SIZE = 1;
+    const PAGE_SIZE = 3;
     const skipAmount =
       Number(page) - 1 === 0 ? 0 : (Number(page) - 1) * PAGE_SIZE;
 

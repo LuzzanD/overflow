@@ -20,7 +20,7 @@ const RightSideBar = async () => {
         >
           <div className="group mb-4 flex h-[16%] items-center justify-between rounded-lg bg-slate-200/90 p-2 pr-0 hover:cursor-pointer hover:bg-slate-200/50 dark:bg-dark-100 hover:dark:bg-dark-100/50 lg:pr-1 xl:pr-2">
             <p className="h-[100%] w-[90%] overflow-hidden text-ellipsis text-[9px] dark:text-slate-100 lg:w-[80%] lg:text-[10px] xl:text-[12px]">
-              {question.text}
+              {question.title}
             </p>
             <div className="relative h-[18px] w-[18px] lg:h-[20px] lg:w-[20px] xl:h-[22px] xl:w-[22px]">
               <Image
@@ -44,25 +44,25 @@ const RightSideBar = async () => {
           className="mb-4 flex h-[16%] items-center justify-between rounded-lg bg-slate-200/90 p-1.5 hover:cursor-pointer hover:bg-slate-200/50 dark:bg-dark-100 hover:dark:bg-dark-100/50 lg:p-2"
         >
           <Tag name={name} hasCloseButton={false} />
-          <div className="text-[14px] dark:text-slate-100">
+          <div className="text-[13px] dark:text-slate-100">
             {questions.length !== 0 ? questions.length : 0}
           </div>
         </div>
       );
     });
   return (
-    <section className="h-screen w-[100%] flex-col p-3 pt-6 shadow-xl dark:bg-dark-200 dark:shadow-dark-100 sm:w-[25%] md:p-4 md:pt-8 lg:w-[24%] 2xl:w-[20%]">
-      <div className="flex h-1/2 flex-col">
-        <h3 className="paragraph-semibold xl:base-semibold mb-3 h-fit  dark:text-slate-100 lg:mb-4 xl:mb-5">
+    <section className="min-h-full w-[100%] flex-col bg-slate-50 p-3 pt-6 shadow-xl dark:bg-dark-200 dark:shadow-dark-100 sm:w-[25%] md:p-4 md:pt-8 lg:w-[24%] 2xl:w-[20%]">
+      <div className="flex flex-col">
+        <h3 className="paragraph-semibold xl:base-semibold mb-3 h-fit dark:text-slate-100 lg:mb-4 xl:mb-5">
           Hot Network
         </h3>
-        <div className="h-[80%] ">{questionCards}</div>
+        <div className="">{questionCards}</div>
       </div>
-      <div className="flex h-1/2 flex-col">
-        <h3 className="paragraph-semibold xl:base-semibold mb-3 h-fit  dark:text-slate-100 lg:mb-4 xl:mb-5">
+      <div className="flex flex-col">
+        <h3 className="paragraph-semibold xl:base-semibold mb-3 h-fit dark:text-slate-100 lg:mb-4 xl:mb-5">
           Popular Tags
         </h3>
-        <div className="h-[80%]">{tagCards}</div>
+        <div className="">{tagCards}</div>
       </div>
     </section>
   );
