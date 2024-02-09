@@ -25,16 +25,17 @@ const FilterSelector = ({ filters }: { filters: string[] }) => {
   return (
     <div>
       <Select>
-        <SelectTrigger className="w-[180px]">
+        <SelectTrigger className="h-[26px] w-[180px] rounded-lg border-none bg-slate-200 text-slate-900 hover:bg-slate-300 focus:outline-none sm:h-[30px] md:h-[34px] lg:h-[38px]">
           <SelectValue placeholder={filters[0]} />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="bg-slate-200 text-slate-900">
           {filters.map((filter) => {
             return (
               <SelectItem
                 key={filter}
                 onClick={() => handleClick(filter.toLowerCase())}
                 value={filter.toLowerCase()}
+                className="hover:cursor-pointer hover:bg-slate-300"
               >
                 {filter}
               </SelectItem>

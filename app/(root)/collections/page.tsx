@@ -4,8 +4,7 @@ import { getSavedQuestions } from "@/lib/actions/question.actions";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { Schema } from "mongoose";
-import Image from "next/image";
-import { Input } from "@/components/ui/input";
+import Search from "@/components/shared/Search";
 
 interface Props {
   _id: string;
@@ -34,18 +33,8 @@ const Collections = async () => {
           Saved Questions
         </h1>
       </div>
-      <div className="flex h-[26px] rounded-lg sm:h-[30px] md:h-[34px] lg:h-[38px]">
-        <div className="flex-center cursor-pointer rounded-l-lg bg-slate-200 p-1 hover:bg-slate-300 dark:bg-dark-100 dark:hover:bg-dark-100/70 sm:p-2">
-          <div className="relative aspect-square w-[16px] xs:w-[20px] md:w-[22px] lg:w-[25px]">
-            <Image
-              src="/assets/icons/search.svg"
-              alt="search-icon"
-              fill={true}
-              className="object-contain"
-            />
-          </div>
-        </div>
-        <Input className="h-full rounded-r-lg border-none bg-slate-200 px-1 text-[10px] hover:bg-slate-300 focus:outline-none dark:bg-dark-100 dark:text-slate-100 dark:hover:bg-dark-100/70 sm:px-2 sm:text-[12px] md:text-[14px] lg:px-4" />
+      <div className="h-[26px] rounded-lg sm:h-[30px] md:h-[34px] lg:h-[38px]">
+        <Search />
       </div>
       <div className="flex flex-col gap-4">
         {savedQuestions ? (

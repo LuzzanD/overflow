@@ -1,8 +1,8 @@
 import React from "react";
-import QuestionForm from "@/components/forms/QuestionForm";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { getUserById } from "@/lib/actions/user.actions";
+import QuestionForm from "@/components/forms/QuestionForm";
 
 const AskQuestion = async () => {
   const { userId } = auth();

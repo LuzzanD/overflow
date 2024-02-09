@@ -4,7 +4,6 @@ import Image from "next/image";
 import VotingMetric from "./VotingMetric";
 import { Schema } from "mongoose";
 import { convertDateFormat } from "@/lib/utils";
-// import { calculateTimePassed } from "@/lib/utils";
 
 interface Props {
   userId: string;
