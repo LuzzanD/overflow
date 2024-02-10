@@ -1,10 +1,10 @@
 "use client";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import QuestionCard from "@/components/cards/QuestionCard";
-import { Schema } from "mongoose";
 import React, { useState } from "react";
+import QuestionCard from "@/components/cards/QuestionCard";
 import AnswerCard from "../cards/AnswerCard";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Schema } from "mongoose";
 
 interface QuestionProps {
   _id: string;
@@ -36,15 +36,17 @@ interface AnswerProps {
   upvotes: Schema.Types.ObjectId[];
 }
 
-interface Params {
+interface ProfileTabsProps {
   questions?: string;
   answers?: string;
 }
 
-const ProfileTabs = ({ questions, answers }: Params) => {
+const ProfileTabs = ({ questions, answers }: ProfileTabsProps) => {
   const [active, setActive] = useState("questions");
+
   const parsedQuestions = questions && JSON.parse(questions);
   const parsedAnswers = answers && JSON.parse(answers);
+
   return (
     <div className="mt-12">
       <Tabs defaultValue="questions" className="">

@@ -1,7 +1,8 @@
 "use client";
-import { formUrlQuery } from "@/lib/utils";
-import { useRouter, useSearchParams } from "next/navigation";
+
 import React, { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { formUrlQuery } from "@/lib/utils";
 
 const Pagination = ({ isNext }: { isNext: boolean }) => {
   const router = useRouter();

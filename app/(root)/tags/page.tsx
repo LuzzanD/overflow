@@ -1,11 +1,10 @@
 import React from "react";
 import TagCard from "@/components/cards/TagCard";
-import { getAllTags } from "@/lib/actions/tag.actions";
-import Link from "next/link";
-import { Schema } from "mongoose";
 import FilterSelector from "@/components/shared/FilterSelector";
-import { tagsFilters } from "@/constants";
 import Search from "@/components/shared/Search";
+import { Schema } from "mongoose";
+import { tagsFilters } from "@/constants";
+import { getAllTags } from "@/lib/actions/tag.actions";
 
 interface Props {
   name: string;
@@ -28,12 +27,11 @@ const Tags = async ({ searchParams }: any) => {
       <div className="grid grid-cols-2 gap-3 xs:grid-cols-3 md:grid-cols-4 lg:gap-4 xl:grid-cols-5">
         {allTags ? (
           allTags.map((tag: Props) => (
-            <Link key={tag.name} href={`/tags/${tag.name}`}>
-              <TagCard
-                name={tag.name}
-                numberOfQuestions={tag.questions.length}
-              />
-            </Link>
+            <TagCard
+              key={tag.name}
+              name={tag.name}
+              numberOfQuestions={tag.questions.length}
+            />
           ))
         ) : (
           <div>

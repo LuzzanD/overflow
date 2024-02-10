@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
 
 interface TagProps {
   name: string;

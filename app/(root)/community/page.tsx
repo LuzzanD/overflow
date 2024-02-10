@@ -1,10 +1,9 @@
 import React from "react";
 import UserCard from "@/components/cards/UserCard";
-import { getAllUsers } from "@/lib/actions/user.actions";
-import Link from "next/link";
 import FilterSelector from "@/components/shared/FilterSelector";
-import { communityFilters } from "@/constants";
 import Search from "@/components/shared/Search";
+import { getAllUsers } from "@/lib/actions/user.actions";
+import { communityFilters } from "@/constants";
 
 const Community = async ({ searchParams }: any) => {
   const allUsers = await getAllUsers({ filter: searchParams.filter });
@@ -24,13 +23,13 @@ const Community = async ({ searchParams }: any) => {
         <div className="grid grid-cols-2 gap-3 xs:grid-cols-3 md:grid-cols-4 lg:gap-4 xl:grid-cols-5">
           {allUsers.map((user) => {
             return (
-              <Link key={user.clerkId} href={`/profile/${user.clerkId}`}>
-                <UserCard
-                  profilePic={user.profilePictureUrl}
-                  name={user.name}
-                  username={user.username}
-                />
-              </Link>
+              <UserCard
+                key={user.clerkId}
+                clerkId={user.clerkId}
+                profilePic={user.profilePictureUrl}
+                name={user.name}
+                username={user.username}
+              />
             );
           })}
         </div>

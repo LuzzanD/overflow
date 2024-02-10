@@ -14,6 +14,7 @@ import { formUrlQuery } from "@/lib/utils";
 const FilterSelector = ({ filters }: { filters: string[] }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
+
   const handleClick = (value: string) => {
     const url = formUrlQuery({
       searchParams: searchParams.toString(),
@@ -22,6 +23,7 @@ const FilterSelector = ({ filters }: { filters: string[] }) => {
     });
     router.push(url, { scroll: false });
   };
+
   return (
     <div>
       <Select>

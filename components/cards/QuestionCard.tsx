@@ -46,7 +46,6 @@ const QuestionCard = ({
   if (!user) redirect("sign-in");
   const { toast } = useToast();
 
-  // const parsedId = JSON.parse(authorId);
   const handleDeleteClick = async () => {
     await deleteQuestion({
       questionId: JSON.parse(id),

@@ -1,11 +1,13 @@
-import { calculateTimePassed } from "@/lib/utils";
-import Link from "next/link";
+"use client";
+
 import React from "react";
+import Link from "next/link";
 import Image from "next/image";
 import Tag from "../shared/Tag";
 import upvote from "../../public/assets/icons/like.svg";
+import { calculateTimePassed } from "@/lib/utils";
 
-interface Props {
+interface AnswerCardProps {
   answerId: string;
   questionId: string;
   title: string;
@@ -27,7 +29,7 @@ const AnswerCard = ({
   author,
   profilePictureUrl,
   upvoteNumber,
-}: Props) => {
+}: AnswerCardProps) => {
   const timeOfCreation = calculateTimePassed(JSON.parse(createdAt));
   return (
     <Link href={`/question/${JSON.parse(questionId)}/#${JSON.parse(answerId)}`}>
@@ -38,7 +40,14 @@ const AnswerCard = ({
         <div className="flex gap-3">
           {tags &&
             tags.map(({ name }) => {
-              return <Tag key={name} name={name} hasCloseButton={false} />;
+              const parsedName = JSON.parse(name);
+              return (
+                <Tag
+                  key={parsedName}
+                  name={parsedName}
+                  hasCloseButton={false}
+                />
+              );
             })}
         </div>
         <div className="flex items-baseline justify-between">
@@ -60,7 +69,7 @@ const AnswerCard = ({
           </div>
           <div />
           <div className="flex items-center gap-[3px]">
-            <Image alt="metric icon" src={upvote} height={14} width={14} />
+            <Image alt="upvote icon" src={upvote} height={14} width={14} />
             <p className="text-[9px] text-sky-600 sm:text-[10px] md:text-[11px] xl:text-[12px]">
               {upvoteNumber === 1
                 ? `${upvoteNumber} Vote`
