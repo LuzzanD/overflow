@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { Schema } from "mongoose";
 import Search from "@/components/shared/Search";
 
-interface Props {
+interface QuestionProps {
   _id: string;
   title: string;
   tags: { name: string }[];
@@ -38,9 +38,10 @@ const Collections = async () => {
       </div>
       <div className="flex flex-col gap-4">
         {savedQuestions ? (
-          savedQuestions.map((question: Props) => {
+          savedQuestions.map((question: QuestionProps) => {
             const parsedQuestionId = JSON.stringify(question._id);
             const parsedDate = JSON.stringify(question.createdAt);
+            const tagArray = question.tags.map((tag) => tag.name);
             const { clerkId, name, profilePictureUrl } = question.author;
             return (
               <QuestionCard
@@ -50,7 +51,7 @@ const Collections = async () => {
                 profilePictureUrl={profilePictureUrl}
                 id={parsedQuestionId}
                 title={question.title}
-                tags={question.tags}
+                tags={tagArray}
                 createdAt={parsedDate}
                 views={question.views}
                 upvoteNumber={question.upvotes.length}

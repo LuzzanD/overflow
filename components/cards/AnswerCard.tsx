@@ -11,9 +11,7 @@ interface AnswerCardProps {
   answerId: string;
   questionId: string;
   title: string;
-  tags: {
-    name: string;
-  }[];
+  tags: string[];
   createdAt: string;
   author: string;
   profilePictureUrl: string;
@@ -39,15 +37,8 @@ const AnswerCard = ({
         </h3>
         <div className="flex gap-3">
           {tags &&
-            tags.map(({ name }) => {
-              const parsedName = JSON.parse(name);
-              return (
-                <Tag
-                  key={parsedName}
-                  name={parsedName}
-                  hasCloseButton={false}
-                />
-              );
+            tags.map((name) => {
+              return <Tag key={name} name={name} hasCloseButton={false} />;
             })}
         </div>
         <div className="flex items-baseline justify-between">

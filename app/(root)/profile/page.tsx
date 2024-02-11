@@ -50,7 +50,7 @@ const Profile = async () => {
               {name}
             </h2>
             <Link href="/profile/edit">
-              <Button className="primary-gradient dark:secondary-gradient w-[150px] text-white">
+              <Button className="primary-gradient dark:secondary-gradient w-[150px] text-white transition-transform duration-300 hover:scale-110">
                 Edit profile
               </Button>
             </Link>

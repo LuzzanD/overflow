@@ -6,7 +6,7 @@ import { Schema } from "mongoose";
 import { tagsFilters } from "@/constants";
 import { getAllTags } from "@/lib/actions/tag.actions";
 
-interface Props {
+interface TagProps {
   name: string;
   questions: Schema.Types.ObjectId[];
 }
@@ -26,7 +26,7 @@ const Tags = async ({ searchParams }: any) => {
       </div>
       <div className="grid grid-cols-2 gap-3 xs:grid-cols-3 md:grid-cols-4 lg:gap-4 xl:grid-cols-5">
         {allTags ? (
-          allTags.map((tag: Props) => (
+          allTags.map((tag: TagProps) => (
             <TagCard
               key={tag.name}
               name={tag.name}

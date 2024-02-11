@@ -82,13 +82,14 @@ const ProfileTabs = ({ questions, answers }: ProfileTabsProps) => {
           <div className="flex flex-col gap-4">
             {parsedQuestions.map((question: QuestionProps) => {
               const { clerkId, name, profilePictureUrl } = question.author;
+              const tagArray = question.tags.map((tag) => tag.name);
               return (
                 <QuestionCard
                   key={JSON.stringify(question._id)}
                   id={JSON.stringify(question._id)}
                   authorId={clerkId}
                   title={question.title}
-                  tags={question.tags}
+                  tags={tagArray}
                   createdAt={JSON.stringify(question.createdAt)}
                   author={name}
                   profilePictureUrl={profilePictureUrl}
@@ -104,13 +105,14 @@ const ProfileTabs = ({ questions, answers }: ProfileTabsProps) => {
           <div className="flex flex-col gap-4">
             {parsedAnswers.map((answer: AnswerProps) => {
               const { _id, title, tags } = answer.question;
+              const tagArray = tags.map((tag) => tag.name);
               const { name, profilePictureUrl } = answer.author;
               return (
                 <AnswerCard
                   key={JSON.stringify(answer._id)}
                   answerId={JSON.stringify(answer._id)}
                   questionId={JSON.stringify(_id)}
-                  tags={tags}
+                  tags={tagArray}
                   title={title}
                   createdAt={JSON.stringify(answer.createdAt)}
                   author={name}

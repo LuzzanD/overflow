@@ -90,8 +90,8 @@ const VotingMetric = ({
     toast({
       variant: hasUserSaved ? "destructive" : "default",
       description: hasUserSaved
-        ? "Question has been removed from collection!"
-        : "Question has been added to collection!",
+        ? "Question has been removed from the collection!"
+        : "Question has been added to the collection!",
     });
   };
 

@@ -17,9 +17,7 @@ interface QuestionCardProps {
   id: string;
   title: string;
   authorId: string;
-  tags: {
-    name: string;
-  }[];
+  tags: string[];
   createdAt: string;
   author: string;
   profilePictureUrl: string;
@@ -92,7 +90,7 @@ const QuestionCard = ({
         </div>
         <div className="flex gap-3">
           {tags &&
-            tags.map(({ name }: { name: string }) => {
+            tags.map((name) => {
               return <Tag key={name} name={name} hasCloseButton={false} />;
             })}
         </div>
