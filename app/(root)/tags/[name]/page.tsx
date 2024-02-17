@@ -27,7 +27,7 @@ const TagDetail = async ({ params, searchParams }: any) => {
     <div className="flex w-full flex-col gap-8">
       <h1 className="h2-bold xl:h1-bold mb-2 dark:text-slate-100">{name}</h1>
       <div className="flex h-[26px] rounded-lg sm:h-[30px] md:h-[34px] lg:h-[38px]">
-        <Search />
+        <Search placeholder="Search for questions." />
       </div>
       <div className="flex flex-col gap-4">
         {fetchedQuestionsByTag.map((question: QuestionProps) => {

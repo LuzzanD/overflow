@@ -27,7 +27,7 @@ const Home = async ({ searchParams }: any) => {
         </Link>
       </div>
       <div className="h-[26px] w-full rounded-lg sm:h-[30px] md:h-[34px] lg:h-[38px]">
-        <Search />
+        <Search placeholder="Search for questions." />
       </div>
       <div className="flex w-full gap-4">
         {homePageFilters.map((filter) => {

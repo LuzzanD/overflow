@@ -67,18 +67,37 @@ export function convertDateFormat(inputDate: Date): string {
   return formattedDate;
 }
 
-interface Params {
+interface FormUrlParams {
   searchParams: string;
   value: string;
   key: string;
 }
 
-export const formUrlQuery = (params: Params) => {
+export const formUrlQuery = (params: FormUrlParams) => {
   const { searchParams, value, key } = params;
   const currentUrl = qs.parse(searchParams);
 
   currentUrl[key] = value;
-  console.log(currentUrl, window.location.pathname);
+
+  return qs.stringifyUrl(
+    {
+      url: window.location.pathname,
+      query: currentUrl,
+    },
+    { skipNull: true }
+  );
+};
+
+interface DeleteUrlParams {
+  searchParams: string;
+  key: string;
+}
+
+export const removeUrlQuery = (params: DeleteUrlParams) => {
+  const { searchParams, key } = params;
+  const currentUrl = qs.parse(searchParams);
+
+  delete currentUrl[key];
 
   return qs.stringifyUrl(
     {

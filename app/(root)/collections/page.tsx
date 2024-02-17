@@ -34,7 +34,7 @@ const Collections = async () => {
         </h1>
       </div>
       <div className="h-[26px] rounded-lg sm:h-[30px] md:h-[34px] lg:h-[38px]">
-        <Search />
+        <Search placeholder="Search for questions." />
       </div>
       <div className="flex flex-col gap-4">
         {savedQuestions ? (

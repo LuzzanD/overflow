@@ -18,7 +18,7 @@ const Tags = async ({ searchParams }: any) => {
       <h1 className="h2-bold xl:h1-bold mb-2 dark:text-slate-100">Tags</h1>
       <div className="flex w-full gap-4">
         <div className="h-[26px] w-full rounded-lg sm:h-[30px] md:h-[34px] lg:h-[38px]">
-          <Search />
+          <Search placeholder="Search for tags." />
         </div>
         <div className="">
           <FilterSelector filters={tagsFilters} />
