@@ -5,6 +5,7 @@ import { User } from "@/database/UserModel";
 import { Question } from "@/database/QuestionModel";
 import { revalidatePath } from "next/cache";
 import { connectToDatabase } from "../mongoose";
+import { FilterQuery } from "mongoose";
 
 interface GetUserParams {
   userId: string;
@@ -83,12 +84,27 @@ export const editUser = async (params: EditUserProps) => {
 
 interface FilterProps {
   filter: string;
+  page: string;
+  searchQuery: string;
 }
 
 export const getAllUsers = async (params: FilterProps) => {
   try {
     await connectToDatabase();
-    const { filter } = params;
+    const { filter, page, searchQuery } = params;
+
+    const PAGE_SIZE = 3;
+    const skipAmount =
+      Number(page) - 1 === 0 ? 0 : (Number(page) - 1) * PAGE_SIZE;
+
+    const query: FilterQuery<typeof User> = {};
+
+    if (searchQuery) {
+      query.$or = [
+        { username: { $regex: new RegExp(searchQuery, "i") } },
+        { name: { $regex: new RegExp(searchQuery, "i") } },
+      ];
+    }
 
     let sortOption: {};
 
@@ -107,7 +123,10 @@ export const getAllUsers = async (params: FilterProps) => {
       default:
         sortOption = { joinedAt: -1 };
     }
-    const allUsers = await User.find().sort(sortOption);
+    const allUsers = await User.find(query)
+      .sort(sortOption)
+      .limit(PAGE_SIZE)
+      .skip(skipAmount);
     return allUsers;
   } catch (error) {
     console.log(error);

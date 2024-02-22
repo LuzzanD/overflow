@@ -6,6 +6,7 @@ import { Question } from "@/database/QuestionModel";
 import { Answer } from "@/database/AnswerModel";
 import { User } from "@/database/UserModel";
 import { Tag } from "@/database/TagModel";
+import { FilterQuery } from "mongoose";
 
 interface CreateQuestionParams {
   author: string;
@@ -56,17 +57,26 @@ export const createQuestion = async (params: CreateQuestionParams) => {
 interface FilterProps {
   filter: string;
   page: string;
+  searchQuery: string;
 }
 
 export const getQuestions = async (params: FilterProps) => {
   try {
     await connectToDatabase();
-    const { filter, page } = params;
+    const { filter, page, searchQuery } = params;
     const PAGE_SIZE = 3;
     const skipAmount =
       Number(page) - 1 === 0 ? 0 : (Number(page) - 1) * PAGE_SIZE;
 
     let sortOption: {};
+    const query: FilterQuery<typeof Question> = {};
+
+    if (searchQuery) {
+      query.$or = [
+        { title: { $regex: new RegExp(searchQuery, "i") } },
+        { text: { $regex: new RegExp(searchQuery, "i") } },
+      ];
+    }
 
     switch (filter) {
       case "newest":
@@ -88,7 +98,7 @@ export const getQuestions = async (params: FilterProps) => {
         sortOption = { createdAt: -1 };
     }
 
-    const allQuestions = await Question.find()
+    const allQuestions = await Question.find(query)
       .populate({
         path: "author",
         model: User,
@@ -174,10 +184,47 @@ export const getQuestionsByUserId = async ({
 
 interface GetSavedQuestionsProps {
   userId: string;
+  filter: string;
+  page: string;
+  searchQuery: string;
 }
 
 export const getSavedQuestions = async (params: GetSavedQuestionsProps) => {
-  const { userId } = params;
+  const { userId, filter, page, searchQuery } = params;
+  const PAGE_SIZE = 3;
+  const skipAmount =
+    Number(page) - 1 === 0 ? 0 : (Number(page) - 1) * PAGE_SIZE;
+
+  let sortOption: {};
+  const query: FilterQuery<typeof Question> = {};
+
+  if (searchQuery) {
+    query.$or = [
+      { title: { $regex: new RegExp(searchQuery, "i") } },
+      { text: { $regex: new RegExp(searchQuery, "i") } },
+    ];
+  }
+
+  switch (filter) {
+    case "newest":
+      sortOption = { createdAt: -1 };
+      break;
+    case "recommended questions":
+      sortOption = { upvotes: 1 };
+      break;
+
+    case "frequent":
+      sortOption = { views: -1 };
+      break;
+
+    case "unanswered":
+      sortOption = { answers: 1 };
+      break;
+
+    default:
+      sortOption = { createdAt: -1 };
+  }
+
   try {
     await connectToDatabase();
     const user = await User.findOne({ clerkId: userId })
@@ -198,7 +245,9 @@ export const getSavedQuestions = async (params: GetSavedQuestionsProps) => {
           },
         ],
       })
-      .sort({ createdAt: -1 });
+      .limit(PAGE_SIZE)
+      .skip(skipAmount)
+      .sort(sortOption);
     return user.savedQuestions;
   } catch (error) {
     console.log(error);

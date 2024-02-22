@@ -3,15 +3,16 @@ import Link from "next/link";
 import QuestionCard from "@/components/cards/QuestionCard";
 import { Button } from "@/components/ui/button";
 import { getQuestions } from "@/lib/actions/question.actions";
-import { homePageFilters } from "@/constants";
-import FilterTab from "@/components/shared/FilterTab";
+
 import Pagination from "@/components/shared/Pagination";
 import Search from "@/components/shared/Search";
+import Filters from "@/components/shared/Filters";
 
 const Home = async ({ searchParams }: any) => {
   const result = await getQuestions({
     filter: searchParams.filter,
     page: searchParams.page,
+    searchQuery: searchParams.q,
   });
 
   return (
@@ -29,11 +30,7 @@ const Home = async ({ searchParams }: any) => {
       <div className="h-[26px] w-full rounded-lg sm:h-[30px] md:h-[34px] lg:h-[38px]">
         <Search placeholder="Search for questions." />
       </div>
-      <div className="flex w-full gap-4">
-        {homePageFilters.map((filter) => {
-          return <FilterTab key={filter} filter={filter} />;
-        })}
-      </div>
+      <Filters />
       <div className="flex flex-col gap-4">
         {result.allQuestions ? (
           result.allQuestions.map((question) => {

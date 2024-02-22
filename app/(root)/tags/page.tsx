@@ -12,7 +12,11 @@ interface TagProps {
 }
 
 const Tags = async ({ searchParams }: any) => {
-  const allTags = await getAllTags({ filter: searchParams.filter });
+  const allTags = await getAllTags({
+    filter: searchParams.filter,
+    page: searchParams.page,
+    searchQuery: searchParams.q,
+  });
   return (
     <div className="flex w-full flex-col gap-8">
       <h1 className="h2-bold xl:h1-bold mb-2 dark:text-slate-100">Tags</h1>

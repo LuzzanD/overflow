@@ -4,15 +4,28 @@ import { Question } from "@/database/QuestionModel";
 import { connectToDatabase } from "../mongoose";
 import { Tag } from "@/database/TagModel";
 import { User } from "@/database/UserModel";
+import { FilterQuery } from "mongoose";
 
 interface FilterProps {
   filter: string;
+  page: string;
+  searchQuery: string;
 }
 
 export const getAllTags = async (params: FilterProps) => {
   try {
     connectToDatabase();
-    const { filter } = params;
+    const { filter, page, searchQuery } = params;
+
+    const PAGE_SIZE = 3;
+    const skipAmount =
+      Number(page) - 1 === 0 ? 0 : (Number(page) - 1) * PAGE_SIZE;
+
+    const query: FilterQuery<typeof Tag> = {};
+
+    if (searchQuery) {
+      query.$or = [{ name: { $regex: new RegExp(searchQuery, "i") } }];
+    }
 
     let sortOption: {};
 
@@ -27,7 +40,10 @@ export const getAllTags = async (params: FilterProps) => {
       default:
         sortOption = { questions: -1 };
     }
-    const allTags = await Tag.find().sort(sortOption);
+    const allTags = await Tag.find(query)
+      .sort(sortOption)
+      .limit(PAGE_SIZE)
+      .skip(skipAmount);
     return allTags;
   } catch (error: any) {
     throw new Error(error);

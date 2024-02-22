@@ -5,6 +5,7 @@ import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { Schema } from "mongoose";
 import Search from "@/components/shared/Search";
+import Filters from "@/components/shared/Filters";
 
 interface QuestionProps {
   _id: string;
@@ -21,10 +22,15 @@ interface QuestionProps {
   answers: Schema.Types.ObjectId[];
 }
 
-const Collections = async () => {
+const Collections = async ({ searchParams }: any) => {
   const user = await currentUser();
   if (!user) redirect("/sign-in");
-  const savedQuestions = await getSavedQuestions({ userId: user.id });
+  const savedQuestions = await getSavedQuestions({
+    userId: user.id,
+    filter: searchParams.filter,
+    page: searchParams.page,
+    searchQuery: searchParams.q,
+  });
 
   return (
     <div className="flex w-full flex-col gap-8">
@@ -36,6 +42,7 @@ const Collections = async () => {
       <div className="h-[26px] rounded-lg sm:h-[30px] md:h-[34px] lg:h-[38px]">
         <Search placeholder="Search for questions." />
       </div>
+      <Filters />
       <div className="flex flex-col gap-4">
         {savedQuestions ? (
           savedQuestions.map((question: QuestionProps) => {

@@ -6,7 +6,11 @@ import { getAllUsers } from "@/lib/actions/user.actions";
 import { communityFilters } from "@/constants";
 
 const Community = async ({ searchParams }: any) => {
-  const allUsers = await getAllUsers({ filter: searchParams.filter });
+  const allUsers = await getAllUsers({
+    filter: searchParams.filter,
+    page: searchParams.page,
+    searchQuery: searchParams.q,
+  });
 
   return (
     <div className="flex w-full flex-col gap-8">
