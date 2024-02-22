@@ -124,6 +124,32 @@ export const getQuestions = async (params: FilterProps) => {
   }
 };
 
+export const getRightSidebarQuestions = async () => {
+  try {
+    await connectToDatabase();
+
+    const allQuestions = await Question.find()
+      .populate({
+        path: "author",
+        model: User,
+        select: "clerkId name profilePictureUrl",
+      })
+      .populate({
+        path: "tags",
+        model: Tag,
+        select: "name",
+        options: {
+          lean: true,
+        },
+      })
+      .limit(5);
+
+    return { allQuestions };
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
 interface GetQuestionByIdParams {
   id: string;
 }

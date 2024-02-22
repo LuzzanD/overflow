@@ -3,12 +3,12 @@ import Image from "next/image";
 import Tag from "./shared/Tag";
 import chevronImage from "../public/assets/icons/chevron-right.svg";
 import { getRightSideBarTags } from "@/lib/actions/tag.actions";
-import { getQuestions } from "@/lib/actions/question.actions";
+import { getRightSidebarQuestions } from "@/lib/actions/question.actions";
 import Link from "next/link";
 
 const RightSideBar = async () => {
   const allTags = await getRightSideBarTags();
-  const result = await getQuestions({ filter: "Newest", page: "1" });
+  const result = await getRightSidebarQuestions();
 
   const questionCards =
     result.allQuestions &&
